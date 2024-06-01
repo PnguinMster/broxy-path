@@ -22,5 +22,5 @@ function love.update(dt)
 end
 
 function love.draw()
-	love.graphics.rectangle("fill", player.x, player.y, 30, 60)
+	love.graphics.rectangle("line", player.x, player.y, 30, 60)
 end
