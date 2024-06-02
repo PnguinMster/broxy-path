@@ -1,4 +1,4 @@
-_G.love = require("love")
+love = require("love")
 
 function love.load()
 	World = love.physics.newWorld(0, 30, true)
