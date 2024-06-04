@@ -13,7 +13,6 @@ function love.load()
 	Player.body = love.physics.newBody(World, Player.start_x, Player.start_y, "dynamic")
 	Player.shape = love.physics.newRectangleShape(Player.width, Player.height)
 	Player.fixture = love.physics.newFixture(Player.body, Player.shape, 3)
-	Player.body:setFixedRotation(true)
 	Player.fixture:setRestitution(0.2)
 
 	Ground = {}
@@ -32,13 +31,15 @@ function love.load()
 	love.window.setMode(window_x, window_y)
 end
 
+-- NOTE:Have two square colliders that got to the center and seperate for effect
+
 function love.update(dt)
 	World:update(dt)
 
 	if love.keyboard.isDown("right") then
-		Player.body:applyForce(400, 0)
+		Player.body:applyAngularImpulse(50)
 	elseif love.keyboard.isDown("left") then
-		Player.body:applyForce(-400, 0)
+		Player.body:applyAngularImpulse(-50)
 	end
 end
 
