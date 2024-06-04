@@ -1,7 +1,7 @@
 love = require("love")
 
 function love.load()
-	World = love.physics.newWorld(0, 30, true)
+	World = love.physics.newWorld(0, 9.81 * 15, true)
 
 	local window_x, window_y = 750, 750
 
@@ -12,8 +12,12 @@ function love.load()
 	Player.start_y = (window_y / 2)
 	Player.body = love.physics.newBody(World, Player.start_x, Player.start_y, "dynamic")
 	Player.shape = love.physics.newRectangleShape(Player.width, Player.height)
-	Player.fixture = love.physics.newFixture(Player.body, Player.shape, 3)
+	Player.fixture = love.physics.newFixture(Player.body, Player.shape, 2)
 	Player.fixture:setRestitution(0.2)
+	Player.fixture:setFriction(0.3)
+	Player.body:setAngularDamping(10)
+
+	Player.angular_force = 250
 
 	Ground = {}
 	Ground.width = 700
@@ -37,9 +41,9 @@ function love.update(dt)
 	World:update(dt)
 
 	if love.keyboard.isDown("right") then
-		Player.body:applyAngularImpulse(50)
+		Player.body:applyAngularImpulse(Player.angular_force)
 	elseif love.keyboard.isDown("left") then
-		Player.body:applyAngularImpulse(-50)
+		Player.body:applyAngularImpulse(-Player.angular_force)
 	end
 end
 
