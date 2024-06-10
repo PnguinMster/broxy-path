@@ -6,6 +6,7 @@ function love.load()
 	local window_x, window_y = 750, 750
 
 	LAYERS = {
+		DEFAULT = 0,
 		LEVEL = 1,
 		PLAYER = 2,
 		OBSTACLE = 3,
@@ -28,6 +29,8 @@ function love.load()
 	Player.body:setAngularDamping(10)
 
 	Player.angular_force = 250
+	Player.topFixture:setCategory(LAYERS.PLAYER, LAYERS.DEFAULT)
+	Player.bottomFixture:setCategory(LAYERS.PLAYER, LAYERS.DEFAULT)
 
 	Ground = {}
 	Ground.width = 700
@@ -38,6 +41,7 @@ function love.load()
 	Ground.shape = love.physics.newRectangleShape(Ground.width, Ground.height)
 	Ground.fixture = love.physics.newFixture(Ground.body, Ground.shape, 3)
 	Ground.body:setFixedRotation(true)
+	Ground.fixture:setCategory(LAYERS.LEVEL, LAYERS.DEFAULT)
 
 	local r, g, b = love.math.colorFromBytes(25, 18, 28)
 	love.graphics.setBackgroundColor(r, g, b)
