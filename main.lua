@@ -6,10 +6,10 @@ function love.load()
 	local window_x, window_y = 750, 750
 
 	LAYERS = {
-		DEFAULT = 0,
-		LEVEL = 1,
-		PLAYER = 2,
-		OBSTACLE = 3,
+		DEFAULT = 1,
+		LEVEL = 2,
+		PLAYER = 3,
+		OBSTACLE = 4,
 	}
 
 	Player = {}
@@ -22,6 +22,7 @@ function love.load()
 	Player.bottomShape = love.physics.newRectangleShape(0, -Player.height / 4, Player.width, Player.height / 2)
 	Player.topFixture = love.physics.newFixture(Player.body, Player.topShape, 2)
 	Player.bottomFixture = love.physics.newFixture(Player.body, Player.bottomShape, 2)
+
 	Player.topFixture:setRestitution(0.2)
 	Player.topFixture:setFriction(0.3)
 	Player.bottomFixture:setRestitution(0.2)
@@ -29,8 +30,10 @@ function love.load()
 	Player.body:setAngularDamping(10)
 
 	Player.angular_force = 250
-	Player.topFixture:setCategory(LAYERS.PLAYER, LAYERS.DEFAULT)
-	Player.bottomFixture:setCategory(LAYERS.PLAYER, LAYERS.DEFAULT)
+	Player.topFixture:setCategory(LAYERS.PLAYER)
+	Player.bottomFixture:setCategory(LAYERS.PLAYER)
+	Player.topFixture:setMask(LAYERS.PLAYER)
+	Player.bottomFixture:setMask(LAYERS.PLAYER )
 
 	Ground = {}
 	Ground.width = 700
@@ -41,7 +44,7 @@ function love.load()
 	Ground.shape = love.physics.newRectangleShape(Ground.width, Ground.height)
 	Ground.fixture = love.physics.newFixture(Ground.body, Ground.shape, 3)
 	Ground.body:setFixedRotation(true)
-	Ground.fixture:setCategory(LAYERS.LEVEL, LAYERS.DEFAULT)
+	Ground.fixture:setCategory(LAYERS.LEVEL)
 
 	local r, g, b = love.math.colorFromBytes(25, 18, 28)
 	love.graphics.setBackgroundColor(r, g, b)
