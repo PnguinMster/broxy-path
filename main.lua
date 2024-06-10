@@ -5,6 +5,12 @@ function love.load()
 
 	local window_x, window_y = 750, 750
 
+	LAYERS = {
+		LEVEL = 1,
+		PLAYER = 2,
+		OBSTACLE = 3,
+	}
+
 	Player = {}
 	Player.width = 30
 	Player.height = 60
@@ -38,7 +44,6 @@ function love.load()
 
 	love.window.setMode(window_x, window_y)
 end
-
 
 function love.update(dt)
 	World:update(dt)
