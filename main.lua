@@ -72,12 +72,16 @@ function love.update(dt)
 end
 
 function love.draw()
-	-- TODO: Get Average from points
-	local x1, y1, x2, y2, x5, y5, x6, y6 = Player.topBody:getWorldPoints(Player.topShape:getPoints())
-	local _, _, _, _, x3, y3, x4, y4 = Player.bottomBody:getWorldPoints(Player.bottomShape:getPoints())
 	love.graphics.setColor(1, 0.5, 0)
+	local x1, y1, x2, y2, x5, y5, x6, y6 = Player.topBody:getWorldPoints(Player.topShape:getPoints())
+	local x7, y7, x8, y8, x3, y3, x4, y4 = Player.bottomBody:getWorldPoints(Player.bottomShape:getPoints())
 
-	love.graphics.polygon("line", x1, y1, x2, y2, x5, y5, x6, y6, x4, y4, x3, y3, x5, y5, x6, y6)
+	local center_x1 = (x5 + x8) * 0.5
+	local center_y1 = (y5 + y8) * 0.5
+	local center_x2 = (x6 + x7) * 0.5
+	local center_y2 = (y6 + y7) * 0.5
+
+	love.graphics.polygon("fill", x1, y1, x2, y2, center_x1, center_y1, center_x2, center_y2, x4, y4, x3, y3, center_x1, center_y1, center_x2, center_y2)
 	-- love.graphics.polygon("line", x1, y1, x2, y2, x3, y3, x4, y4)
 	-- love.graphics.polygon("line", Player.topBody:getWorldPoints(Player.topShape:getPoints()))
 	-- love.graphics.polygon("line", Player.bottomBody:getWorldPoints(Player.bottomShape:getPoints()))
