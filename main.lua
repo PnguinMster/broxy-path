@@ -1,7 +1,5 @@
 love = require("love")
 
--- NOTE: NEW DIRECTION add toggle hover thing ability
-
 function love.load()
 	World = love.physics.newWorld(0, 9.81 * 15, true)
 
@@ -34,12 +32,15 @@ function love.load()
 	Player.topFixture:setFriction(0.7)
 	Player.bottomFixture:setRestitution(0.2)
 	Player.bottomFixture:setFriction(0.3)
-	Player.topBody:setAngularDamping(10)
-	Player.bottomBody:setAngularDamping(10)
+	Player.topBody:setAngularDamping(20)
+	Player.bottomBody:setAngularDamping(20)
 
 	Player.angular_force = 250
 	Player.topFixture:setCategory(LAYERS.PLAYER)
 	Player.bottomFixture:setCategory(LAYERS.PLAYER)
+
+	Player.hoverStrength = 70
+	Player.linear_force = 30
 
 	Ground = {}
 	Ground.width = 700
@@ -65,9 +66,23 @@ function love.update(dt)
 	if love.keyboard.isDown("right") then
 		Player.topBody:applyAngularImpulse(Player.angular_force)
 		Player.bottomBody:applyAngularImpulse(Player.angular_force)
+
+		Player.topBody:applyForce(Player.linear_force, 0)
+		Player.bottomBody:applyForce(Player.linear_force, 0)
 	elseif love.keyboard.isDown("left") then
 		Player.topBody:applyAngularImpulse(-Player.angular_force)
 		Player.bottomBody:applyAngularImpulse(-Player.angular_force)
+
+		Player.topBody:applyForce(-Player.linear_force * 0.25, 0)
+		Player.bottomBody:applyForce(-Player.linear_force, 0)
+	end
+
+	if love.keyboard.isDown("up") then
+		Player.topBody:applyForce(0, -9.8 * Player.hoverStrength)
+		Player.bottomBody:applyForce(0, -9.8 * Player.hoverStrength)
+	elseif love.keyboard.isDown("down") then
+		Player.topBody:applyForce(0, 9.8 * Player.hoverStrength)
+		Player.bottomBody:applyForce(0, 9.8 * Player.hoverStrength)
 	end
 end
 
@@ -81,7 +96,25 @@ function love.draw()
 	local center_x2 = (x6 + x7) * 0.5
 	local center_y2 = (y6 + y7) * 0.5
 
-	love.graphics.polygon("fill", x1, y1, x2, y2, center_x1, center_y1, center_x2, center_y2, x4, y4, x3, y3, center_x1, center_y1, center_x2, center_y2)
+	love.graphics.polygon(
+		"fill",
+		x1,
+		y1,
+		x2,
+		y2,
+		center_x1,
+		center_y1,
+		center_x2,
+		center_y2,
+		x4,
+		y4,
+		x3,
+		y3,
+		center_x1,
+		center_y1,
+		center_x2,
+		center_y2
+	)
 	-- love.graphics.polygon("line", x1, y1, x2, y2, x3, y3, x4, y4)
 	-- love.graphics.polygon("line", Player.topBody:getWorldPoints(Player.topShape:getPoints()))
 	-- love.graphics.polygon("line", Player.bottomBody:getWorldPoints(Player.bottomShape:getPoints()))
