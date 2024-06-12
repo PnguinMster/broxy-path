@@ -32,8 +32,8 @@ function love.load()
 	Player.topFixture:setFriction(0.7)
 	Player.bottomFixture:setRestitution(0.2)
 	Player.bottomFixture:setFriction(0.3)
-	Player.topBody:setAngularDamping(20)
-	Player.bottomBody:setAngularDamping(20)
+	Player.topBody:setAngularDamping(15)
+	Player.bottomBody:setAngularDamping(15)
 
 	Player.angular_force = 250
 	Player.topFixture:setCategory(LAYERS.PLAYER)
