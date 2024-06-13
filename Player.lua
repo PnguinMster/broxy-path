@@ -14,9 +14,9 @@ local ANGULAR_DAMPENING = 15
 
 function Player.new()
 	return setmetatable({
-		linear_force = 30,
 		angular_force = 250,
-		hover_strength = 70,
+		linear_force = 30,
+		hover_force = 70,
 
 		width = 30,
 		height = 60,
@@ -24,10 +24,10 @@ function Player.new()
 		start_y = 0,
 
 		top_body = {},
-		bottom_body = {},
 		top_shape = {},
-		bottom_shape = {},
 		top_fixture = {},
+		bottom_body = {},
+		bottom_shape = {},
 		bottom_fixture = {},
 
 		joint = {},
@@ -39,10 +39,10 @@ function Player:load()
 	self.start_y = love.graphics.getHeight() / 2
 
 	self.top_body = love.physics.newBody(World, self.start_x, self.start_y, "dynamic")
-	self.bottom_body = love.physics.newBody(World, self.start_x, self.start_y, "dynamic")
 	self.top_shape = love.physics.newRectangleShape(0, -self.height / 4, self.width, self.height / 2)
-	self.bottom_shape = love.physics.newRectangleShape(0, self.height / 4, self.width, self.height / 2)
 	self.top_fixture = love.physics.newFixture(self.top_body, self.top_shape, 2)
+	self.bottom_body = love.physics.newBody(World, self.start_x, self.start_y, "dynamic")
+	self.bottom_shape = love.physics.newRectangleShape(0, self.height / 4, self.width, self.height / 2)
 	self.bottom_fixture = love.physics.newFixture(self.bottom_body, self.bottom_shape, 2)
 
 	self.joint = love.physics.newWeldJoint(self.top_body, self.bottom_body, self.start_x, self.start_y, false)
@@ -51,10 +51,10 @@ function Player:load()
 	self.joint:setFrequency(FREQUENCY)
 
 	self.top_fixture:setRestitution(RESTITUTION)
-	self.bottom_fixture:setRestitution(RESTITUTION)
 	self.top_fixture:setFriction(FRICTION)
-	self.bottom_fixture:setFriction(FRICTION)
 	self.top_fixture:setCategory(CATEGORY)
+	self.bottom_fixture:setRestitution(RESTITUTION)
+	self.bottom_fixture:setFriction(FRICTION)
 	self.bottom_fixture:setCategory(CATEGORY)
 
 	self.top_body:setAngularDamping(ANGULAR_DAMPENING)
@@ -64,15 +64,13 @@ end
 function Player:update()
 	if love.keyboard.isDown("right") then
 		self.top_body:applyAngularImpulse(self.angular_force)
-		self.bottom_body:applyAngularImpulse(self.angular_force)
-
 		self.top_body:applyForce(self.linear_force, 0)
+		self.bottom_body:applyAngularImpulse(self.angular_force)
 		self.bottom_body:applyForce(self.linear_force, 0)
 	elseif love.keyboard.isDown("left") then
 		self.top_body:applyAngularImpulse(-self.angular_force)
+		self.top_body:applyForce(-self.linear_force, 0)
 		self.bottom_body:applyAngularImpulse(-self.angular_force)
-
-		self.top_body:applyForce(-self.linear_force * 0.25, 0)
 		self.bottom_body:applyForce(-self.linear_force, 0)
 	end
 
