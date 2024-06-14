@@ -34,7 +34,7 @@ function love.update(dt)
 	local x, y = Player:get_position()
 	x = x - love.graphics.getWidth() / 2
 	y = y - love.graphics.getHeight() / 2
-	camera:setPosition(x, y)
+	camera:smoothPosition(x, y, 0.05, dt)
 end
 
 function love.draw()

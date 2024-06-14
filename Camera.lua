@@ -53,6 +53,11 @@ function camera:setPosition(x, y)
 	end
 end
 
+function camera:smoothPosition(x, y, smoothing, dt)
+	self._x = math.damp(self._x, x, smoothing, dt)
+	self._y = math.damp(self._y, y, smoothing, dt)
+end
+
 function camera:setScale(sx, sy)
 	self.scaleX = sx or self.scaleX
 	self.scaleY = sy or self.scaleY
