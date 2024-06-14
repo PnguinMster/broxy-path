@@ -114,4 +114,7 @@ function Player:draw()
 	)
 end
 
+function Player.get_position()
+end
+
 return Player
