@@ -114,7 +114,11 @@ function Player:draw()
 	)
 end
 
-function Player.get_position()
+function Player:get_position()
+	local x1, y1, x2, y2 = self.joint:getAnchors()
+	local x_average = (x1 + x2) * 0.5
+	local y_average = (y1 + y2) * 0.5
+	return x_average, y_average
 end
 
 return Player

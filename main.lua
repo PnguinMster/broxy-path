@@ -1,4 +1,5 @@
 require("Layers")
+require("Camera")
 
 ---@class love
 local love = require("love")
@@ -29,11 +30,17 @@ end
 function love.update(dt)
 	World:update(dt)
 	Player:update()
+
+	local x, y = Player:get_position()
+	x = x - love.graphics.getWidth() / 2
+	y = y - love.graphics.getHeight() / 2
+	camera:setPosition(x, y)
 end
 
 function love.draw()
+	camera:set()
 	Player:draw()
 	love.graphics.setColor(1, 0.5, 0)
 	love.graphics.polygon("line", Ground.body:getWorldPoints(Ground.shape:getPoints()))
+	camera:unset()
 end
-
