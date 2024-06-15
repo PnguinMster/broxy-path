@@ -5,6 +5,9 @@ require("Camera")
 local love = require("love")
 local player = require("Player")
 
+-- TODO: Implement image to level map
+-- and add bar max for hover
+
 function love.load()
 	love.graphics.setBackgroundColor(25 / 255, 18 / 255, 28 / 255)
 	love.window.setMode(750, 750)
@@ -29,7 +32,7 @@ end
 
 function love.update(dt)
 	World:update(dt)
-	Player:update()
+	Player:update(dt)
 
 	local x, y = Player:get_position()
 	x = x - love.graphics.getWidth() / 2
@@ -38,6 +41,7 @@ function love.update(dt)
 end
 
 function love.draw()
+	Player:hud()
 	camera:set()
 	Player:draw()
 	love.graphics.setColor(1, 0.5, 0)

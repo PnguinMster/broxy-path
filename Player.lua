@@ -12,6 +12,13 @@ local FRICTION = 0.7
 local CATEGORY = LAYERS.PLAYER
 local ANGULAR_DAMPENING = 15
 
+local HOVER_TIME_GAIN = 1.5
+local HOVER_TIME_LOSE = 1
+local CAN_HOVER_TIME = 0.1
+local hover_timer = 0
+local can_hover_timer = 0
+local hover_enabled = false
+
 function Player.new()
 	return setmetatable({
 		angular_force = 250,
@@ -61,7 +68,7 @@ function Player:load()
 	self.bottom_body:setAngularDamping(ANGULAR_DAMPENING)
 end
 
-function Player:update()
+function Player:update(dt)
 	if love.keyboard.isDown("right") then
 		self.top_body:applyAngularImpulse(self.angular_force)
 		self.top_body:applyForce(self.linear_force, 0)
@@ -74,13 +81,34 @@ function Player:update()
 		self.bottom_body:applyForce(-self.linear_force, 0)
 	end
 
-	if love.keyboard.isDown("up") then
-		self.top_body:applyForce(0, -9.8 * self.hoverStrength)
-		self.bottom_body:applyForce(0, -9.8 * self.hoverStrength)
-	elseif love.keyboard.isDown("down") then
-		self.top_body:applyForce(0, 9.8 * self.hoverStrength)
-		self.bottom_body:applyForce(0, 9.8 * self.hoverStrength)
+	if love.keyboard.isDown("up") and hover_enabled then
+		self.top_body:applyForce(0, -9.8 * self.hover_force)
+		self.bottom_body:applyForce(0, -9.8 * self.hover_force)
+		hover_timer = hover_timer - dt * HOVER_TIME_LOSE
+	elseif love.keyboard.isDown("down") and hover_enabled then
+		self.top_body:applyForce(0, 9.8 * self.hover_force)
+		self.bottom_body:applyForce(0, 9.8 * self.hover_force)
+		hover_timer = hover_timer - dt / HOVER_TIME_LOSE
+	elseif hover_enabled then
+		hover_timer = hover_timer + dt / HOVER_TIME_GAIN
 	end
+
+	if hover_timer <= 0 then
+		can_hover_timer = can_hover_timer + dt / CAN_HOVER_TIME
+		hover_enabled = false
+		if can_hover_timer > 1 then
+			hover_enabled = true
+			can_hover_timer = 0
+			hover_timer = 0
+		end
+	end
+
+	hover_timer = math.clamp(hover_timer, -1, 1)
+end
+
+function Player:hud()
+	love.graphics.setColor(1, 0, 0)
+	love.graphics.print(tostring(hover_timer))
 end
 
 function Player:draw()
