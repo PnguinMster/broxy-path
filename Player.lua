@@ -113,6 +113,10 @@ end
 
 function Player:draw()
 	love.graphics.setColor(1, 0.5, 0)
+
+	-- love.graphics.polygon("line", self.top_body:getWorldPoints(self.top_shape:getPoints()))
+	-- love.graphics.polygon("line", self.bottom_body:getWorldPoints(self.bottom_shape:getPoints()))
+
 	local x1, y1, x2, y2, x5, y5, x6, y6 = self.top_body:getWorldPoints(self.top_shape:getPoints())
 	local x7, y7, x8, y8, x3, y3, x4, y4 = self.bottom_body:getWorldPoints(self.bottom_shape:getPoints())
 
@@ -120,6 +124,56 @@ function Player:draw()
 	local center_y1 = (y5 + y8) * 0.5
 	local center_x2 = (x6 + x7) * 0.5
 	local center_y2 = (y6 + y7) * 0.5
+
+	love.graphics.polygon(
+		"line",
+		x1,
+		y1,
+		x2,
+		y2,
+		center_x1,
+		center_y1,
+		center_x2,
+		center_y2,
+		x4,
+		y4,
+		x3,
+		y3,
+		center_x1,
+		center_y1,
+		center_x2,
+		center_y2
+	)
+
+	self:hover_bar()
+end
+
+function Player:hover_bar()
+	local bar_height = math.lerp(self.height, 0, hover_timer)
+
+	love.graphics.setColor(1, 0, 0)
+	local x1, y1, x2, y2, x5, y5, x6, y6 = self.top_body:getWorldPoints(self.top_shape:getPoints())
+	local x7, y7, x8, y8, x3, y3, x4, y4 = self.bottom_body:getWorldPoints(self.bottom_shape:getPoints())
+
+	local center_x1 = (x5 + x8) * 0.5
+	local center_y1 = (y5 + y8) * 0.5
+	local center_x2 = (x6 + x7) * 0.5
+	local center_y2 = (y6 + y7) * 0.5
+
+	x1, y1 = self.top_body:getLocalPoint(x1, y1)
+	x2, y2 = self.top_body:getLocalPoint(x2, y2)
+	center_x1, center_y1 = self.top_body:getLocalPoint(center_x1, center_y1)
+	center_x2, center_y2 = self.top_body:getLocalPoint(center_x2, center_y2)
+
+	y1 = y1 + bar_height
+	y2 = y2 + bar_height
+	center_y1 = math.clamp(center_y1, y1, center_y1)
+	center_y2 = math.clamp(center_y2, y2, center_y2)
+
+	x1, y1 = self.top_body:getWorldPoint(x1, y1)
+	x2, y2 = self.top_body:getWorldPoint(x2, y2)
+	center_x1, center_y1 = self.top_body:getWorldPoint(center_x1, center_y1)
+	center_x2, center_y2 = self.top_body:getWorldPoint(center_x2, center_y2)
 
 	love.graphics.polygon(
 		"line",

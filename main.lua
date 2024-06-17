@@ -6,7 +6,6 @@ local love = require("love")
 local player = require("Player")
 
 -- TODO: Implement image to level map
--- and add bar max for hover
 
 function love.load()
 	love.graphics.setBackgroundColor(25 / 255, 18 / 255, 28 / 255)
