@@ -6,13 +6,13 @@ require("TileMap")
 local love = require("love")
 local player = require("Player")
 
--- TODO: Implement image to level map
-
 function love.load()
 	love.graphics.setBackgroundColor(25 / 255, 18 / 255, 28 / 255)
-	love.window.setMode(750, 750)
+	-- love.window.setMode(750, 750, { resizable = true, vsync = 0, minwidth = 400, minheight = 300 })
+	-- love.window.setMode(750, 750)
+	love.window.setMode(750, 750, { vsync = 0 })
 
-	World = love.physics.newWorld(0, 9.8 * 15, true)
+	World = love.physics.newWorld(0, 9.8 * 16, true)
 
 	Player = player.new()
 
@@ -46,6 +46,7 @@ end
 
 function love.draw()
 	-- Player:hud()
+	love.graphics.print("FPS: " .. tostring(love.timer.getFPS()), 10, 10)
 
 	camera:set()
 	Tilemap:draw_map()

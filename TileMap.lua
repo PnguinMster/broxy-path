@@ -3,6 +3,7 @@ local love = require("love")
 Tilemap = {}
 
 Tilemap.test_level = love.image.newImageData("Art/Level/test.png")
+-- Tilemap.test_level = love.image.newImageData("Art/Level/testlarge.png")
 Tilemap.map = {}
 Tilemap.blocks = {}
 
@@ -31,7 +32,7 @@ function Tilemap:load_map(player)
 			info.fixture = love.physics.newFixture(info.body, info.shape)
 
 			info.fixture:setCategory(LAYERS.LEVEL)
-			info.fixture:setFriction(0.7)
+			info.fixture:setFriction(0.9)
 
 			table.insert(self.blocks, info)
 		elseif block.type == BLOCK_TYPE.START then

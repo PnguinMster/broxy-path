@@ -7,10 +7,10 @@ Player.__index = Player
 
 local DAMPING_RATIO = 1
 local FREQUENCY = 2
-local RESTITUTION = 0.2
+local RESTITUTION = 0.1
 local FRICTION = 0.9
 local CATEGORY = LAYERS.PLAYER
-local ANGULAR_DAMPENING = 15
+local ANGULAR_DAMPENING = 12
 
 local HOVER_TIME_GAIN = 1.5
 local HOVER_TIME_LOSE = 1
@@ -21,7 +21,7 @@ local hover_enabled = false
 
 function Player.new()
 	return setmetatable({
-		angular_force = 250,
+		angular_force = 250 * 100,
 		linear_force = 30,
 		hover_force = 70,
 
@@ -70,14 +70,14 @@ end
 
 function Player:update(dt)
 	if love.keyboard.isDown("right") then
-		self.top_body:applyAngularImpulse(self.angular_force)
+		self.top_body:applyTorque(self.angular_force)
 		self.top_body:applyForce(self.linear_force, 0)
-		self.bottom_body:applyAngularImpulse(self.angular_force)
+		self.bottom_body:applyTorque(self.angular_force)
 		self.bottom_body:applyForce(self.linear_force, 0)
 	elseif love.keyboard.isDown("left") then
-		self.top_body:applyAngularImpulse(-self.angular_force)
+		self.top_body:applyTorque(-self.angular_force)
 		self.top_body:applyForce(-self.linear_force, 0)
-		self.bottom_body:applyAngularImpulse(-self.angular_force)
+		self.bottom_body:applyTorque(-self.angular_force)
 		self.bottom_body:applyForce(-self.linear_force, 0)
 	end
 
