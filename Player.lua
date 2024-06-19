@@ -8,7 +8,7 @@ Player.__index = Player
 local DAMPING_RATIO = 1
 local FREQUENCY = 2
 local RESTITUTION = 0.2
-local FRICTION = 0.7
+local FRICTION = 0.9
 local CATEGORY = LAYERS.PLAYER
 local ANGULAR_DAMPENING = 15
 
@@ -42,8 +42,8 @@ function Player.new()
 end
 
 function Player:load()
-	self.start_x = love.graphics.getWidth() / 2
-	self.start_y = love.graphics.getHeight() / 2
+	-- self.start_x = love.graphics.getWidth() / 2
+	-- self.start_y = love.graphics.getHeight() / 2
 
 	self.top_body = love.physics.newBody(World, self.start_x, self.start_y, "dynamic")
 	self.top_shape = love.physics.newRectangleShape(0, -self.height / 4, self.width, self.height / 2)

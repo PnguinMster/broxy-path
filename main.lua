@@ -1,5 +1,6 @@
 require("Layers")
 require("Camera")
+require("TileMap")
 
 ---@class love
 local love = require("love")
@@ -14,19 +15,23 @@ function love.load()
 	World = love.physics.newWorld(0, 9.8 * 15, true)
 
 	Player = player.new()
+
+	Tilemap:create_map(Tilemap.test_level)
+	Tilemap:load_map(Player)
+
 	Player:load()
 
-	Ground = {}
-	Ground.width = 700
-	Ground.height = 30
-	Ground.start_x = (love.graphics.getWidth() / 2)
-	Ground.start_y = (love.graphics.getHeight() / 2) + 300
-	Ground.body = love.physics.newBody(World, Ground.start_x, Ground.start_y, "static")
-	Ground.shape = love.physics.newRectangleShape(Ground.width, Ground.height)
-	Ground.fixture = love.physics.newFixture(Ground.body, Ground.shape, 3)
-	Ground.body:setFixedRotation(true)
-	Ground.fixture:setCategory(LAYERS.LEVEL)
-	Ground.fixture:setFriction(0.7)
+	-- Ground = {}
+	-- Ground.width = 1700
+	-- Ground.height = 30
+	-- Ground.start_x = (love.graphics.getWidth() / 2)
+	-- Ground.start_y = (love.graphics.getHeight() / 2) + 300
+	-- Ground.body = love.physics.newBody(World, Ground.start_x, Ground.start_y, "static")
+	-- Ground.shape = love.physics.newRectangleShape(Ground.width, Ground.height)
+	-- Ground.fixture = love.physics.newFixture(Ground.body, Ground.shape, 3)
+	-- Ground.body:setFixedRotation(true)
+	-- Ground.fixture:setCategory(LAYERS.LEVEL)
+	-- Ground.fixture:setFriction(0.7)
 end
 
 function love.update(dt)
@@ -40,10 +45,12 @@ function love.update(dt)
 end
 
 function love.draw()
-	Player:hud()
+	-- Player:hud()
+
 	camera:set()
+	Tilemap:draw_map()
 	Player:draw()
 	love.graphics.setColor(1, 0.5, 0)
-	love.graphics.polygon("line", Ground.body:getWorldPoints(Ground.shape:getPoints()))
+	-- love.graphics.polygon("line", Ground.body:getWorldPoints(Ground.shape:getPoints()))
 	camera:unset()
 end
