@@ -32,7 +32,7 @@ function Tilemap:create_map(image, player_width, player_height)
 end
 
 function Tilemap:optimize_map()
-	for x = 1, #self.map do
+	for x, _ in pairs(self.map) do
 		for y = 2, #self.map[1] do
 			if
 				self.map[x][y - 1] ~= nil
