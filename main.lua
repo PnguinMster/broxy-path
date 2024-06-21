@@ -8,16 +8,17 @@ local player = require("Player")
 
 function love.load()
 	love.graphics.setBackgroundColor(25 / 255, 18 / 255, 28 / 255)
-	-- love.window.setMode(750, 750, { resizable = true, vsync = 0, minwidth = 400, minheight = 300 })
+	love.window.setMode(750, 750, { resizable = true, vsync = 0, minwidth = 400, minheight = 300 })
 	-- love.window.setMode(750, 750)
-	love.window.setMode(750, 750, { vsync = 0 })
+	-- love.window.setMode(750, 750, { vsync = 0 })
 
 	World = love.physics.newWorld(0, 9.8 * 16, true)
 
 	Player = player.new()
 
-	Tilemap:create_map(Tilemap.test_level)
-	Tilemap:load_map(Player)
+	Tilemap:create_map(Tilemap.test_level, Player.width, Player.height)
+	-- Tilemap:optimize_map()
+	Tilemap:load_map()
 
 	Player:load()
 
