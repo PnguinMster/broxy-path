@@ -1,11 +1,5 @@
 function math.clamp(x, min, max)
-	if x < min then
-		return min
-	elseif x > max then
-		return max
-	else
-		return x
-	end
+	return x < min and min or x > max and max or x
 end
 
 function math.lerp(a, b, t)
