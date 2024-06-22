@@ -7,6 +7,7 @@ function love.conf(t)
 	t.window.vsync = 0
 	t.window.minwidth = 400
 	t.window.minheight = 300
+	t.window.display = 2
 
 	t.modules.data = false
 	t.modules.system = false
