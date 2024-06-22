@@ -203,4 +203,8 @@ function Player:get_position()
 	return x_average, y_average
 end
 
+function Player.unload()
+	setmetatable(Player, nil)
+end
+
 return Player

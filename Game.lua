@@ -4,19 +4,22 @@ STATE = {
 	MENU = 1,
 	GAME = 2,
 }
-Game = {}
-Game.__index = Game
 
 SCENE = {
 	MENU = menu_scene,
 	GAME = game_scene,
 }
 
+Game = {}
+Game.__index = Game
+
 Game.scene = SCENE.MENU
 Game.state = SCENE.MENU
 
 function Game:set_scene(scene)
+	self.scene:unload()
 	self.scene = scene
+	self.scene:load()
 end
 
 function Game:load()

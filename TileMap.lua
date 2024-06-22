@@ -1,15 +1,20 @@
 local love = require("love")
 
 Tilemap = {}
+Tilemap.__index = Tilemap
 
-Tilemap.test_level = love.image.newImageData("Art/Level/test.png")
--- Tilemap.test_level = love.image.newImageData("Art/Level/testlarge.png")
-Tilemap.map = {}
-Tilemap.blocks = {}
-Tilemap.start_x = 0
-Tilemap.start_y = 0
-Tilemap.player_offset_x = 0
-Tilemap.player_offset_y = 0
+function Tilemap.new()
+	return setmetatable({
+		test_level = love.image.newImageData("Art/Level/test.png"),
+		-- test_level = love.image.newImageData("Art/Level/testlarge.png"),
+		map = {},
+		blocks = {},
+		start_x = 0,
+		start_y = 0,
+		player_offset_x = 0,
+		player_offset_y = 0,
+	}, Tilemap)
+end
 
 local block_size = 50
 
@@ -96,6 +101,10 @@ function Tilemap:draw_map()
 	end
 end
 
+function Tilemap.unload()
+	setmetatable(Tilemap, nil)
+end
+
 BLOCK_TYPE = {
 	STATIC = 0,
 	START = 1,
@@ -110,4 +119,4 @@ function Block.new(type, width, height)
 		height = height or 1,
 	}, Block)
 end
-return Block
+return Tilemap

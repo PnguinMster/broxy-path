@@ -1,7 +1,9 @@
 require("Layers")
 require("Camera")
-require("TileMap")
+
 local player = require("Player")
+local tilemap = require("TileMap")
+local button = require("Button")
 
 -- NOTE: Menu Scene
 menu_scene = {}
@@ -14,6 +16,8 @@ function menu_scene:update(dt) end
 
 function menu_scene:draw() end
 
+function menu_scene:unload() end
+
 -- NOTE: Game Scene
 game_scene = {}
 game_scene.__index = game_scene
@@ -23,6 +27,7 @@ function game_scene:load()
 	World = love.physics.newWorld(0, 9.8 * 16, true)
 
 	Player = player.new()
+	Tilemap = tilemap.new()
 
 	Tilemap:create_map(Tilemap.test_level, Player.width, Player.height)
 	Tilemap:load_map()
@@ -48,4 +53,10 @@ function game_scene:draw()
 	Player:draw()
 	love.graphics.setColor(1, 0.5, 0)
 	camera:unset()
+end
+
+function game_scene:unload()
+	World:destroy()
+	Player.unload()
+	Tilemap.unload()
 end
