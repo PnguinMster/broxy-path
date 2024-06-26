@@ -28,8 +28,8 @@ function Text.new(text, scale, horizontal_align, vertical_align, offset_x, offse
 	local font = love.graphics:getFont()
 	local textWidth = font:getWidth(text)
 	local textHeight = font:getHeight()
-	local x = offset_x
-	local y = offset_y
+	local x = offset_x or 0
+	local y = offset_y or 0
 
 	if horizontal_align == HORIZONTAL_ALIGN.RIGHT then
 		x = x + love.graphics:getWidth()
