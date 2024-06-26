@@ -25,12 +25,14 @@ function Tilemap:create_map(image, player_width, player_height)
 		self.map[x] = {}
 		for y = 1, image:getHeight() do
 			local r = love.math.colorToBytes(image:getPixel(x - 1, y - 1))
+			local type = self.has_block_value(r)
 
-			if r == BLOCK_TYPE.START then
+			if r == BLOCK_TYPE.START.r then
 				self.start_x = -x
 				self.start_y = -y
-			elseif self.has_block_value(r) then
-				self.map[x][y] = Block.new(r)
+			elseif type ~= nil then
+				print(type.r)
+				self.map[x][y] = Block.new(type)
 			end
 		end
 	end
@@ -38,11 +40,11 @@ end
 
 function Tilemap.has_block_value(value)
 	for _, val in pairs(BLOCK_TYPE) do
-		if value == val then
-			return true
+		if value == val.r then
+			return val
 		end
 	end
-	return false
+	return nil
 end
 
 function Tilemap:optimize_map()
@@ -99,7 +101,7 @@ function Tilemap:load_map()
 				table.insert(self.blocks, info)
 			elseif block.type == BLOCK_TYPE.VERTICAL_BLOCK then
 				local info = {}
-				info.body = love.physics.newBody(World, start_offset_x, start_offset_y, "static")
+				info.body = love.physics.newBody(World, start_offset_x, start_offset_y, "kinematic")
 				info.shape = love.physics.newRectangleShape(
 					(x - (block.width / 2)) * block_size,
 					(y - (block.height / 2)) * block_size,
@@ -115,7 +117,7 @@ function Tilemap:load_map()
 				table.insert(self.blocks, info)
 			elseif block.type == BLOCK_TYPE.HORIZONTAL_BLOCK then
 				local info = {}
-				info.body = love.physics.newBody(World, start_offset_x, start_offset_y, "static")
+				info.body = love.physics.newBody(World, start_offset_x, start_offset_y, "kinematic")
 				info.shape = love.physics.newRectangleShape(
 					(x - (block.width / 2)) * block_size,
 					(y - (block.height / 2)) * block_size,
@@ -147,7 +149,7 @@ function Tilemap:load_map()
 				table.insert(self.blocks, info)
 			elseif block.type == BLOCK_TYPE.VERTICAL_BOUNCE then
 				local info = {}
-				info.body = love.physics.newBody(World, start_offset_x, start_offset_y, "static")
+				info.body = love.physics.newBody(World, start_offset_x, start_offset_y, "kinematic")
 				info.shape = love.physics.newRectangleShape(
 					(x - (block.width / 2)) * block_size,
 					(y - (block.height / 2)) * block_size,
@@ -163,7 +165,7 @@ function Tilemap:load_map()
 				table.insert(self.blocks, info)
 			elseif block.type == BLOCK_TYPE.HORIZONTAL_BOUNCE then
 				local info = {}
-				info.body = love.physics.newBody(World, start_offset_x, start_offset_y, "static")
+				info.body = love.physics.newBody(World, start_offset_x, start_offset_y, "kinematic")
 				info.shape = love.physics.newRectangleShape(
 					(x - (block.width / 2)) * block_size,
 					(y - (block.height / 2)) * block_size,
@@ -177,6 +179,38 @@ function Tilemap:load_map()
 
 				info.type = BLOCK_TYPE.HORIZONTAL_BOUNCE
 				table.insert(self.blocks, info)
+			elseif block.type == BLOCK_TYPE.ROTATING_BLOCK then
+				local info = {}
+				info.body = love.physics.newBody(World, start_offset_x, start_offset_y, "kinematic")
+				info.shape = love.physics.newRectangleShape(
+					(x - (block.width / 2)) * block_size,
+					(y - (block.height / 2)) * block_size,
+					block.width * block_size,
+					block.height * block_size
+				)
+
+				info.fixture = love.physics.newFixture(info.body, info.shape)
+				info.fixture:setCategory(LAYERS.LEVEL)
+				info.fixture:setFriction(0.9)
+
+				info.type = BLOCK_TYPE.ROTATING_BLOCK
+				table.insert(self.blocks, info)
+			elseif block.type == BLOCK_TYPE.ROTATING_BOUNCE then
+				local info = {}
+				info.body = love.physics.newBody(World, start_offset_x, start_offset_y, "kinematic")
+				info.shape = love.physics.newRectangleShape(
+					(x - (block.width / 2)) * block_size,
+					(y - (block.height / 2)) * block_size,
+					block.width * block_size,
+					block.height * block_size
+				)
+
+				info.fixture = love.physics.newFixture(info.body, info.shape)
+				info.fixture:setCategory(LAYERS.LEVEL)
+				info.fixture:setFriction(0.9)
+
+				info.type = BLOCK_TYPE.ROTATING_BOUNCE
+				table.insert(self.blocks, info)
 			end
 		end
 	end
@@ -184,21 +218,7 @@ end
 
 function Tilemap:draw_map()
 	for _, block in ipairs(self.blocks) do
-		local type = block.type
-
-		if type == BLOCK_TYPE.STATIC_BLOCK then
-			love.graphics.setColor(love.math.colorFromBytes(230, 237, 227))
-		elseif type == BLOCK_TYPE.VERTICAL_BLOCK then
-			love.graphics.setColor(love.math.colorFromBytes(109, 194, 202))
-		elseif type == BLOCK_TYPE.HORIZONTAL_BLOCK then
-			love.graphics.setColor(love.math.colorFromBytes(210, 125, 44))
-		elseif type == BLOCK_TYPE.BOUNCE_BLOCK then
-			love.graphics.setColor(love.math.colorFromBytes(52, 101, 36))
-		elseif type == BLOCK_TYPE.VERTICAL_BOUNCE then
-			love.graphics.setColor(love.math.colorFromBytes(68, 36, 52))
-		elseif type == BLOCK_TYPE.HORIZONTAL_BOUNCE then
-			love.graphics.setColor(love.math.colorFromBytes(208, 70, 72))
-		end
+		love.graphics.setColor(love.math.colorFromBytes(block.type.r, block.type.g, block.type.b))
 		love.graphics.polygon("line", block.body:getWorldPoints(block.shape:getPoints()))
 	end
 end
@@ -208,20 +228,22 @@ function Tilemap.unload()
 end
 
 BLOCK_TYPE = {
-	START = 218, -- Yellow
-	STATIC_BLOCK = 0, -- Black
-	VERTICAL_BLOCK = 109, -- Teal Blue
-	HORIZONTAL_BLOCK = 210, -- Orange
-	BOUNCE_BLOCK = 52, --Green
-	VERTICAL_BOUNCE = 68, -- Wine
-	HORIZONTAL_BOUNCE = 208, -- Red
+	START = { r = 218, g = 212, b = 94 }, -- Yellow
+	STATIC_BLOCK = { r = 222, g = 238, b = 214 }, -- White
+	VERTICAL_BLOCK = { r = 109, g = 194, b = 202 }, -- Teal Blue
+	HORIZONTAL_BLOCK = { r = 210, g = 125, b = 44 }, -- Orange
+	BOUNCE_BLOCK = { r = 52, g = 101, b = 36 }, --Green
+	VERTICAL_BOUNCE = { r = 68, g = 36, b = 52 }, -- Wine
+	HORIZONTAL_BOUNCE = { r = 208, g = 70, b = 72 }, -- Red
+	ROTATING_BLOCK = { r = 89, g = 125, b = 206 }, -- Matte Blue
+	ROTATING_BOUNCE = { r = 48, g = 52, b = 109 }, -- Dark Blue
 }
-Block = { type = BLOCK_TYPE.STATIC, width = 1, height = 1 }
+Block = { type = BLOCK_TYPE.STATIC_BLOCK, width = 1, height = 1 }
 Block.__index = Block
 
 function Block.new(type, width, height)
 	return setmetatable({
-		type = type or BLOCK_TYPE.STATIC,
+		type = type or BLOCK_TYPE.STATIC_BLOCK,
 		width = width or 1,
 		height = height or 1,
 	}, Block)
