@@ -16,8 +16,8 @@ local Button = {
 Button.__index = Button
 
 function Button.new(width, height, string, func, func_param, horizontal_align, vertical_align, offset_x, offset_y)
-	local x = offset_x
-	local y = offset_y
+	local x = offset_x or 0
+	local y = offset_y or 0
 
 	if horizontal_align == HORIZONTAL_ALIGN.RIGHT then
 		x = x + love.graphics:getWidth()
@@ -40,8 +40,7 @@ function Button.new(width, height, string, func, func_param, horizontal_align, v
 		y = y or 0,
 		width = width or 0,
 		height = height or 0,
-		string = text.new(string, 1, horizontal_align, vertical_align, offset_x, offset_y)
-			or text.new("Text", 1, HORIZONTAL_ALIGN.LEFT, VERTICAL_ALIGN.TOP, 0, 0),
+		string = text.new(string, nil, horizontal_align, vertical_align, offset_x, offset_y) or text.new(),
 		func = func or function()
 			print("No Function")
 		end,
