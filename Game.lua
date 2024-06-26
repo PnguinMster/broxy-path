@@ -33,6 +33,7 @@ function Game:update(dt)
 end
 
 function Game:draw()
+	love.graphics.setColor(1, 1, 1)
 	love.graphics.print("FPS: " .. tostring(love.timer.getFPS()), 10, 10)
 
 	self.scene:draw()
