@@ -1,15 +1,5 @@
 local love = require("love")
 
-local color_block_key = {
-	start = 218, -- Yellow
-	static_block = 0, -- Black
-	vertical_block = 109, -- Teal Blue
-	horizontal_block = 210, -- Orange
-	bounce_block = 52, --Green
-	vertical_bounce = 68, -- Wine
-	horizontal_bounce = 208, -- Red
-}
-
 Tilemap = {}
 Tilemap.__index = Tilemap
 
@@ -36,24 +26,23 @@ function Tilemap:create_map(image, player_width, player_height)
 		for y = 1, image:getHeight() do
 			local r = love.math.colorToBytes(image:getPixel(x - 1, y - 1))
 
-			if r == color_block_key.start then
+			if r == BLOCK_TYPE.START then
 				self.start_x = -x
 				self.start_y = -y
-			elseif r == color_block_key.static_block then
-				self.map[x][y] = Block.new(BLOCK_TYPE.STATIC_BLOCK)
-			elseif r == color_block_key.vertical_block then
-				self.map[x][y] = Block.new(BLOCK_TYPE.VERTICAL_BLOCK)
-			elseif r == color_block_key.horizontal_block then
-				self.map[x][y] = Block.new(BLOCK_TYPE.HORIZONTAL_BLOCK)
-			elseif r == color_block_key.bounce_block then
-				self.map[x][y] = Block.new(BLOCK_TYPE.BOUNCE_BLOCK)
-			elseif r == color_block_key.vertical_bounce then
-				self.map[x][y] = Block.new(BLOCK_TYPE.VERTICAL_BOUNCE)
-			elseif r == color_block_key.horizontal_bounce then
-				self.map[x][y] = Block.new(BLOCK_TYPE.HORIZONTAL_BOUNCE)
+			elseif self.has_block_value(r) then
+				self.map[x][y] = Block.new(r)
 			end
 		end
 	end
+end
+
+function Tilemap.has_block_value(value)
+	for _, val in pairs(BLOCK_TYPE) do
+		if value == val then
+			return true
+		end
+	end
+	return false
 end
 
 function Tilemap:optimize_map()
@@ -126,13 +115,13 @@ function Tilemap.unload()
 end
 
 BLOCK_TYPE = {
-	STATIC_BLOCK = 0,
-	START = 1,
-	VERTICAL_BLOCK = 2,
-	HORIZONTAL_BLOCK = 3,
-	BOUNCE_BLOCK = 4,
-	VERTICAL_BOUNCE = 5,
-	HORIZONTAL_BOUNCE = 6,
+	START = 218, -- Yellow
+	STATIC_BLOCK = 0, -- Black
+	VERTICAL_BLOCK = 109, -- Teal Blue
+	HORIZONTAL_BLOCK = 210, -- Orange
+	BOUNCE_BLOCK = 52, --Green
+	VERTICAL_BOUNCE = 68, -- Wine
+	HORIZONTAL_BOUNCE = 208, -- Red
 }
 Block = { type = BLOCK_TYPE.STATIC, width = 1, height = 1 }
 Block.__index = Block
