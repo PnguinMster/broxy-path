@@ -21,6 +21,7 @@ function menu_scene:load()
 
 	self.start_pressed = function()
 		print("Start button pressed")
+		Game:set_scene(SCENE.GAME)
 	end
 
 	self.options_pressed = function()
@@ -29,6 +30,7 @@ function menu_scene:load()
 
 	self.quit_pressed = function()
 		print("Quit button pressed")
+		love.event.push("quit")
 	end
 
 	self.title_text = text.new("Broxy Grath", 3, HORIZONTAL_ALIGN.CENTER, VERTICAL_ALIGN.TOP, 0, 10)
