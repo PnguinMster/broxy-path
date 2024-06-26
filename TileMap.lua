@@ -95,6 +95,87 @@ function Tilemap:load_map()
 				info.fixture:setCategory(LAYERS.LEVEL)
 				info.fixture:setFriction(0.9)
 
+				info.type = BLOCK_TYPE.STATIC_BLOCK
+				table.insert(self.blocks, info)
+			elseif block.type == BLOCK_TYPE.VERTICAL_BLOCK then
+				local info = {}
+				info.body = love.physics.newBody(World, start_offset_x, start_offset_y, "static")
+				info.shape = love.physics.newRectangleShape(
+					(x - (block.width / 2)) * block_size,
+					(y - (block.height / 2)) * block_size,
+					block.width * block_size,
+					block.height * block_size
+				)
+
+				info.fixture = love.physics.newFixture(info.body, info.shape)
+				info.fixture:setCategory(LAYERS.LEVEL)
+				info.fixture:setFriction(0.9)
+
+				info.type = BLOCK_TYPE.VERTICAL_BLOCK
+				table.insert(self.blocks, info)
+			elseif block.type == BLOCK_TYPE.HORIZONTAL_BLOCK then
+				local info = {}
+				info.body = love.physics.newBody(World, start_offset_x, start_offset_y, "static")
+				info.shape = love.physics.newRectangleShape(
+					(x - (block.width / 2)) * block_size,
+					(y - (block.height / 2)) * block_size,
+					block.width * block_size,
+					block.height * block_size
+				)
+
+				info.fixture = love.physics.newFixture(info.body, info.shape)
+				info.fixture:setCategory(LAYERS.LEVEL)
+				info.fixture:setFriction(0.9)
+
+				info.type = BLOCK_TYPE.HORIZONTAL_BLOCK
+				table.insert(self.blocks, info)
+			elseif block.type == BLOCK_TYPE.BOUNCE_BLOCK then
+				local info = {}
+				info.body = love.physics.newBody(World, start_offset_x, start_offset_y, "static")
+				info.shape = love.physics.newRectangleShape(
+					(x - (block.width / 2)) * block_size,
+					(y - (block.height / 2)) * block_size,
+					block.width * block_size,
+					block.height * block_size
+				)
+
+				info.fixture = love.physics.newFixture(info.body, info.shape)
+				info.fixture:setCategory(LAYERS.LEVEL)
+				info.fixture:setFriction(0.9)
+
+				info.type = BLOCK_TYPE.BOUNCE_BLOCK
+				table.insert(self.blocks, info)
+			elseif block.type == BLOCK_TYPE.VERTICAL_BOUNCE then
+				local info = {}
+				info.body = love.physics.newBody(World, start_offset_x, start_offset_y, "static")
+				info.shape = love.physics.newRectangleShape(
+					(x - (block.width / 2)) * block_size,
+					(y - (block.height / 2)) * block_size,
+					block.width * block_size,
+					block.height * block_size
+				)
+
+				info.fixture = love.physics.newFixture(info.body, info.shape)
+				info.fixture:setCategory(LAYERS.LEVEL)
+				info.fixture:setFriction(0.9)
+
+				info.type = BLOCK_TYPE.VERTICAL_BOUNCE
+				table.insert(self.blocks, info)
+			elseif block.type == BLOCK_TYPE.HORIZONTAL_BOUNCE then
+				local info = {}
+				info.body = love.physics.newBody(World, start_offset_x, start_offset_y, "static")
+				info.shape = love.physics.newRectangleShape(
+					(x - (block.width / 2)) * block_size,
+					(y - (block.height / 2)) * block_size,
+					block.width * block_size,
+					block.height * block_size
+				)
+
+				info.fixture = love.physics.newFixture(info.body, info.shape)
+				info.fixture:setCategory(LAYERS.LEVEL)
+				info.fixture:setFriction(0.9)
+
+				info.type = BLOCK_TYPE.HORIZONTAL_BOUNCE
 				table.insert(self.blocks, info)
 			end
 		end
@@ -103,8 +184,20 @@ end
 
 function Tilemap:draw_map()
 	for _, block in ipairs(self.blocks) do
-		if block.type == BLOCK_TYPE.STATIC then
-			love.graphics.setColor(1, 0.5, 0)
+		local type = block.type
+
+		if type == BLOCK_TYPE.STATIC_BLOCK then
+			love.graphics.setColor(love.math.colorFromBytes(230, 237, 227))
+		elseif type == BLOCK_TYPE.VERTICAL_BLOCK then
+			love.graphics.setColor(love.math.colorFromBytes(109, 194, 202))
+		elseif type == BLOCK_TYPE.HORIZONTAL_BLOCK then
+			love.graphics.setColor(love.math.colorFromBytes(210, 125, 44))
+		elseif type == BLOCK_TYPE.BOUNCE_BLOCK then
+			love.graphics.setColor(love.math.colorFromBytes(52, 101, 36))
+		elseif type == BLOCK_TYPE.VERTICAL_BOUNCE then
+			love.graphics.setColor(love.math.colorFromBytes(68, 36, 52))
+		elseif type == BLOCK_TYPE.HORIZONTAL_BOUNCE then
+			love.graphics.setColor(love.math.colorFromBytes(208, 70, 72))
 		end
 		love.graphics.polygon("line", block.body:getWorldPoints(block.shape:getPoints()))
 	end
