@@ -3,12 +3,26 @@ local love = require("love")
 Tilemap = {}
 Tilemap.__index = Tilemap
 
+local BLOCK_SIZE = 50
+
+LEVEL_IMAGES = {
+	test = "Art/Level/test.png",
+	tutorial = "Art/Level/tutorial.png",
+	level_1 = "Art/Level/level_1.png",
+	level_2 = "Art/Level/level_2.png",
+	level_3 = "Art/Level/level_3.png",
+}
+
+--
+-- TODO: Refactor all this
+-- then add blocks movement
+--
+
 function Tilemap.new()
 	return setmetatable({
-		test_level = love.image.newImageData("Art/Level/test.png"),
-		-- test_level = love.image.newImageData("Art/Level/testlarge.png"),
 		map = {},
-		blocks = {},
+		static_blocks = {},
+		movable_blocks = {},
 		start_x = 0,
 		start_y = 0,
 		player_offset_x = 0,
@@ -16,35 +30,26 @@ function Tilemap.new()
 	}, Tilemap)
 end
 
-local block_size = 50
-
 function Tilemap:create_map(image, player_width, player_height)
+	local level = love.image.newImageData(image)
+
 	self.player_offset_x = player_width / 2
 	self.player_offset_y = player_height / 2
-	for x = 1, image:getWidth() do
+
+	for x = 1, level:getWidth() do
 		self.map[x] = {}
-		for y = 1, image:getHeight() do
-			local r = love.math.colorToBytes(image:getPixel(x - 1, y - 1))
+		for y = 1, level:getHeight() do
+			local r = love.math.colorToBytes(level:getPixel(x - 1, y - 1))
 			local type = self.has_block_value(r)
 
 			if r == BLOCK_TYPE.START.r then
 				self.start_x = -x
 				self.start_y = -y
 			elseif type ~= nil then
-				print(type.r)
-				self.map[x][y] = Block.new(type)
+				self.map[x][y] = Map_info.new(type)
 			end
 		end
 	end
-end
-
-function Tilemap.has_block_value(value)
-	for _, val in pairs(BLOCK_TYPE) do
-		if value == val.r then
-			return val
-		end
-	end
-	return nil
 end
 
 function Tilemap:optimize_map()
@@ -78,153 +83,52 @@ end
 function Tilemap:load_map()
 	self:optimize_map()
 
-	local start_offset_x = self.start_x * block_size + self.player_offset_x
-	local start_offset_y = self.start_y * block_size + self.player_offset_y
+	local start_offset_x = self.start_x * BLOCK_SIZE + self.player_offset_x
+	local start_offset_y = self.start_y * BLOCK_SIZE + self.player_offset_y
 
 	for x, column in pairs(self.map) do
-		for y, block in pairs(column) do
-			if block.type == BLOCK_TYPE.STATIC_BLOCK then
-				local info = {}
-				info.body = love.physics.newBody(World, start_offset_x, start_offset_y, "static")
-				info.shape = love.physics.newRectangleShape(
-					(x - (block.width / 2)) * block_size,
-					(y - (block.height / 2)) * block_size,
-					block.width * block_size,
-					block.height * block_size
-				)
-
-				info.fixture = love.physics.newFixture(info.body, info.shape)
-				info.fixture:setCategory(LAYERS.LEVEL)
-				info.fixture:setFriction(0.9)
-
-				info.type = BLOCK_TYPE.STATIC_BLOCK
-				table.insert(self.blocks, info)
-			elseif block.type == BLOCK_TYPE.VERTICAL_BLOCK then
-				local info = {}
-				info.body = love.physics.newBody(World, start_offset_x, start_offset_y, "kinematic")
-				info.shape = love.physics.newRectangleShape(
-					(x - (block.width / 2)) * block_size,
-					(y - (block.height / 2)) * block_size,
-					block.width * block_size,
-					block.height * block_size
-				)
-
-				info.fixture = love.physics.newFixture(info.body, info.shape)
-				info.fixture:setCategory(LAYERS.LEVEL)
-				info.fixture:setFriction(0.9)
-
-				info.type = BLOCK_TYPE.VERTICAL_BLOCK
-				table.insert(self.blocks, info)
-			elseif block.type == BLOCK_TYPE.HORIZONTAL_BLOCK then
-				local info = {}
-				info.body = love.physics.newBody(World, start_offset_x, start_offset_y, "kinematic")
-				info.shape = love.physics.newRectangleShape(
-					(x - (block.width / 2)) * block_size,
-					(y - (block.height / 2)) * block_size,
-					block.width * block_size,
-					block.height * block_size
-				)
-
-				info.fixture = love.physics.newFixture(info.body, info.shape)
-				info.fixture:setCategory(LAYERS.LEVEL)
-				info.fixture:setFriction(0.9)
-
-				info.type = BLOCK_TYPE.HORIZONTAL_BLOCK
-				table.insert(self.blocks, info)
-			elseif block.type == BLOCK_TYPE.BOUNCE_BLOCK then
-				local info = {}
-				info.body = love.physics.newBody(World, start_offset_x, start_offset_y, "static")
-				info.shape = love.physics.newRectangleShape(
-					(x - (block.width / 2)) * block_size,
-					(y - (block.height / 2)) * block_size,
-					block.width * block_size,
-					block.height * block_size
-				)
-
-				info.fixture = love.physics.newFixture(info.body, info.shape)
-				info.fixture:setCategory(LAYERS.LEVEL)
-				info.fixture:setFriction(0.9)
-
-				info.type = BLOCK_TYPE.BOUNCE_BLOCK
-				table.insert(self.blocks, info)
-			elseif block.type == BLOCK_TYPE.VERTICAL_BOUNCE then
-				local info = {}
-				info.body = love.physics.newBody(World, start_offset_x, start_offset_y, "kinematic")
-				info.shape = love.physics.newRectangleShape(
-					(x - (block.width / 2)) * block_size,
-					(y - (block.height / 2)) * block_size,
-					block.width * block_size,
-					block.height * block_size
-				)
-
-				info.fixture = love.physics.newFixture(info.body, info.shape)
-				info.fixture:setCategory(LAYERS.LEVEL)
-				info.fixture:setFriction(0.9)
-
-				info.type = BLOCK_TYPE.VERTICAL_BOUNCE
-				table.insert(self.blocks, info)
-			elseif block.type == BLOCK_TYPE.HORIZONTAL_BOUNCE then
-				local info = {}
-				info.body = love.physics.newBody(World, start_offset_x, start_offset_y, "kinematic")
-				info.shape = love.physics.newRectangleShape(
-					(x - (block.width / 2)) * block_size,
-					(y - (block.height / 2)) * block_size,
-					block.width * block_size,
-					block.height * block_size
-				)
-
-				info.fixture = love.physics.newFixture(info.body, info.shape)
-				info.fixture:setCategory(LAYERS.LEVEL)
-				info.fixture:setFriction(0.9)
-
-				info.type = BLOCK_TYPE.HORIZONTAL_BOUNCE
-				table.insert(self.blocks, info)
-			elseif block.type == BLOCK_TYPE.ROTATING_BLOCK then
-				local info = {}
-				info.body = love.physics.newBody(World, start_offset_x, start_offset_y, "kinematic")
-				info.shape = love.physics.newRectangleShape(
-					(x - (block.width / 2)) * block_size,
-					(y - (block.height / 2)) * block_size,
-					block.width * block_size,
-					block.height * block_size
-				)
-
-				info.fixture = love.physics.newFixture(info.body, info.shape)
-				info.fixture:setCategory(LAYERS.LEVEL)
-				info.fixture:setFriction(0.9)
-
-				info.type = BLOCK_TYPE.ROTATING_BLOCK
-				table.insert(self.blocks, info)
-			elseif block.type == BLOCK_TYPE.ROTATING_BOUNCE then
-				local info = {}
-				info.body = love.physics.newBody(World, start_offset_x, start_offset_y, "kinematic")
-				info.shape = love.physics.newRectangleShape(
-					(x - (block.width / 2)) * block_size,
-					(y - (block.height / 2)) * block_size,
-					block.width * block_size,
-					block.height * block_size
-				)
-
-				info.fixture = love.physics.newFixture(info.body, info.shape)
-				info.fixture:setCategory(LAYERS.LEVEL)
-				info.fixture:setFriction(0.9)
-
-				info.type = BLOCK_TYPE.ROTATING_BOUNCE
-				table.insert(self.blocks, info)
+		for y, map_info in pairs(column) do
+			local block = Block_info.new(map_info, x, y, start_offset_x, start_offset_y)
+			if block.body:getType() == "kinematic" then
+				table.insert(self.movable_blocks, block)
+			else
+				table.insert(self.static_blocks, block)
 			end
 		end
 	end
 end
 
+function Tilemap:update(dt)
+	-- NOTE: loop through moving blocks and move them
+end
+
 function Tilemap:draw_map()
-	for _, block in ipairs(self.blocks) do
-		love.graphics.setColor(love.math.colorFromBytes(block.type.r, block.type.g, block.type.b))
+	for _, block in ipairs(self.static_blocks) do
+		love.graphics.setColor(
+			love.math.colorFromBytes(block.map_info.type.r, block.map_info.type.g, block.map_info.type.b)
+		)
+		love.graphics.polygon("line", block.body:getWorldPoints(block.shape:getPoints()))
+	end
+
+	for _, block in ipairs(self.movable_blocks) do
+		love.graphics.setColor(
+			love.math.colorFromBytes(block.map_info.type.r, block.map_info.type.g, block.map_info.type.b)
+		)
 		love.graphics.polygon("line", block.body:getWorldPoints(block.shape:getPoints()))
 	end
 end
 
 function Tilemap.unload()
 	setmetatable(Tilemap, nil)
+end
+
+function Tilemap.has_block_value(value)
+	for _, val in pairs(BLOCK_TYPE) do
+		if value == val.r then
+			return val
+		end
+	end
+	return nil
 end
 
 BLOCK_TYPE = {
@@ -238,14 +142,62 @@ BLOCK_TYPE = {
 	ROTATING_BLOCK = { r = 89, g = 125, b = 206 }, -- Matte Blue
 	ROTATING_BOUNCE = { r = 48, g = 52, b = 109 }, -- Dark Blue
 }
-Block = { type = BLOCK_TYPE.STATIC_BLOCK, width = 1, height = 1 }
-Block.__index = Block
 
-function Block.new(type, width, height)
-	return setmetatable({
-		type = type or BLOCK_TYPE.STATIC_BLOCK,
-		width = width or 1,
-		height = height or 1,
-	}, Block)
+Map_info = { width = 1, height = 1 }
+Map_info.__index = Map_info
+
+function Map_info.new(type)
+	return setmetatable({ type = type or BLOCK_TYPE.STATIC_BLOCK }, Map_info)
 end
+
+Block_info = {}
+Block_info.__index = Block_info
+
+function Block_info.new(map_info, x, y, offset_x, offset_y)
+	local body_type = "kinematic"
+	if map_info.type.r == BLOCK_TYPE.STATIC_BLOCK.r or map_info.type.r == BLOCK_TYPE.BOUNCE_BLOCK.r then
+		body_type = "static"
+	end
+
+	local body = love.physics.newBody(World, offset_x, offset_y, body_type)
+	local shape = love.physics.newRectangleShape(
+		(x - (map_info.width / 2)) * BLOCK_SIZE,
+		(y - (map_info.height / 2)) * BLOCK_SIZE,
+		map_info.width * BLOCK_SIZE,
+		map_info.height * BLOCK_SIZE
+	)
+	local fixture = love.physics.newFixture(body, shape)
+	fixture:setCategory(LAYERS.LEVEL)
+	fixture:setFriction(0.9)
+
+	return setmetatable({
+		map_info = map_info or Map_info.new(),
+		body = body,
+		shape = shape,
+		fixture = fixture,
+	}, Block_info)
+end
+
+-- Block = {
+-- 	type = BLOCK_TYPE.STATIC_BLOCK,
+-- 	width = 1,
+-- 	height = 1,
+-- 	is_rotating = false,
+-- 	first = 0,
+-- 	last = 0,
+-- 	is_vertical = false,
+-- }
+-- Block.__index = Block
+--
+-- function Block.new(type, width, height, is_rotating, first, last, is_vertical)
+-- 	return setmetatable({
+-- 		type = type or BLOCK_TYPE.STATIC_BLOCK,
+-- 		width = width or 1,
+-- 		height = height or 1,
+-- 		is_rotating = is_rotating or false,
+-- 		first = first or 0,
+-- 		last = last or 0,
+-- 		is_vertical = is_vertical or false,
+-- 	}, Block)
+-- end
 return Tilemap

@@ -94,7 +94,7 @@ function game_scene:load()
 	Player = player.new()
 	Tilemap = tilemap.new()
 
-	Tilemap:create_map(Tilemap.test_level, Player.width, Player.height)
+	Tilemap:create_map(LEVEL_IMAGES.test, Player.width, Player.height)
 	Tilemap:load_map()
 
 	Player:load()
@@ -103,6 +103,7 @@ end
 function game_scene:update(dt)
 	World:update(dt)
 	Player:update(dt)
+	Tilemap:update(dt)
 
 	local x, y = Player:get_position()
 	x = x - love.graphics.getWidth() / 2
