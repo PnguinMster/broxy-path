@@ -98,6 +98,10 @@ end
 
 function Tilemap:update(dt)
 	-- NOTE: loop through moving blocks and move them
+
+	for _, block in ipairs(self.movable_blocks) do
+		block:move()
+	end
 end
 
 function Tilemap:draw_map()
@@ -157,13 +161,11 @@ function Block_info.new(map_info, x, y, offset_x, offset_y)
 		body_type = "static"
 	end
 
-	local body = love.physics.newBody(World, offset_x, offset_y, body_type)
-	local shape = love.physics.newRectangleShape(
-		(x - (map_info.width / 2)) * BLOCK_SIZE,
-		(y - (map_info.height / 2)) * BLOCK_SIZE,
-		map_info.width * BLOCK_SIZE,
-		map_info.height * BLOCK_SIZE
-	)
+	local center_x = (x - (map_info.width / 2)) * BLOCK_SIZE
+	local center_y = (y - (map_info.height / 2)) * BLOCK_SIZE
+
+	local body = love.physics.newBody(World, offset_x + center_x, offset_y + center_y, body_type)
+	local shape = love.physics.newRectangleShape(map_info.width * BLOCK_SIZE, map_info.height * BLOCK_SIZE)
 	local fixture = love.physics.newFixture(body, shape)
 	fixture:setCategory(LAYERS.LEVEL)
 	fixture:setFriction(0.9)
