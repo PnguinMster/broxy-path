@@ -9,7 +9,7 @@ local BLOCK_ROTATE_SPEED = 3
 local BLOCK_MOVE_SPEED = 30
 
 LEVEL_IMAGES = {
-	test = "Art/Level/test.png",
+	test = "Art/Level/test_block.png",
 	tutorial = "Art/Level/tutorial.png",
 	level_1 = "Art/Level/level_1.png",
 	level_2 = "Art/Level/level_2.png",
@@ -171,7 +171,7 @@ function Block_info.new(map_info, x, y, offset_x, offset_y)
 	fixture:setFriction(0.9)
 
 	if map_info.type == BLOCK_TYPE.BOUNCE_BLOCK then
-		fixture:setRestitution(0.8)
+		fixture:setRestitution(0.9)
 	end
 
 	local start_x = body:getX()
@@ -225,7 +225,7 @@ function Block_info:move()
 			if self.body:getX() <= self.first_x then
 				self.is_right = true
 			end
-			self.body:setLinearVelocity(0, -BLOCK_MOVE_SPEED)
+			self.body:setLinearVelocity(-BLOCK_MOVE_SPEED, 0)
 		end
 	end
 
