@@ -5,8 +5,8 @@ Tilemap.__index = Tilemap
 
 local BLOCK_SIZE = 50
 local BLOCK_MOVE_DISTANCE = 3
-local BLOCK_ROTATE_SPEED = 3
-local BLOCK_MOVE_SPEED = 30
+local BLOCK_ROTATE_SPEED = 2
+local BLOCK_MOVE_SPEED = 25
 
 LEVEL_IMAGES = {
 	test = "Art/Level/test_block.png",
@@ -168,9 +168,14 @@ function Block_info.new(map_info, x, y, offset_x, offset_y)
 	local shape = love.physics.newRectangleShape(map_info.width * BLOCK_SIZE, map_info.height * BLOCK_SIZE)
 	local fixture = love.physics.newFixture(body, shape)
 	fixture:setCategory(LAYERS.LEVEL)
-	fixture:setFriction(0.9)
+	fixture:setFriction(0.8)
 
-	if map_info.type == BLOCK_TYPE.BOUNCE_BLOCK then
+	if
+		map_info.type == BLOCK_TYPE.BOUNCE_BLOCK
+		or map_info.type == BLOCK_TYPE.ROTATING_BOUNCE
+		or map_info.type == BLOCK_TYPE.VERTICAL_BOUNCE
+		or map_info.type == BLOCK_TYPE.HORIZONTAL_BOUNCE
+	then
 		fixture:setRestitution(0.9)
 	end
 
@@ -229,7 +234,7 @@ function Block_info:move()
 		end
 	end
 
-	if self.map_info.type == BLOCK_TYPE.ROTATING_BLOCK or self.map_info == BLOCK_TYPE.ROTATING_BOUNCE then
+	if self.map_info.type == BLOCK_TYPE.ROTATING_BLOCK or self.map_info.type == BLOCK_TYPE.ROTATING_BOUNCE then
 		self.body:setAngularVelocity(BLOCK_ROTATE_SPEED)
 	end
 end
