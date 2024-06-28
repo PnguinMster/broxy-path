@@ -9,7 +9,7 @@ local BLOCK_ROTATE_SPEED = 1
 local BLOCK_MOVE_SPEED = 25
 
 LEVEL_IMAGES = {
-	test = "Art/Level/test_block.png",
+	test = "Art/Level/test_block_colored.png",
 	tutorial = "Art/Level/tutorial.png",
 	level_1 = "Art/Level/level_1.png",
 	level_2 = "Art/Level/level_2.png",
@@ -132,15 +132,16 @@ function Tilemap.has_block_value(value)
 end
 
 BLOCK_TYPE = {
-	START = { r = 218, g = 212, b = 94 }, -- Yellow
-	STATIC_BLOCK = { r = 222, g = 238, b = 214 }, -- White
-	VERTICAL_BLOCK = { r = 109, g = 194, b = 202 }, -- Teal Blue
-	HORIZONTAL_BLOCK = { r = 210, g = 125, b = 44 }, -- Orange
-	BOUNCE_BLOCK = { r = 52, g = 101, b = 36 }, --Green
-	VERTICAL_BOUNCE = { r = 68, g = 36, b = 52 }, -- Wine
-	HORIZONTAL_BOUNCE = { r = 208, g = 70, b = 72 }, -- Red
-	ROTATING_BLOCK = { r = 89, g = 125, b = 206 }, -- Matte Blue
-	ROTATING_BOUNCE = { r = 48, g = 52, b = 109 }, -- Dark Blue
+	START = { r = 168, g = 202, b = 88 }, -- Lime
+	STATIC_BLOCK = { r = 235, g = 237, b = 233 }, -- White
+	VERTICAL_BLOCK = { r = 115, g = 190, b = 211 }, -- Light Blue
+	HORIZONTAL_BLOCK = { r = 37, g = 58, b = 94 }, -- Dark Blue
+	BOUNCE_BLOCK = { r = 218, g = 134, b = 62 }, -- Orange
+	VERTICAL_BOUNCE = { r = 207, g = 87, b = 60 }, -- Red
+	HORIZONTAL_BOUNCE = { r = 117, g = 36, b = 56 }, -- Maroon
+	ROTATING_BLOCK = { r = 122, g = 54, b = 123 }, -- Purple
+	ROTATING_BOUNCE = { r = 223, g = 132, b = 165 }, -- Pink
+	END = { r = 87, g = 114, b = 119 }, -- Gray
 }
 
 Map_info = { width = 1, height = 1 }
