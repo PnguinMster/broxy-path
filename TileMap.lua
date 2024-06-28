@@ -4,6 +4,9 @@ Tilemap = {}
 Tilemap.__index = Tilemap
 
 local BLOCK_SIZE = 50
+local BLOCK_MOVE_DISTANCE = 3
+local BLOCK_ROTATE_SPEED = 3
+local BLOCK_MOVE_SPEED = 30
 
 LEVEL_IMAGES = {
 	test = "Art/Level/test.png",
@@ -12,11 +15,6 @@ LEVEL_IMAGES = {
 	level_2 = "Art/Level/level_2.png",
 	level_3 = "Art/Level/level_3.png",
 }
-
---
--- TODO: Refactor all this
--- then add blocks movement
---
 
 function Tilemap.new()
 	return setmetatable({
@@ -170,34 +168,68 @@ function Block_info.new(map_info, x, y, offset_x, offset_y)
 	fixture:setCategory(LAYERS.LEVEL)
 	fixture:setFriction(0.9)
 
+	if map_info.type == BLOCK_TYPE.BOUNCE_BLOCK then
+		fixture:setRestitution(0.8)
+	end
+
+	local start_x = body:getX()
+	local start_y = body:getY()
+
+	local local_end_x = start_x
+	local local_end_y = start_y
+
+	if body_type == "kinematic" then
+		if map_info.type == BLOCK_TYPE.VERTICAL_BLOCK or map_info.type == BLOCK_TYPE.VERTICAL_BOUNCE then
+			local_end_y = start_y - (BLOCK_MOVE_DISTANCE * BLOCK_SIZE)
+		elseif map_info.type == BLOCK_TYPE.HORIZONTAL_BLOCK or map_info.type == BLOCK_TYPE.HORIZONTAL_BOUNCE then
+			local_end_x = start_x + (BLOCK_MOVE_DISTANCE * BLOCK_SIZE)
+		end
+	end
+
 	return setmetatable({
 		map_info = map_info or Map_info.new(),
 		body = body,
 		shape = shape,
 		fixture = fixture,
+		first_x = start_x,
+		first_y = start_y,
+		last_x = local_end_x,
+		last_y = local_end_y,
+		is_up = true,
+		is_right = true,
 	}, Block_info)
 end
 
--- Block = {
--- 	type = BLOCK_TYPE.STATIC_BLOCK,
--- 	width = 1,
--- 	height = 1,
--- 	is_rotating = false,
--- 	first = 0,
--- 	last = 0,
--- 	is_vertical = false,
--- }
--- Block.__index = Block
---
--- function Block.new(type, width, height, is_rotating, first, last, is_vertical)
--- 	return setmetatable({
--- 		type = type or BLOCK_TYPE.STATIC_BLOCK,
--- 		width = width or 1,
--- 		height = height or 1,
--- 		is_rotating = is_rotating or false,
--- 		first = first or 0,
--- 		last = last or 0,
--- 		is_vertical = is_vertical or false,
--- 	}, Block)
--- end
+function Block_info:move()
+	if self.map_info.type == BLOCK_TYPE.VERTICAL_BLOCK or self.map_info.type == BLOCK_TYPE.VERTICAL_BOUNCE then
+		if self.is_up then
+			if self.body:getY() <= self.last_y then
+				self.is_up = false
+			end
+			self.body:setLinearVelocity(0, -BLOCK_MOVE_SPEED)
+		else
+			if self.body:getY() >= self.first_y then
+				self.is_up = true
+			end
+			self.body:setLinearVelocity(0, BLOCK_MOVE_SPEED)
+		end
+	elseif self.map_info.type == BLOCK_TYPE.HORIZONTAL_BLOCK or self.map_info.type == BLOCK_TYPE.HORIZONTAL_BOUNCE then
+		if self.is_right then
+			if self.body:getX() >= self.last_x then
+				self.is_right = false
+			end
+			self.body:setLinearVelocity(BLOCK_MOVE_SPEED, 0)
+		else
+			if self.body:getX() <= self.first_x then
+				self.is_right = true
+			end
+			self.body:setLinearVelocity(0, -BLOCK_MOVE_SPEED)
+		end
+	end
+
+	if self.map_info.type == BLOCK_TYPE.ROTATING_BLOCK or self.map_info == BLOCK_TYPE.ROTATING_BOUNCE then
+		self.body:setAngularVelocity(BLOCK_ROTATE_SPEED)
+	end
+end
+
 return Tilemap
