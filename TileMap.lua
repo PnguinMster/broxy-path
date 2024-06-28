@@ -97,8 +97,6 @@ function Tilemap:load_map()
 end
 
 function Tilemap:update(dt)
-	-- NOTE: loop through moving blocks and move them
-
 	for _, block in ipairs(self.movable_blocks) do
 		block:move()
 	end
