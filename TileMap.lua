@@ -5,7 +5,7 @@ Tilemap.__index = Tilemap
 
 local BLOCK_SIZE = 50
 local BLOCK_MOVE_DISTANCE = 3
-local BLOCK_ROTATE_SPEED = 2
+local BLOCK_ROTATE_SPEED = 1
 local BLOCK_MOVE_SPEED = 25
 
 LEVEL_IMAGES = {
