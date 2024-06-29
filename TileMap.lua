@@ -10,7 +10,7 @@ local BLOCK_MOVE_SPEED = 25
 
 LEVEL_IMAGES = {
 	test = "Art/Level/test_block_colored.png",
-	tutorial = "Art/Level/tutorial.png",
+	level_0 = "Art/Level/level_0.png",
 	level_1 = "Art/Level/level_1.png",
 	level_2 = "Art/Level/level_2.png",
 	level_3 = "Art/Level/level_3.png",
@@ -52,7 +52,7 @@ end
 
 function Tilemap:optimize_map()
 	for x, _ in pairs(self.map) do
-		for y = 2, #self.map[1] do
+		for y, _ in pairs(self.map[x]) do
 			if
 				self.map[x][y - 1] ~= nil
 				and self.map[x][y] ~= nil
@@ -68,6 +68,7 @@ function Tilemap:optimize_map()
 		for y, block in pairs(self.map[x]) do
 			if
 				self.map[x - 1][y] ~= nil
+				and block ~= nil
 				and block.height == self.map[x - 1][y].height
 				and block.type == self.map[x - 1][y].type
 			then
