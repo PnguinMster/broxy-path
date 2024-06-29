@@ -43,17 +43,47 @@ function Block_info.new(map_info, x, y, offset_x, offset_y)
 		fixture:setRestitution(0.9)
 	end
 
-	local start_x = body:getX()
-	local start_y = body:getY()
-
-	local local_end_x = start_x
-	local local_end_y = start_y
+	local move = nil
 
 	if body_type == "kinematic" then
 		if map_info.type == BLOCK_TYPE.VERTICAL_BLOCK or map_info.type == BLOCK_TYPE.VERTICAL_BOUNCE then
-			local_end_y = start_y - (BLOCK_MOVE_DISTANCE * BLOCK_SIZE)
+			local first = body:getY()
+			local last = first - (BLOCK_MOVE_DISTANCE * BLOCK_SIZE)
+			local is_go_to = true
+			move = function()
+				if is_go_to then
+					if body:getY() <= last then
+						is_go_to = false
+					end
+					body:setLinearVelocity(0, -BLOCK_MOVE_SPEED)
+				else
+					if body:getY() >= first then
+						is_go_to = true
+					end
+					body:setLinearVelocity(0, BLOCK_MOVE_SPEED)
+				end
+			end
 		elseif map_info.type == BLOCK_TYPE.HORIZONTAL_BLOCK or map_info.type == BLOCK_TYPE.HORIZONTAL_BOUNCE then
-			local_end_x = start_x + (BLOCK_MOVE_DISTANCE * BLOCK_SIZE)
+			local first = body:getX()
+			local last = first + (BLOCK_MOVE_DISTANCE * BLOCK_SIZE)
+			local is_go_to = true
+			move = function()
+				if is_go_to then
+					if body:getX() >= last then
+						is_go_to = false
+					end
+					body:setLinearVelocity(BLOCK_MOVE_SPEED, 0)
+				else
+					if body:getX() <= first then
+						is_go_to = true
+					end
+					body:setLinearVelocity(-BLOCK_MOVE_SPEED, 0)
+				end
+			end
+		else
+			move = function()
+				body:setAngularVelocity(BLOCK_ROTATE_SPEED)
+			end
 		end
 	end
 
@@ -62,43 +92,6 @@ function Block_info.new(map_info, x, y, offset_x, offset_y)
 		body = body,
 		shape = shape,
 		fixture = fixture,
-		first_x = start_x,
-		first_y = start_y,
-		last_x = local_end_x,
-		last_y = local_end_y,
-		is_up = true,
-		is_right = true,
+		move = move,
 	}, Block_info)
-end
-
-function Block_info:move()
-	if self.map_info.type == BLOCK_TYPE.VERTICAL_BLOCK or self.map_info.type == BLOCK_TYPE.VERTICAL_BOUNCE then
-		if self.is_up then
-			if self.body:getY() <= self.last_y then
-				self.is_up = false
-			end
-			self.body:setLinearVelocity(0, -BLOCK_MOVE_SPEED)
-		else
-			if self.body:getY() >= self.first_y then
-				self.is_up = true
-			end
-			self.body:setLinearVelocity(0, BLOCK_MOVE_SPEED)
-		end
-	elseif self.map_info.type == BLOCK_TYPE.HORIZONTAL_BLOCK or self.map_info.type == BLOCK_TYPE.HORIZONTAL_BOUNCE then
-		if self.is_right then
-			if self.body:getX() >= self.last_x then
-				self.is_right = false
-			end
-			self.body:setLinearVelocity(BLOCK_MOVE_SPEED, 0)
-		else
-			if self.body:getX() <= self.first_x then
-				self.is_right = true
-			end
-			self.body:setLinearVelocity(-BLOCK_MOVE_SPEED, 0)
-		end
-	end
-
-	if self.map_info.type == BLOCK_TYPE.ROTATING_BLOCK or self.map_info.type == BLOCK_TYPE.ROTATING_BOUNCE then
-		self.body:setAngularVelocity(BLOCK_ROTATE_SPEED)
-	end
 end

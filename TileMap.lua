@@ -91,7 +91,7 @@ end
 
 function Tilemap:update(dt)
 	for _, block in ipairs(self.movable_blocks) do
-		block:move()
+		block.move()
 	end
 end
 
