@@ -55,7 +55,6 @@ function Tilemap:optimize_map()
 		for y, _ in pairs(self.map[x]) do
 			if
 				self.map[x][y - 1] ~= nil
-				and self.map[x][y] ~= nil
 				and self.map[x][y].type == self.map[x][y - 1].type
 			then
 				self.map[x][y].height = self.map[x][y].height + self.map[x][y - 1].height
@@ -68,7 +67,6 @@ function Tilemap:optimize_map()
 		for y, block in pairs(self.map[x]) do
 			if
 				self.map[x - 1][y] ~= nil
-				and block ~= nil
 				and block.height == self.map[x - 1][y].height
 				and block.type == self.map[x - 1][y].type
 			then
