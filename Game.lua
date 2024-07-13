@@ -23,6 +23,12 @@ function Game:set_scene(scene)
 	self.scene:load()
 end
 
+function Game:set_state(state)
+	self.state = state
+
+	love.mouse.setVisible(state == STATE.MENU)
+end
+
 function Game:load()
 	love.graphics.setBackgroundColor(love.math.colorFromBytes(25, 18, 28))
 
