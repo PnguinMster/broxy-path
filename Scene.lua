@@ -83,6 +83,21 @@ function menu_scene:unload()
 	setmetatable(menu_scene, nil)
 end
 
+-- NOTE: Level Scene
+level_scene = {}
+level_scene.__index = level_scene
+setmetatable({}, level_scene)
+
+function level_scene:load() end
+
+function level_scene:update(dt) end
+
+function level_scene:draw() end
+
+function level_scene:unload()
+	setmetatable(level_scene, nil)
+end
+
 -- NOTE: Game Scene
 game_scene = {}
 game_scene.__index = game_scene
