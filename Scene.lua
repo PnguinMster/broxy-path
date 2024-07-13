@@ -21,7 +21,7 @@ function menu_scene:load()
 
 	self.start_pressed = function()
 		print("Start button pressed")
-		Game:set_scene(SCENE.GAME)
+		Game:set_scene(SCENE.LEVEL)
 	end
 
 	self.options_pressed = function()
@@ -64,14 +64,6 @@ function menu_scene:update(dt)
 	end
 end
 
-function love.mousereleased(x, y, index)
-	if index == 1 then
-		menu_scene.start_button:check_pressed(x, y)
-		menu_scene.options_button:check_pressed(x, y)
-		menu_scene.quit_button:check_pressed(x, y)
-	end
-end
-
 function menu_scene:draw()
 	self.title_text:draw()
 	self.start_button:draw()
@@ -84,15 +76,93 @@ function menu_scene:unload()
 end
 
 -- NOTE: Level Scene
+
+local level = LEVEL_IMAGES.test
+
 level_scene = {}
 level_scene.__index = level_scene
 setmetatable({}, level_scene)
 
-function level_scene:load() end
+function level_scene:load()
+	self.level_0_pressed = function()
+		print("Level 0 pressed")
+		level = LEVEL_IMAGES.level_0
+		Game:set_scene(SCENE.GAME)
+	end
+	self.level_1_pressed = function()
+		print("Level 1 pressed")
+		level = LEVEL_IMAGES.level_1
+		Game:set_scene(SCENE.GAME)
+	end
+	self.level_2_pressed = function()
+		print("Level 2 pressed")
+		level = LEVEL_IMAGES.level_2
+		Game:set_scene(SCENE.GAME)
+	end
+	self.level_3_pressed = function()
+		print("Level 3 pressed")
+		level = LEVEL_IMAGES.level_3
+		Game:set_scene(SCENE.GAME)
+	end
+	self.level_4_pressed = function()
+		print("Level 4 pressed")
+		level = LEVEL_IMAGES.level_4
+		Game:set_scene(SCENE.GAME)
+	end
+	self.level_5_pressed = function()
+		print("Level 5 pressed")
+		level = LEVEL_IMAGES.level_5
+		Game:set_scene(SCENE.GAME)
+	end
+	self.level_6_pressed = function()
+		print("Level 6 pressed")
+		level = LEVEL_IMAGES.level_6
+		Game:set_scene(SCENE.GAME)
+	end
+	self.level_7_pressed = function()
+		print("Level 7 pressed")
+		level = LEVEL_IMAGES.level_7
+		Game:set_scene(SCENE.GAME)
+	end
+	self.level_8_pressed = function()
+		print("Level 8 pressed")
+		level = LEVEL_IMAGES.level_8
+		Game:set_scene(SCENE.GAME)
+	end
+
+	self.level_0_button =
+		button.new(85, 50, "0", self.level_0_pressed, nil, HORIZONTAL_ALIGN.CENTER, VERTICAL_ALIGN.CENTER, -140, -100)
+	self.level_1_button =
+		button.new(85, 50, "1", self.level_1_pressed, nil, HORIZONTAL_ALIGN.CENTER, VERTICAL_ALIGN.CENTER, 0, -100)
+	self.level_2_button =
+		button.new(85, 50, "2", self.level_2_pressed, nil, HORIZONTAL_ALIGN.CENTER, VERTICAL_ALIGN.CENTER, 140, -100)
+	self.level_3_button =
+		button.new(85, 50, "3", self.level_3_pressed, nil, HORIZONTAL_ALIGN.CENTER, VERTICAL_ALIGN.CENTER, -140)
+	self.level_4_button =
+		button.new(85, 50, "4", self.level_4_pressed, nil, HORIZONTAL_ALIGN.CENTER, VERTICAL_ALIGN.CENTER)
+	self.level_5_button =
+		button.new(85, 50, "5", self.level_5_pressed, nil, HORIZONTAL_ALIGN.CENTER, VERTICAL_ALIGN.CENTER, 140)
+	self.level_6_button =
+		button.new(85, 50, "6", self.level_6_pressed, nil, HORIZONTAL_ALIGN.CENTER, VERTICAL_ALIGN.CENTER, -140, 100)
+	self.level_7_button =
+		button.new(85, 50, "7", self.level_7_pressed, nil, HORIZONTAL_ALIGN.CENTER, VERTICAL_ALIGN.CENTER, 0, 100)
+	self.level_8_button =
+		button.new(85, 50, "8", self.level_8_pressed, nil, HORIZONTAL_ALIGN.CENTER, VERTICAL_ALIGN.CENTER, 140, 100)
+end
 
 function level_scene:update(dt) end
 
-function level_scene:draw() end
+function level_scene:draw()
+	self.level_0_button:draw()
+	self.level_1_button:draw()
+	self.level_2_button:draw()
+	self.level_3_button:draw()
+	self.level_4_button:draw()
+	self.level_5_button:draw()
+	self.level_6_button:draw()
+	self.level_7_button:draw()
+	self.level_8_button:draw()
+end
 
 function level_scene:unload()
 	setmetatable(level_scene, nil)
@@ -109,10 +179,11 @@ function game_scene:load()
 	Player = player.new()
 	Tilemap = tilemap.new()
 
-	Tilemap:create_map(LEVEL_IMAGES.level_0, Player.width, Player.height)
+	Tilemap:create_map(level, Player.width, Player.height)
 	Tilemap:load_map()
 
 	Player:load()
+	pause_menu:load()
 end
 
 function game_scene:update(dt)
@@ -124,10 +195,19 @@ function game_scene:update(dt)
 	x = x - love.graphics.getWidth() / 2
 	y = y - love.graphics.getHeight() / 2
 	camera:smoothPosition(x, y, 0.05, dt)
+
+	if love.keyboard.isDown("escape") then
+		if Game.state == STATE.GAME then
+			Game:set_state(STATE.MENU)
+		else
+			Game:set_state(STATE.GAME)
+		end
+	end
 end
 
 function game_scene:draw()
 	-- Player:hud()
+	pause_menu:draw()
 
 	camera:set()
 	Tilemap:draw_map()
@@ -140,4 +220,89 @@ function game_scene:unload()
 	World:destroy()
 	Player.unload()
 	Tilemap.unload()
+	pause_menu:unload()
+	setmetatable(game_scene, nil)
+end
+
+-- NOTE: PAUSE MENU
+pause_menu = {}
+pause_menu.__index = pause_menu
+setmetatable({}, pause_menu)
+
+function pause_menu:load()
+	self.continue_pressed = function()
+		print("Continue pressed")
+		Game:set_state(STATE.MENU)
+	end
+	self.retry_pressed = function()
+		print("Retry pressed")
+	end
+	self.menu_pressed = function()
+		print("Menu pressed")
+	end
+
+	self.continue_button = button.new(
+		85,
+		50,
+		"Continue",
+		self.continue_pressed,
+		nil,
+		HORIZONTAL_ALIGN.CENTER,
+		VERTICAL_ALIGN.CENTER,
+		0,
+		-140
+	)
+	self.retry_button =
+		button.new(85, 50, "Retry", self.continue_pressed, nil, HORIZONTAL_ALIGN.CENTER, VERTICAL_ALIGN.CENTER, 0, 0)
+	self.menu_button = button.new(
+		85,
+		50,
+		"Main Menu",
+		self.continue_pressed,
+		nil,
+		HORIZONTAL_ALIGN.CENTER,
+		VERTICAL_ALIGN.CENTER,
+		0,
+		140
+	)
+end
+
+function pause_menu:draw()
+	if Game.state ~= STATE.MENU then
+		return
+	end
+
+	self.continue_button:draw()
+	self.retry_button:draw()
+	self.menu_button:draw()
+end
+
+function pause_menu:unload()
+	setmetatable(pause_menu, nil)
+end
+
+-- NOTE: Check Button
+
+function love.mousereleased(x, y, index)
+	if index == 1 then
+		if Game.scene == SCENE.MENU then
+			menu_scene.start_button:check_pressed(x, y)
+			menu_scene.options_button:check_pressed(x, y)
+			menu_scene.quit_button:check_pressed(x, y)
+		elseif Game.scene == SCENE.LEVEL then
+			level_scene.level_0_button:check_pressed(x, y)
+			level_scene.level_1_button:check_pressed(x, y)
+			level_scene.level_2_button:check_pressed(x, y)
+			level_scene.level_3_button:check_pressed(x, y)
+			level_scene.level_4_button:check_pressed(x, y)
+			level_scene.level_5_button:check_pressed(x, y)
+			level_scene.level_6_button:check_pressed(x, y)
+			level_scene.level_7_button:check_pressed(x, y)
+			level_scene.level_8_button:check_pressed(x, y)
+		elseif Game.scene == SCENE.GAME and Game.state == STATE.MENU then
+			pause_menu.continue_button:check_pressed(x, y)
+			pause_menu.retry_button:check_pressed(x, y)
+			pause_menu.menu_button:check_pressed(x, y)
+		end
+	end
 end
