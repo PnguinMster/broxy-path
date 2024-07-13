@@ -8,6 +8,7 @@ STATE = {
 SCENE = {
 	MENU = menu_scene,
 	GAME = game_scene,
+	LEVEL = level_scene,
 }
 
 Game = {}
