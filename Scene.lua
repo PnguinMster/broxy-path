@@ -94,7 +94,7 @@ function game_scene:load()
 	Player = player.new()
 	Tilemap = tilemap.new()
 
-	Tilemap:create_map(LEVEL_IMAGES.test, Player.width, Player.height)
+	Tilemap:create_map(LEVEL_IMAGES.level_0, Player.width, Player.height)
 	Tilemap:load_map()
 
 	Player:load()
