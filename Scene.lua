@@ -159,7 +159,36 @@ function level_scene:load()
 		button.new(85, 50, "8", self.level_8_pressed, nil, HORIZONTAL_ALIGN.CENTER, VERTICAL_ALIGN.CENTER, 140, 100)
 end
 
-function level_scene:update(dt) end
+function level_scene:update(dt)
+	local x_difference = math.abs(window_x - love.graphics.getWidth())
+	local y_difference = math.abs(window_y - love.graphics.getHeight())
+
+	if x_difference >= RESIZE_DIFFERENCE then
+		self.level_0_button:auto_resize_x()
+		self.level_1_button:auto_resize_x()
+		self.level_2_button:auto_resize_x()
+		self.level_3_button:auto_resize_x()
+		self.level_4_button:auto_resize_x()
+		self.level_5_button:auto_resize_x()
+		self.level_6_button:auto_resize_x()
+		self.level_7_button:auto_resize_x()
+		self.level_8_button:auto_resize_x()
+		window_x = love.graphics.getWidth()
+	end
+
+	if y_difference >= RESIZE_DIFFERENCE then
+		self.level_0_button:auto_resize_y()
+		self.level_1_button:auto_resize_y()
+		self.level_2_button:auto_resize_y()
+		self.level_3_button:auto_resize_y()
+		self.level_4_button:auto_resize_y()
+		self.level_5_button:auto_resize_y()
+		self.level_6_button:auto_resize_y()
+		self.level_7_button:auto_resize_y()
+		self.level_8_button:auto_resize_y()
+		window_y = love.graphics.getHeight()
+	end
+end
 
 function level_scene:draw()
 	self.level_0_button:draw()
@@ -199,6 +228,11 @@ end
 
 function game_scene:update(dt)
 	if Game.state ~= STATE.GAME then
+		if Game.state == STATE.MENU then
+			pause_menu:update(dt)
+			end_menu:update(dt)
+		end
+
 		return
 	end
 
@@ -281,6 +315,25 @@ function pause_menu:load()
 		button.new(85, 50, "Main Menu", self.menu_pressed, nil, HORIZONTAL_ALIGN.CENTER, VERTICAL_ALIGN.CENTER, 0, 140)
 end
 
+function pause_menu:update(dt)
+	local x_difference = math.abs(window_x - love.graphics.getWidth())
+	local y_difference = math.abs(window_y - love.graphics.getHeight())
+
+	if x_difference >= RESIZE_DIFFERENCE then
+		self.continue_button:auto_resize_x()
+		self.retry_button:auto_resize_x()
+		self.menu_button:auto_resize_x()
+		window_x = love.graphics.getWidth()
+	end
+
+	if y_difference >= RESIZE_DIFFERENCE then
+		self.continue_button:auto_resize_y()
+		self.retry_button:auto_resize_y()
+		self.menu_button:auto_resize_y()
+		window_y = love.graphics.getHeight()
+	end
+end
+
 function pause_menu:draw()
 	if self.active == false then
 		return
@@ -315,6 +368,23 @@ function end_menu:load()
 		button.new(85, 50, "Retry", self.retry_pressed, nil, HORIZONTAL_ALIGN.CENTER, VERTICAL_ALIGN.CENTER, 0, 0)
 	self.menu_button =
 		button.new(85, 50, "Main Menu", self.menu_pressed, nil, HORIZONTAL_ALIGN.CENTER, VERTICAL_ALIGN.CENTER, 0, 140)
+end
+
+function end_menu:update(dt)
+	local x_difference = math.abs(window_x - love.graphics.getWidth())
+	local y_difference = math.abs(window_y - love.graphics.getHeight())
+
+	if x_difference >= RESIZE_DIFFERENCE then
+		self.retry_button:auto_resize_x()
+		self.menu_button:auto_resize_x()
+		window_x = love.graphics.getWidth()
+	end
+
+	if y_difference >= RESIZE_DIFFERENCE then
+		self.retry_button:auto_resize_y()
+		self.menu_button:auto_resize_y()
+		window_y = love.graphics.getHeight()
+	end
 end
 
 function end_menu:draw()
