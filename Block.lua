@@ -50,7 +50,7 @@ function Block_info.new(map_info, x, y, offset_x, offset_y)
 	if map_info.type == BLOCK_TYPE.END then
 		fixture:setSensor(true)
 		fixture:setCategory(LAYERS.TRIGGER)
-		fixture:setMask(LAYERS.PLAYER)
+		fixture:setUserData("trigger")
 	end
 
 	local move = nil
