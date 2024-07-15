@@ -197,10 +197,12 @@ function game_scene:update(dt)
 	camera:smoothPosition(x, y, 0.05, dt)
 
 	if love.keyboard.isDown("escape") then
-		if Game.state == STATE.GAME then
+		if Game.state == STATE.GAME and end_menu.active == false then
 			Game:set_state(STATE.MENU)
+			pause_menu.active = true
 		else
 			Game:set_state(STATE.GAME)
+			pause_menu.active = false
 		end
 	end
 end
@@ -221,24 +223,29 @@ function game_scene:unload()
 	Player.unload()
 	Tilemap.unload()
 	pause_menu:unload()
+	end_menu:unload()
 	setmetatable(game_scene, nil)
 end
 
 -- NOTE: PAUSE MENU
-pause_menu = {}
+pause_menu = { active = false }
 pause_menu.__index = pause_menu
 setmetatable({}, pause_menu)
 
 function pause_menu:load()
 	self.continue_pressed = function()
 		print("Continue pressed")
-		Game:set_state(STATE.MENU)
+		Game:set_state(STATE.GAME)
+		self.active = false
 	end
 	self.retry_pressed = function()
 		print("Retry pressed")
+		Game:set_state(STATE.GAME)
+		self.active = false
 	end
 	self.menu_pressed = function()
 		print("Menu pressed")
+		self.active = false
 	end
 
 	self.continue_button = button.new(
@@ -253,22 +260,13 @@ function pause_menu:load()
 		-140
 	)
 	self.retry_button =
-		button.new(85, 50, "Retry", self.continue_pressed, nil, HORIZONTAL_ALIGN.CENTER, VERTICAL_ALIGN.CENTER, 0, 0)
-	self.menu_button = button.new(
-		85,
-		50,
-		"Main Menu",
-		self.continue_pressed,
-		nil,
-		HORIZONTAL_ALIGN.CENTER,
-		VERTICAL_ALIGN.CENTER,
-		0,
-		140
-	)
+		button.new(85, 50, "Retry", self.retry_pressed, nil, HORIZONTAL_ALIGN.CENTER, VERTICAL_ALIGN.CENTER, 0, 0)
+	self.menu_button =
+		button.new(85, 50, "Main Menu", self.menu_pressed, nil, HORIZONTAL_ALIGN.CENTER, VERTICAL_ALIGN.CENTER, 0, 140)
 end
 
 function pause_menu:draw()
-	if Game.state ~= STATE.MENU then
+	if self.active == false then
 		return
 	end
 
@@ -278,6 +276,40 @@ function pause_menu:draw()
 end
 
 function pause_menu:unload()
+	setmetatable(pause_menu, nil)
+end
+
+-- NOTE: END MENU
+end_menu = { active = false }
+end_menu.__index = end_menu
+setmetatable({}, end_menu)
+
+function end_menu:load()
+	self.retry_pressed = function()
+		print("Retry pressed")
+		Game:set_state(STATE.GAME)
+		self.active = false
+	end
+	self.menu_pressed = function()
+		print("Menu pressed")
+		self.active = false
+	end
+
+	self.retry_button =
+		button.new(85, 50, "Retry", self.retry_pressed, nil, HORIZONTAL_ALIGN.CENTER, VERTICAL_ALIGN.CENTER, 0, 0)
+	self.menu_button =
+		button.new(85, 50, "Main Menu", self.menu_pressed, nil, HORIZONTAL_ALIGN.CENTER, VERTICAL_ALIGN.CENTER, 0, 140)
+end
+
+function end_menu:draw()
+	if self.active == false then
+		return
+	end
+	self.retry_button:draw()
+	self.menu_button:draw()
+end
+
+function end_menu:unload()
 	setmetatable(pause_menu, nil)
 end
 
@@ -299,10 +331,15 @@ function love.mousereleased(x, y, index)
 			level_scene.level_6_button:check_pressed(x, y)
 			level_scene.level_7_button:check_pressed(x, y)
 			level_scene.level_8_button:check_pressed(x, y)
-		elseif Game.scene == SCENE.GAME and Game.state == STATE.MENU then
-			pause_menu.continue_button:check_pressed(x, y)
-			pause_menu.retry_button:check_pressed(x, y)
-			pause_menu.menu_button:check_pressed(x, y)
+		elseif Game.scene == SCENE.GAME then
+			if pause_menu.active then
+				pause_menu.continue_button:check_pressed(x, y)
+				pause_menu.retry_button:check_pressed(x, y)
+				pause_menu.menu_button:check_pressed(x, y)
+			elseif end_menu.active then
+				end_menu.retry_button:check_pressed(x, y)
+				end_menu.menu_button:check_pressed(x, y)
+			end
 		end
 	end
 end
