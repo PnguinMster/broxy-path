@@ -88,46 +88,55 @@ function level_scene:load()
 		print("Level 0 pressed")
 		level = LEVEL_IMAGES.level_0
 		Game:set_scene(SCENE.GAME)
+		Game:set_state(STATE.GAME)
 	end
 	self.level_1_pressed = function()
 		print("Level 1 pressed")
 		level = LEVEL_IMAGES.level_1
 		Game:set_scene(SCENE.GAME)
+		Game:set_state(STATE.GAME)
 	end
 	self.level_2_pressed = function()
 		print("Level 2 pressed")
 		level = LEVEL_IMAGES.level_2
 		Game:set_scene(SCENE.GAME)
+		Game:set_state(STATE.GAME)
 	end
 	self.level_3_pressed = function()
 		print("Level 3 pressed")
 		level = LEVEL_IMAGES.level_3
 		Game:set_scene(SCENE.GAME)
+		Game:set_state(STATE.GAME)
 	end
 	self.level_4_pressed = function()
 		print("Level 4 pressed")
 		level = LEVEL_IMAGES.level_4
 		Game:set_scene(SCENE.GAME)
+		Game:set_state(STATE.GAME)
 	end
 	self.level_5_pressed = function()
 		print("Level 5 pressed")
 		level = LEVEL_IMAGES.level_5
 		Game:set_scene(SCENE.GAME)
+		Game:set_state(STATE.GAME)
 	end
 	self.level_6_pressed = function()
 		print("Level 6 pressed")
 		level = LEVEL_IMAGES.level_6
 		Game:set_scene(SCENE.GAME)
+		Game:set_state(STATE.GAME)
 	end
 	self.level_7_pressed = function()
 		print("Level 7 pressed")
 		level = LEVEL_IMAGES.level_7
 		Game:set_scene(SCENE.GAME)
+		Game:set_state(STATE.GAME)
 	end
 	self.level_8_pressed = function()
 		print("Level 8 pressed")
 		level = LEVEL_IMAGES.level_8
 		Game:set_scene(SCENE.GAME)
+		Game:set_state(STATE.GAME)
 	end
 
 	self.level_0_button =
@@ -188,6 +197,10 @@ function game_scene:load()
 end
 
 function game_scene:update(dt)
+	if Game.state ~= STATE.GAME then
+		return
+	end
+
 	World:update(dt)
 	Player:update(dt)
 	Tilemap:update(dt)
