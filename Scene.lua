@@ -196,26 +196,16 @@ function game_scene:update(dt)
 	x = x - love.graphics.getWidth() / 2
 	y = y - love.graphics.getHeight() / 2
 	camera:smoothPosition(x, y, 0.05, dt)
-
-	if love.keyboard.isDown("escape") then
-		if Game.state == STATE.GAME and end_menu.active == false then
-			Game:set_state(STATE.MENU)
-			pause_menu.active = true
-		else
-			Game:set_state(STATE.GAME)
-			pause_menu.active = false
-		end
-	end
 end
 
 function game_scene:draw()
-	pause_menu:draw()
-
 	camera:set()
 	Tilemap:draw_map()
 	Player:draw()
 	love.graphics.setColor(1, 0.5, 0)
 	camera:unset()
+
+	pause_menu:draw()
 end
 
 function game_scene.on_begin_contact(a, b, contact)
@@ -321,6 +311,22 @@ end
 
 function end_menu:unload()
 	setmetatable(pause_menu, nil)
+end
+
+--NOTE: Check Key Released
+
+function love.keyreleased(key)
+	if Game.scene == SCENE.GAME then
+		if key == "escape" then
+			if Game.state == STATE.GAME and end_menu.active == false then
+				Game:set_state(STATE.MENU)
+				pause_menu.active = true
+			else
+				Game:set_state(STATE.GAME)
+				pause_menu.active = false
+			end
+		end
+	end
 end
 
 -- NOTE: Check Button
