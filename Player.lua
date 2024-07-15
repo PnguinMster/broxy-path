@@ -10,6 +10,7 @@ local FREQUENCY = 2
 local RESTITUTION = 0.1
 local FRICTION = 0.9
 local CATEGORY = LAYERS.PLAYER
+local USER_DATA = "player"
 local ANGULAR_DAMPENING = 12
 
 local HOVER_TIME_GAIN = 1.5
@@ -60,9 +61,11 @@ function Player:load()
 	self.top_fixture:setRestitution(RESTITUTION)
 	self.top_fixture:setFriction(FRICTION)
 	self.top_fixture:setCategory(CATEGORY)
+	self.top_fixture:setUserData(USER_DATA)
 	self.bottom_fixture:setRestitution(RESTITUTION)
 	self.bottom_fixture:setFriction(FRICTION)
 	self.bottom_fixture:setCategory(CATEGORY)
+	self.bottom_fixture:setUserData(USER_DATA)
 
 	self.top_body:setAngularDamping(ANGULAR_DAMPENING)
 	self.bottom_body:setAngularDamping(ANGULAR_DAMPENING)
