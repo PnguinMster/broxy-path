@@ -194,6 +194,7 @@ function game_scene:load()
 
 	Player:load()
 	pause_menu:load()
+	end_menu:load()
 end
 
 function game_scene:update(dt)
@@ -219,6 +220,7 @@ function game_scene:draw()
 	camera:unset()
 
 	pause_menu:draw()
+	end_menu:draw()
 end
 
 function game_scene.on_begin_contact(a, b, contact)
@@ -228,6 +230,7 @@ function game_scene.on_begin_contact(a, b, contact)
 	if user_data_1 and user_data_2 then
 		print(user_data_1 .. " triggered " .. user_data_2)
 		end_menu.active = true
+		Game:set_state(STATE.MENU)
 	end
 end
 
