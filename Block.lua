@@ -21,7 +21,11 @@ local BLOCK_MOVE_SPEED = 25
 
 function Block_info.new(map_info, x, y, offset_x, offset_y)
 	local body_type = "kinematic"
-	if map_info.type.r == BLOCK_TYPE.STATIC_BLOCK.r or map_info.type.r == BLOCK_TYPE.BOUNCE_BLOCK.r then
+	if
+		map_info.type.r == BLOCK_TYPE.STATIC_BLOCK.r
+		or map_info.type.r == BLOCK_TYPE.BOUNCE_BLOCK.r
+		or map_info.type.r == BLOCK_TYPE.END.r
+	then
 		body_type = "static"
 	end
 
@@ -80,7 +84,7 @@ function Block_info.new(map_info, x, y, offset_x, offset_y)
 					body:setLinearVelocity(-BLOCK_MOVE_SPEED, 0)
 				end
 			end
-		else
+		elseif map_info.type == BLOCK_TYPE.ROTATING_BLOCK or map_info.type == BLOCK_TYPE.ROTATING_BOUNCE then
 			move = function()
 				body:setAngularVelocity(BLOCK_ROTATE_SPEED)
 			end
