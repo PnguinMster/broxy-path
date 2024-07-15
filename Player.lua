@@ -109,11 +109,6 @@ function Player:update(dt)
 	hover_timer = math.clamp(hover_timer, -1, 1)
 end
 
-function Player:hud()
-	love.graphics.setColor(1, 0, 0)
-	love.graphics.print(tostring(hover_timer))
-end
-
 function Player:draw()
 	love.graphics.setColor(love.math.colorFromBytes(218, 212, 94))
 
