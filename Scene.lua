@@ -175,6 +175,7 @@ setmetatable({}, game_scene)
 
 function game_scene:load()
 	World = love.physics.newWorld(0, 9.8 * 16, true)
+	World:setCallbacks(self.on_begin_contact)
 
 	Player = player.new()
 	Tilemap = tilemap.new()
@@ -208,7 +209,6 @@ function game_scene:update(dt)
 end
 
 function game_scene:draw()
-	-- Player:hud()
 	pause_menu:draw()
 
 	camera:set()
@@ -216,6 +216,16 @@ function game_scene:draw()
 	Player:draw()
 	love.graphics.setColor(1, 0.5, 0)
 	camera:unset()
+end
+
+function game_scene.on_begin_contact(a, b, contact)
+	local user_data_1 = a:getUserData()
+	local user_data_2 = b:getUserData()
+
+	if user_data_1 and user_data_2 then
+		print(user_data_1 .. " triggered " .. user_data_2)
+		end_menu.active = true
+	end
 end
 
 function game_scene:unload()
