@@ -285,17 +285,19 @@ setmetatable({}, pause_menu)
 function pause_menu:load()
 	self.continue_pressed = function()
 		print("Continue pressed")
-		Game:set_state(STATE.GAME)
 		self.active = false
+		Game:set_state(STATE.GAME)
 	end
 	self.retry_pressed = function()
 		print("Retry pressed")
 		Game:set_state(STATE.GAME)
 		self.active = false
+		Player:reset_player()
 	end
 	self.menu_pressed = function()
 		print("Menu pressed")
 		self.active = false
+		Game:set_scene(SCENE.MENU)
 	end
 
 	self.continue_button = button.new(
@@ -358,10 +360,12 @@ function end_menu:load()
 		print("Retry pressed")
 		Game:set_state(STATE.GAME)
 		self.active = false
+		Player:reset_player()
 	end
 	self.menu_pressed = function()
 		print("Menu pressed")
 		self.active = false
+		Game:set_scene(SCENE.MENU)
 	end
 
 	self.retry_button =
