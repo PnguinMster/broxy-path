@@ -15,10 +15,10 @@ local ANGULAR_DAMPENING = 12
 
 local HOVER_TIME_GAIN = 1.5
 local HOVER_TIME_LOSE = 1
-local CAN_HOVER_TIME = 0.1
-local hover_timer = 0
+local CAN_HOVER_TIME = 0.15
+local hover_timer = 1
 local can_hover_timer = 0
-local hover_enabled = false
+local hover_enabled = true
 
 function Player.new()
 	return setmetatable({
@@ -199,6 +199,21 @@ function Player:get_position()
 	local x_average = (x1 + x2) * 0.5
 	local y_average = (y1 + y2) * 0.5
 	return x_average, y_average
+end
+
+function Player:reset_player()
+	self.top_body:setPosition(0, 0)
+	self.top_body:setAngle(0)
+	self.top_body:setLinearVelocity(0, 0)
+	self.top_body:setAngularVelocity(0)
+
+	self.bottom_body:setPosition(0, 0)
+	self.bottom_body:setAngle(0)
+	self.bottom_body:setLinearVelocity(0, 0)
+	self.bottom_body:setAngularVelocity(0)
+
+	hover_timer = 1
+	hover_enabled = true
 end
 
 function Player.unload()
