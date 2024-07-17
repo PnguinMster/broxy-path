@@ -129,6 +129,10 @@ function Tilemap.has_block_value(value)
 	return nil
 end
 
+function Tilemap:get_spawnpoint()
+	return self.start_x, self.start_y
+end
+
 Map_info = { width = 1, height = 1 }
 Map_info.__index = Map_info
 
