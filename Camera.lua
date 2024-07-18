@@ -64,7 +64,6 @@ function camera:setScale(sx, sy)
 end
 
 function camera:getBounds()
-	-- return unpack(self._bounds)
 	return self._bounds
 end
 
