@@ -43,9 +43,6 @@ function Player.new()
 end
 
 function Player:load()
-	-- self.start_x = love.graphics.getWidth() / 2
-	-- self.start_y = love.graphics.getHeight() / 2
-
 	self.top_body = love.physics.newBody(World, self.start_x, self.start_y, "dynamic")
 	self.top_shape = love.physics.newRectangleShape(0, -self.height / 4, self.width, self.height / 2)
 	self.top_fixture = love.physics.newFixture(self.top_body, self.top_shape, 2)
