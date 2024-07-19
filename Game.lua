@@ -16,6 +16,7 @@ Game.__index = Game
 
 Game.scene = SCENE.MENU
 Game.state = SCENE.MENU
+Game.level = LEVEL_IMAGES.test
 
 function Game:set_scene(scene)
 	self.scene:unload()
