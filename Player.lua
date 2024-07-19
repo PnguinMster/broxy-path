@@ -109,9 +109,6 @@ end
 function Player:draw()
 	love.graphics.setColor(love.math.colorFromBytes(218, 212, 94))
 
-	-- love.graphics.polygon("line", self.top_body:getWorldPoints(self.top_shape:getPoints()))
-	-- love.graphics.polygon("line", self.bottom_body:getWorldPoints(self.bottom_shape:getPoints()))
-
 	local x1, y1, x2, y2, x5, y5, x6, y6 = self.top_body:getWorldPoints(self.top_shape:getPoints())
 	local x7, y7, x8, y8, x3, y3, x4, y4 = self.bottom_body:getWorldPoints(self.bottom_shape:getPoints())
 
