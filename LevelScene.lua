@@ -111,7 +111,7 @@ function level_scene:update(dt)
 	end
 
 	if y_difference >= RESIZE_DIFFERENCE then
-		self.title_text:auto_resize_x()
+		self.title_text:auto_resize_y()
 		self.level_0_button:auto_resize_y()
 		self.level_1_button:auto_resize_y()
 		self.level_2_button:auto_resize_y()
