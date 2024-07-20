@@ -1,4 +1,4 @@
-require("Utility.Enum")
+require("Utility.BlockTypeEnum")
 
 Block_info = {}
 Block_info.__index = Block_info
@@ -6,7 +6,7 @@ Block_info.__index = Block_info
 BLOCK_SIZE = 50
 local BLOCK_MOVE_DISTANCE = 3
 local BLOCK_ROTATE_SPEED = 1
-local BLOCK_MOVE_SPEED = 25
+local BLOCK_MOVE_SPEED Enuwm= 25
 
 function Block_info.new(map_info, x, y, offset_x, offset_y)
 	local body_type = "kinematic"
