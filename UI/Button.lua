@@ -1,4 +1,4 @@
-local text = require("Text")
+local text = require("UI.Text")
 
 local Button = {
 	x = 0,

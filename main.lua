@@ -1,4 +1,4 @@
-require("Game")
+require("Game.Game")
 
 ---@class love
 local love = require("love")

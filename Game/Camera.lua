@@ -1,4 +1,4 @@
-require("Math")
+require("Utility.Math")
 
 camera = {}
 camera._x = 0

@@ -1,8 +1,7 @@
-require("Layers")
-require("Camera")
-require("GameScene")
-require("MenuScene")
-require("LevelScene")
+require("Utility.Enum")
+require("Scenes.GameScene")
+require("Scenes.MenuScene")
+require("Scenes.LevelScene")
 
 --NOTE: Check Key Released
 

@@ -1,7 +1,7 @@
-local player = require("Player")
-local tilemap = require("TileMap")
-local button = require("Button")
-local text = require("Text")
+local player = require("Game.Player")
+local tilemap = require("Game.TileMap")
+local button = require("UI.Button")
+local text = require("UI.Text")
 
 -- NOTE: Game Scene
 game_scene = {}

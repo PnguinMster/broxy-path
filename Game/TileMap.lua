@@ -1,4 +1,4 @@
-require("Block")
+require("Game.Block")
 
 local love = require("love")
 

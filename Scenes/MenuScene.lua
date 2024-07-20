@@ -1,5 +1,5 @@
-local button = require("Button")
-local text = require("Text")
+local button = require("UI.Button")
+local text = require("UI.Text")
 
 -- NOTE: Menu Scene
 menu_scene = {}

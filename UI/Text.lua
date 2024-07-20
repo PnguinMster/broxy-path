@@ -1,14 +1,4 @@
-HORIZONTAL_ALIGN = {
-	LEFT = 1,
-	RIGHT = 2,
-	CENTER = 3,
-}
-
-VERTICAL_ALIGN = {
-	TOP = 1,
-	BOTTOM = 2,
-	CENTER = 3,
-}
+require("Utility.Enum")
 
 local Text = {
 	text = "",

@@ -1,6 +1,4 @@
-require("Layers")
-
-local love = require("love")
+require("Utility.Enum")
 
 local Player = {}
 Player.__index = Player

@@ -1,15 +1,5 @@
-require("Scene")
-
-STATE = {
-	MENU = 1,
-	GAME = 2,
-}
-
-SCENE = {
-	MENU = menu_scene,
-	GAME = game_scene,
-	LEVEL = level_scene,
-}
+require("Scenes.Scene")
+require("Utility.Enum")
 
 Game = {}
 Game.__index = Game
