@@ -1,6 +1,7 @@
 require("Utility.StateEnum")
 require("Utility.SceneEnum")
 require("Utility.LevelImagesEnum")
+require("Scenes.SceneEvent")
 
 Game = {}
 Game.__index = Game
