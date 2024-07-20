@@ -1,4 +1,4 @@
-require("Utility.Enum")
+require("Utility.LayerEnum")
 
 local Player = {}
 Player.__index = Player

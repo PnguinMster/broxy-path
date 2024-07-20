@@ -13,13 +13,6 @@ STATE = {
 	GAME = 2,
 }
 
-LAYERS = {
-	DEFAULT = 1,
-	LEVEL = 2,
-	PLAYER = 3,
-	TRIGGER = 5,
-}
-
 BLOCK_TYPE = {
 	START = { r = 168, g = 202, b = 88 }, -- Lime
 	STATIC_BLOCK = { r = 235, g = 237, b = 233 }, -- White
