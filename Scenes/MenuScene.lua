@@ -1,16 +1,15 @@
 local button = require("UI.Button")
 local text = require("UI.Text")
 
--- NOTE: Menu Scene
-menu_scene = {}
-menu_scene.__index = menu_scene
-setmetatable({}, menu_scene)
+Menu_scene = {}
+Menu_scene.__index = Menu_scene
+setmetatable({}, Menu_scene)
 
 local RESIZE_DIFFERENCE = 5
 local window_x = 0
 local window_y = 0
 
-function menu_scene:load()
+function Menu_scene:load()
 	window_x = love.graphics.getWidth()
 	window_y = love.graphics.getHeight()
 
@@ -39,7 +38,7 @@ function menu_scene:load()
 		button.new(70, 50, "Quit", self.quit_pressed, nil, HORIZONTAL_ALIGN.CENTER, VERTICAL_ALIGN.CENTER, 0, 140)
 end
 
-function menu_scene:update(dt)
+function Menu_scene:update(dt)
 	local x_difference = math.abs(window_x - love.graphics.getWidth())
 	local y_difference = math.abs(window_y - love.graphics.getHeight())
 
@@ -60,13 +59,13 @@ function menu_scene:update(dt)
 	end
 end
 
-function menu_scene:draw()
+function Menu_scene:draw()
 	self.title_text:draw()
 	self.start_button:draw()
 	self.options_button:draw()
 	self.quit_button:draw()
 end
 
-function menu_scene:unload()
-	setmetatable(menu_scene, nil)
+function Menu_scene:unload()
+	setmetatable(Menu_scene, nil)
 end

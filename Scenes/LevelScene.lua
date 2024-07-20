@@ -1,17 +1,15 @@
 local button = require("UI.Button")
 local text = require("UI.Text")
 
--- NOTE: Level Scene
-
 local RESIZE_DIFFERENCE = 5
 local window_x = 0
 local window_y = 0
 
-level_scene = {}
-level_scene.__index = level_scene
-setmetatable({}, level_scene)
+Level_scene = {}
+Level_scene.__index = Level_scene
+setmetatable({}, Level_scene)
 
-function level_scene:load()
+function Level_scene:load()
 	window_x = love.graphics.getWidth()
 	window_y = love.graphics.getHeight()
 
@@ -92,7 +90,7 @@ function level_scene:load()
 		button.new(85, 50, "8", self.level_8_pressed, nil, HORIZONTAL_ALIGN.CENTER, VERTICAL_ALIGN.CENTER, 140, 100)
 end
 
-function level_scene:update(dt)
+function Level_scene:update(dt)
 	local x_difference = math.abs(window_x - love.graphics.getWidth())
 	local y_difference = math.abs(window_y - love.graphics.getHeight())
 
@@ -125,7 +123,7 @@ function level_scene:update(dt)
 	end
 end
 
-function level_scene:draw()
+function Level_scene:draw()
 	self.title_text:draw()
 	self.level_0_button:draw()
 	self.level_1_button:draw()
@@ -138,6 +136,6 @@ function level_scene:draw()
 	self.level_8_button:draw()
 end
 
-function level_scene:unload()
-	setmetatable(level_scene, nil)
+function Level_scene:unload()
+	setmetatable(Level_scene, nil)
 end

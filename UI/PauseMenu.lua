@@ -1,16 +1,15 @@
 local button = require("UI.Button")
 local text = require("UI.Text")
 
--- NOTE: PAUSE MENU
-pause_menu = { active = false }
-pause_menu.__index = pause_menu
-setmetatable({}, pause_menu)
+Pause_menu = { active = false }
+Pause_menu.__index = Pause_menu
+setmetatable({}, Pause_menu)
 
 local RESIZE_DIFFERENCE = 5
 local window_x = 0
 local window_y = 0
 
-function pause_menu:load()
+function Pause_menu:load()
 	window_x = love.graphics.getWidth()
 	window_y = love.graphics.getHeight()
 
@@ -50,7 +49,7 @@ function pause_menu:load()
 		button.new(85, 50, "Main Menu", self.menu_pressed, nil, HORIZONTAL_ALIGN.CENTER, VERTICAL_ALIGN.CENTER, 0, 140)
 end
 
-function pause_menu:update(dt)
+function Pause_menu:update(dt)
 	local x_difference = math.abs(window_x - love.graphics.getWidth())
 	local y_difference = math.abs(window_y - love.graphics.getHeight())
 
@@ -70,7 +69,7 @@ function pause_menu:update(dt)
 	end
 end
 
-function pause_menu:draw()
+function Pause_menu:draw()
 	if self.active == false then
 		return
 	end
@@ -81,6 +80,6 @@ function pause_menu:draw()
 	self.menu_button:draw()
 end
 
-function pause_menu:unload()
-	setmetatable(pause_menu, nil)
+function Pause_menu:unload()
+	setmetatable(Pause_menu, nil)
 end

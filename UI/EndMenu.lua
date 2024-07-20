@@ -1,16 +1,15 @@
 local button = require("UI.Button")
 local text = require("UI.Text")
 
--- NOTE: END MENU
-end_menu = { active = false }
-end_menu.__index = end_menu
-setmetatable({}, end_menu)
+End_menu = { active = false }
+End_menu.__index = End_menu
+setmetatable({}, End_menu)
 
 local RESIZE_DIFFERENCE = 5
 local window_x = 0
 local window_y = 0
 
-function end_menu:load()
+function End_menu:load()
 	window_x = love.graphics.getWidth()
 	window_y = love.graphics.getHeight()
 
@@ -34,7 +33,7 @@ function end_menu:load()
 		button.new(85, 50, "Main Menu", self.menu_pressed, nil, HORIZONTAL_ALIGN.CENTER, VERTICAL_ALIGN.CENTER, 0, 140)
 end
 
-function end_menu:update(dt)
+function End_menu:update(dt)
 	local x_difference = math.abs(window_x - love.graphics.getWidth())
 	local y_difference = math.abs(window_y - love.graphics.getHeight())
 
@@ -53,7 +52,7 @@ function end_menu:update(dt)
 	end
 end
 
-function end_menu:draw()
+function End_menu:draw()
 	if self.active == false then
 		return
 	end
@@ -63,6 +62,6 @@ function end_menu:draw()
 	self.menu_button:draw()
 end
 
-function end_menu:unload()
-	setmetatable(pause_menu, nil)
+function End_menu:unload()
+	setmetatable(Pause_menu, nil)
 end

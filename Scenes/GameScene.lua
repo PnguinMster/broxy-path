@@ -5,12 +5,11 @@ require("UI.EndMenu")
 local player = require("Game.Player")
 local tilemap = require("Game.TileMap")
 
--- NOTE: Game Scene
-game_scene = {}
-game_scene.__index = game_scene
-setmetatable({}, game_scene)
+Game_scene = {}
+Game_scene.__index = Game_scene
+setmetatable({}, Game_scene)
 
-function game_scene:load()
+function Game_scene:load()
 	World = love.physics.newWorld(0, 9.8 * 16, true)
 	World:setCallbacks(self.on_begin_contact)
 
@@ -21,15 +20,15 @@ function game_scene:load()
 	Tilemap:load_map()
 
 	Player:load()
-	pause_menu:load()
-	end_menu:load()
+	Pause_menu:load()
+	End_menu:load()
 end
 
-function game_scene:update(dt)
+function Game_scene:update(dt)
 	if Game.state ~= STATE.GAME then
 		if Game.state == STATE.MENU then
-			pause_menu:update(dt)
-			end_menu:update(dt)
+			Pause_menu:update(dt)
+			End_menu:update(dt)
 		end
 
 		return
@@ -42,36 +41,36 @@ function game_scene:update(dt)
 	local x, y = Player:get_position()
 	x = x - love.graphics.getWidth() / 2
 	y = y - love.graphics.getHeight() / 2
-	camera:smoothPosition(x, y, 0.05, dt)
+	Camera:smoothPosition(x, y, 0.05, dt)
 end
 
-function game_scene:draw()
-	camera:set()
+function Game_scene:draw()
+	Camera:set()
 	Tilemap:draw_map()
 	Player:draw()
 	love.graphics.setColor(1, 0.5, 0)
-	camera:unset()
+	Camera:unset()
 
-	pause_menu:draw()
-	end_menu:draw()
+	Pause_menu:draw()
+	End_menu:draw()
 end
 
-function game_scene.on_begin_contact(a, b, contact)
+function Game_scene.on_begin_contact(a, b, contact)
 	local user_data_1 = a:getUserData()
 	local user_data_2 = b:getUserData()
 
 	if user_data_1 and user_data_2 then
 		print(user_data_1 .. " triggered " .. user_data_2)
-		end_menu.active = true
+		End_menu.active = true
 		Game:set_state(STATE.MENU)
 	end
 end
 
-function game_scene:unload()
+function Game_scene:unload()
 	World:destroy()
 	Player.unload()
 	Tilemap.unload()
-	pause_menu:unload()
-	end_menu:unload()
-	setmetatable(game_scene, nil)
+	Pause_menu:unload()
+	End_menu:unload()
+	setmetatable(Game_scene, nil)
 end

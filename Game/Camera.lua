@@ -1,34 +1,34 @@
 require("Utility.Math")
 
-camera = {}
-camera._x = 0
-camera._y = 0
-camera.scaleX = 1
-camera.scaleY = 1
-camera.rotation = 0
+Camera = {}
+Camera._x = 0
+Camera._y = 0
+Camera.scaleX = 1
+Camera.scaleY = 1
+Camera.rotation = 0
 
-function camera:set()
+function Camera:set()
 	love.graphics.push()
 	love.graphics.rotate(-self.rotation)
 	love.graphics.scale(1 / self.scaleX, 1 / self.scaleY)
 	love.graphics.translate(-self._x, -self._y)
 end
 
-function camera:unset()
+function Camera:unset()
 	love.graphics.pop()
 end
 
-function camera:rotate(dr)
+function Camera:rotate(dr)
 	self.rotation = self.rotation + dr
 end
 
-function camera:scale(sx, sy)
+function Camera:scale(sx, sy)
 	sx = sx or 1
 	self.scaleX = self.scaleX * sx
 	self.scaleY = self.scaleY * (sy or sx)
 end
 
-function camera:setX(value)
+function Camera:setX(value)
 	if self._bounds then
 		self._x = math.clamp(value, self._bounds.x1, self._bounds.x2)
 	else
@@ -36,7 +36,7 @@ function camera:setX(value)
 	end
 end
 
-function camera:setY(value)
+function Camera:setY(value)
 	if self._bounds then
 		self._y = math.clamp(value, self._bounds.y1, self._bounds.y2)
 	else
@@ -44,7 +44,7 @@ function camera:setY(value)
 	end
 end
 
-function camera:setPosition(x, y)
+function Camera:setPosition(x, y)
 	if x then
 		self:setX(x)
 	end
@@ -53,20 +53,20 @@ function camera:setPosition(x, y)
 	end
 end
 
-function camera:smoothPosition(x, y, smoothing, dt)
+function Camera:smoothPosition(x, y, smoothing, dt)
 	self._x = math.damp(self._x, x, smoothing, dt)
 	self._y = math.damp(self._y, y, smoothing, dt)
 end
 
-function camera:setScale(sx, sy)
+function Camera:setScale(sx, sy)
 	self.scaleX = sx or self.scaleX
 	self.scaleY = sy or self.scaleY
 end
 
-function camera:getBounds()
+function Camera:getBounds()
 	return self._bounds
 end
 
-function camera:setBounds(x1, y1, x2, y2)
+function Camera:setBounds(x1, y1, x2, y2)
 	self._bounds = { x1 = x1, y1 = y1, x2 = x2, y2 = y2 }
 end

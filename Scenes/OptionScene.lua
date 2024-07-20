@@ -1,15 +1,15 @@
 local button = require("UI.Button")
 local text = require("UI.Text")
 
-option_scene = {}
-option_scene.__index = option_scene
-setmetatable({}, option_scene)
+Option_scene = {}
+Option_scene.__index = Option_scene
+setmetatable({}, Option_scene)
 
 local RESIZE_DIFFERENCE = 5
 local window_x = 0
 local window_y = 0
 
-function option_scene:load()
+function Option_scene:load()
 	window_x = love.graphics.getWidth()
 	window_y = love.graphics.getHeight()
 
@@ -23,7 +23,7 @@ function option_scene:load()
 		button.new(70, 50, "Start", self.start_pressed, nil, HORIZONTAL_ALIGN.CENTER, VERTICAL_ALIGN.CENTER)
 end
 
-function option_scene:update(dt)
+function Option_scene:update(dt)
 	local x_difference = math.abs(window_x - love.graphics.getWidth())
 	local y_difference = math.abs(window_y - love.graphics.getHeight())
 
@@ -44,13 +44,13 @@ function option_scene:update(dt)
 	end
 end
 
-function option_scene:draw()
+function Option_scene:draw()
 	self.title_text:draw()
 	self.start_button:draw()
 	self.options_button:draw()
 	self.quit_button:draw()
 end
 
-function option_scene:unload()
-	setmetatable(menu_scene, nil)
+function Option_scene:unload()
+	setmetatable(Menu_scene, nil)
 end

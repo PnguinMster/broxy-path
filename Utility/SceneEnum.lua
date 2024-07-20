@@ -4,8 +4,8 @@ require("Scenes.GameScene")
 require("Scenes.OptionScene")
 
 SCENE = {
-	MENU = menu_scene,
-	GAME = game_scene,
-	LEVEL = level_scene,
-	OPTION = option_scene,
+	MENU = Menu_scene,
+	GAME = Game_scene,
+	LEVEL = Level_scene,
+	OPTION = Option_scene,
 }
