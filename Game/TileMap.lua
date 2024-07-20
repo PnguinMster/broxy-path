@@ -1,5 +1,5 @@
 require("Game.Block")
-require("Utility.Enum")
+require("Utility.BlockTypeEnum")
 
 local love = require("love")
 

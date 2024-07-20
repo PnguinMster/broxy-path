@@ -1,4 +1,5 @@
-require("Utility.Enum")
+require("Utility.StateEnum")
+require("Utility.SceneEnum")
 
 Game = {}
 Game.__index = Game
