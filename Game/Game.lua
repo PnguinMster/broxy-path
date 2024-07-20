@@ -1,4 +1,3 @@
-require("Scenes.Scene")
 require("Utility.Enum")
 
 Game = {}
