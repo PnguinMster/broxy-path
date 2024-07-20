@@ -55,6 +55,20 @@ function Checkbox:is_checked()
 	return self.checked
 end
 
+function Checkbox:check_pressed(mouse_x, mouse_y)
+	local offset_x = self.box_size / 2
+	local offset_y = self.box_size / 2
+
+	if
+		mouse_x <= self.x + offset_x
+		and mouse_x >= self.x - offset_x
+		and mouse_y <= self.y + offset_y
+		and mouse_y >= self.y - offset_y
+	then
+		self.checked = not self.checked
+	end
+end
+
 function Checkbox:auto_resize_x()
 	local x = self.offset_x - (self.box_size / 2)
 
@@ -81,7 +95,10 @@ end
 
 function Checkbox:draw()
 	love.graphics.rectangle("line", self.x, self.y, self.box_size, self.box_size)
-	love.graphics.rectangle("fill", self.x, self.y, self.check_size, self.check_size)
+
+	if self.checked then
+		love.graphics.rectangle("fill", self.x, self.y, self.check_size, self.check_size)
+	end
 end
 
 function Checkbox.unload()
