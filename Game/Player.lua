@@ -1,4 +1,5 @@
 require("Utility.LayerEnum")
+require("Utility.Math")
 
 local Player = {}
 Player.__index = Player
