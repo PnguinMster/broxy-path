@@ -7,5 +7,5 @@ function math.lerp(a, b, t)
 end
 
 function math.damp(current, target, smoothing, dt)
-	return math.lerp(current, target, 1 - math.exp(-smoothing * dt))
+	return math.lerp(current, target, 1 - smoothing ^ dt)
 end
