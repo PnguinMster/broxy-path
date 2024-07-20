@@ -20,18 +20,6 @@ LAYERS = {
 	TRIGGER = 5,
 }
 
-HORIZONTAL_ALIGN = {
-	LEFT = 1,
-	RIGHT = 2,
-	CENTER = 3,
-}
-
-VERTICAL_ALIGN = {
-	TOP = 1,
-	BOTTOM = 2,
-	CENTER = 3,
-}
-
 BLOCK_TYPE = {
 	START = { r = 168, g = 202, b = 88 }, -- Lime
 	STATIC_BLOCK = { r = 235, g = 237, b = 233 }, -- White

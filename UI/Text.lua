@@ -1,4 +1,4 @@
-require("Utility.Enum")
+require("Utility.AlignEnum")
 
 local Text = {
 	text = "",
