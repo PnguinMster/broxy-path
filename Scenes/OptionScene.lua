@@ -30,16 +30,12 @@ function Option_scene:update(dt)
 	if x_difference >= RESIZE_DIFFERENCE then
 		self.title_text:auto_resize_x()
 		self.start_button:auto_resize_x()
-		self.options_button:auto_resize_x()
-		self.quit_button:auto_resize_x()
 		window_x = love.graphics.getWidth()
 	end
 
 	if y_difference >= RESIZE_DIFFERENCE then
 		self.title_text:auto_resize_y()
 		self.start_button:auto_resize_y()
-		self.options_button:auto_resize_y()
-		self.quit_button:auto_resize_y()
 		window_y = love.graphics.getHeight()
 	end
 end
@@ -47,10 +43,8 @@ end
 function Option_scene:draw()
 	self.title_text:draw()
 	self.start_button:draw()
-	self.options_button:draw()
-	self.quit_button:draw()
 end
 
 function Option_scene:unload()
-	setmetatable(Menu_scene, nil)
+	setmetatable(Option_scene, nil)
 end
