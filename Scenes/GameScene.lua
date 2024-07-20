@@ -1,3 +1,5 @@
+require("Game.Camera")
+
 local player = require("Game.Player")
 local tilemap = require("Game.TileMap")
 local button = require("UI.Button")
