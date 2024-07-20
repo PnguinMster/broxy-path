@@ -1,21 +1,29 @@
 require("Utility.AlignEnum")
 
 local Checkbox = {
+	checked = false,
 	offset_x = 0,
 	offset_y = 0,
 	horizontal_align = HORIZONTAL_ALIGN.LEFT,
 	vertical_align = VERTICAL_ALIGN.TOP,
 	x = 0,
 	y = 0,
-	scale = 1,
-	origin_offset_x = 0,
-	origin_offset_y = 0,
+	box_size = 0,
+	check_size = 0,
 }
 Checkbox.__index = Checkbox
 
-function Checkbox.new(scale, horizontal_align, vertical_align, offset_x, offset_y)
+local check_scale = 0.8
+local default_size = 25
+
+function Checkbox.new(checked, scale, horizontal_align, vertical_align, offset_x, offset_y)
 	local x = offset_x or 0
 	local y = offset_y or 0
+	local box_size = default_size * scale
+	local check_size = box_size * check_scale
+
+	x = x - (box_size / 2)
+	y = y - (box_size / 2)
 
 	if horizontal_align == HORIZONTAL_ALIGN.RIGHT then
 		x = x + love.graphics:getWidth()
@@ -30,6 +38,7 @@ function Checkbox.new(scale, horizontal_align, vertical_align, offset_x, offset_
 	end
 
 	return setmetatable({
+		checked = checked or false,
 		x = x or 0,
 		y = y or 0,
 		scale = scale or 1,
@@ -37,11 +46,17 @@ function Checkbox.new(scale, horizontal_align, vertical_align, offset_x, offset_
 		offset_y = offset_y or 0,
 		horizontal_align = horizontal_align or HORIZONTAL_ALIGN.LEFT,
 		vertical_align = vertical_align or VERTICAL_ALIGN.TOP,
+		box_size = box_size or default_size,
+		check_size = check_size or default_size * check_size,
 	}, Checkbox)
 end
 
+function Checkbox:is_checked()
+	return self.checked
+end
+
 function Checkbox:auto_resize_x()
-	local x = self.offset_x
+	local x = self.offset_x - (self.box_size / 2)
 
 	if self.horizontal_align == HORIZONTAL_ALIGN.RIGHT then
 		x = x + love.graphics:getWidth()
@@ -53,7 +68,7 @@ function Checkbox:auto_resize_x()
 end
 
 function Checkbox:auto_resize_y()
-	local y = self.offset_y
+	local y = self.offset_y - (self.box_size / 2)
 
 	if self.vertical_align == VERTICAL_ALIGN.BOTTOM then
 		y = y + love.graphics:getHeight()
@@ -65,8 +80,8 @@ function Checkbox:auto_resize_y()
 end
 
 function Checkbox:draw()
-	love.graphics.rectangle("line", self.x, self.y, self.width, self.height)
-	love.graphics.rectangle("fill", self.x, self.y, self.width, self.height)
+	love.graphics.rectangle("line", self.x, self.y, self.box_size, self.box_size)
+	love.graphics.rectangle("fill", self.x, self.y, self.check_size, self.check_size)
 end
 
 function Checkbox.unload()
