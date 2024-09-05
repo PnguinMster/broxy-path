@@ -18,6 +18,8 @@ Button.__index = Button
 function Button.new(width, height, string, func, func_param, horizontal_align, vertical_align, offset_x, offset_y)
 	local x = offset_x or 0
 	local y = offset_y or 0
+	local text_offset_x = offset_x or 0
+	local text_offset_y = offset_y or 0
 
 	if horizontal_align == HORIZONTAL_ALIGN.RIGHT then
 		x = x + love.graphics:getWidth()
@@ -25,9 +27,16 @@ function Button.new(width, height, string, func, func_param, horizontal_align, v
 	elseif horizontal_align == HORIZONTAL_ALIGN.CENTER then
 		x = (love.graphics:getWidth() / 2) + x
 		x = x - width / 2
+	elseif horizontal_align == HORIZONTAL_ALIGN.LEFT then
+		local font = love.graphics:getFont()
+		local text_width = font:getWidth(string)
+		text_offset_x = text_offset_x + (width / 2) - (text_width / 2)
 	end
 
 	if vertical_align == VERTICAL_ALIGN.BOTTOM then
+		local font = love.graphics:getFont()
+		local text_height = font:getHeight()
+		text_offset_y = text_offset_y + (text_height / 2)
 		y = y + love.graphics:getHeight()
 		y = y - height / 2
 	elseif vertical_align == VERTICAL_ALIGN.CENTER then
@@ -40,7 +49,7 @@ function Button.new(width, height, string, func, func_param, horizontal_align, v
 		y = y or 0,
 		width = width or 0,
 		height = height or 0,
-		string = text.new(string, nil, horizontal_align, vertical_align, offset_x, offset_y) or text.new(),
+		string = text.new(string, nil, horizontal_align, vertical_align, text_offset_x, text_offset_y) or text.new(),
 		func = func or function()
 			print("No Function")
 		end,

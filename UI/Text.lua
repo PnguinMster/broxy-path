@@ -16,8 +16,8 @@ Text.__index = Text
 
 function Text.new(text, scale, horizontal_align, vertical_align, offset_x, offset_y)
 	local font = love.graphics:getFont()
-	local textWidth = font:getWidth(text)
-	local textHeight = font:getHeight()
+	local text_width = font:getWidth(text)
+	local text_height = font:getHeight()
 	local x = offset_x or 0
 	local y = offset_y or 0
 
@@ -25,26 +25,26 @@ function Text.new(text, scale, horizontal_align, vertical_align, offset_x, offse
 		x = x + love.graphics:getWidth()
 	elseif horizontal_align == HORIZONTAL_ALIGN.CENTER then
 		x = (love.graphics:getWidth() / 2) + x
-		textWidth = textWidth / 2
+		text_width = text_width / 2
 	else -- horizontal_align == TEXT_HORIZONTAL_ALIGN.LEFT
-		textWidth = 0
+		text_width = 0
 	end
 
 	if vertical_align == VERTICAL_ALIGN.BOTTOM then
 		y = y + love.graphics:getHeight()
 	elseif vertical_align == VERTICAL_ALIGN.CENTER then
 		y = (love.graphics:getHeight() / 2) + y
-		textHeight = textHeight / 2
+		text_height = text_height / 2
 	else -- vertical_align == TEXT_VERTICAL_ALIGN.TOP
-		textHeight = 0
+		text_height = 0
 	end
 
 	return setmetatable({
 		x = x or 0,
 		y = y or 0,
 		scale = scale or 1,
-		origin_offset_x = textWidth or 0,
-		origin_offset_y = textHeight or 0,
+		origin_offset_x = text_width or 0,
+		origin_offset_y = text_height or 0,
 		text = text or "Text",
 		offset_x = offset_x or 0,
 		offset_y = offset_y or 0,

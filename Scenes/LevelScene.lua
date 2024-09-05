@@ -94,7 +94,7 @@ function Level_scene:load()
 	self.level_8_button =
 		button.new(85, 50, "8", self.level_8_pressed, nil, HORIZONTAL_ALIGN.CENTER, VERTICAL_ALIGN.CENTER, 140, 100)
 	self.back_button =
-		button.new(50, 50, "<", self.back_pressed, nil, HORIZONTAL_ALIGN.CENTER, VERTICAL_ALIGN.BOTTOM, 0, -100)
+		button.new(100, 50, "Back", self.back_pressed, nil, HORIZONTAL_ALIGN.LEFT, VERTICAL_ALIGN.BOTTOM, 50, -50)
 end
 
 function Level_scene:update(dt)
