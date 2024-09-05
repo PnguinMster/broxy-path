@@ -68,6 +68,11 @@ function Level_scene:load()
 		Game:set_state(STATE.GAME)
 	end
 
+	self.back_pressed = function()
+		print("Back pressed")
+		Game:set_scene(SCENE.MENU)
+	end
+
 	self.title_text = text.new("Select Level", 3, HORIZONTAL_ALIGN.CENTER, VERTICAL_ALIGN.TOP, 0, 10)
 
 	self.level_0_button =
@@ -88,6 +93,8 @@ function Level_scene:load()
 		button.new(85, 50, "7", self.level_7_pressed, nil, HORIZONTAL_ALIGN.CENTER, VERTICAL_ALIGN.CENTER, 0, 100)
 	self.level_8_button =
 		button.new(85, 50, "8", self.level_8_pressed, nil, HORIZONTAL_ALIGN.CENTER, VERTICAL_ALIGN.CENTER, 140, 100)
+	self.back_button =
+		button.new(50, 50, "<", self.back_pressed, nil, HORIZONTAL_ALIGN.CENTER, VERTICAL_ALIGN.BOTTOM, 0, -100)
 end
 
 function Level_scene:update(dt)
@@ -134,6 +141,7 @@ function Level_scene:draw()
 	self.level_6_button:draw()
 	self.level_7_button:draw()
 	self.level_8_button:draw()
+	self.back_button:draw()
 end
 
 function Level_scene:unload()

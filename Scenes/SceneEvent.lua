@@ -34,6 +34,7 @@ function love.mousereleased(x, y, index)
 			Level_scene.level_6_button:check_pressed(x, y)
 			Level_scene.level_7_button:check_pressed(x, y)
 			Level_scene.level_8_button:check_pressed(x, y)
+			Level_scene.back_button:check_pressed(x, y)
 		elseif Game.scene == SCENE.GAME then
 			if Pause_menu.active then
 				Pause_menu.continue_button:check_pressed(x, y)
