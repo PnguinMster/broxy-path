@@ -1,5 +1,6 @@
 local button = require("UI.Button")
 local text = require("UI.Text")
+local checkbox = require("UI.checkbox")
 
 Option_scene = {}
 Option_scene.__index = Option_scene
@@ -21,6 +22,8 @@ function Option_scene:load()
 
 	self.start_button =
 		button.new(70, 50, "Start", self.start_pressed, nil, HORIZONTAL_ALIGN.CENTER, VERTICAL_ALIGN.CENTER)
+
+	self.test_checkbox = checkbox.new(false, 1, HORIZONTAL_ALIGN.CENTER, VERTICAL_ALIGN.CENTER, 0, 80)
 end
 
 function Option_scene:update(dt)
@@ -43,6 +46,7 @@ end
 function Option_scene:draw()
 	self.title_text:draw()
 	self.start_button:draw()
+	self.test_checkbox:draw()
 end
 
 function Option_scene:unload()

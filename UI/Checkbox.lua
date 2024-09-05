@@ -10,6 +10,7 @@ local Checkbox = {
 	y = 0,
 	box_size = 0,
 	check_size = 0,
+	check_offset = 0,
 }
 Checkbox.__index = Checkbox
 
@@ -37,6 +38,8 @@ function Checkbox.new(checked, scale, horizontal_align, vertical_align, offset_x
 		y = (love.graphics:getHeight() / 2) + y
 	end
 
+	local check_offset = (box_size - check_size) / 2
+
 	return setmetatable({
 		checked = checked or false,
 		x = x or 0,
@@ -48,6 +51,7 @@ function Checkbox.new(checked, scale, horizontal_align, vertical_align, offset_x
 		vertical_align = vertical_align or VERTICAL_ALIGN.TOP,
 		box_size = box_size or default_size,
 		check_size = check_size or default_size * check_size,
+		check_offset = check_offset,
 	}, Checkbox)
 end
 
@@ -56,15 +60,10 @@ function Checkbox:is_checked()
 end
 
 function Checkbox:check_pressed(mouse_x, mouse_y)
-	local offset_x = self.box_size / 2
-	local offset_y = self.box_size / 2
+	local offset_x = self.box_size
+	local offset_y = self.box_size
 
-	if
-		mouse_x <= self.x + offset_x
-		and mouse_x >= self.x - offset_x
-		and mouse_y <= self.y + offset_y
-		and mouse_y >= self.y - offset_y
-	then
+	if mouse_x <= self.x + offset_x and mouse_x >= self.x and mouse_y <= self.y + offset_y and mouse_y >= self.y then
 		self.checked = not self.checked
 	end
 end
@@ -94,10 +93,17 @@ function Checkbox:auto_resize_y()
 end
 
 function Checkbox:draw()
+	love.graphics.setColor(1, 1, 1, 0.8)
 	love.graphics.rectangle("line", self.x, self.y, self.box_size, self.box_size)
 
 	if self.checked then
-		love.graphics.rectangle("fill", self.x, self.y, self.check_size, self.check_size)
+		love.graphics.rectangle(
+			"fill",
+			self.x + self.check_offset,
+			self.y + self.check_offset,
+			self.check_size,
+			self.check_size
+		)
 	end
 end
 

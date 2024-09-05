@@ -43,6 +43,9 @@ function love.mousereleased(x, y, index)
 				End_menu.retry_button:check_pressed(x, y)
 				End_menu.menu_button:check_pressed(x, y)
 			end
+		elseif Game.scene == SCENE.OPTION then
+			Option_scene.start_button:check_pressed(x, y)
+			Option_scene.test_checkbox:check_pressed(x, y)
 		end
 	end
 end
