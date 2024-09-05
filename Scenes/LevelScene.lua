@@ -13,6 +13,8 @@ function Level_scene:load()
 	window_x = love.graphics.getWidth()
 	window_y = love.graphics.getHeight()
 
+	self.interactables = {}
+
 	self.level_0_pressed = function()
 		print("Level 0 pressed")
 		Game.level = LEVEL_IMAGES.level_0
@@ -75,25 +77,25 @@ function Level_scene:load()
 
 	self.title_text = text.new("Select Level", 3, HORIZONTAL_ALIGN.CENTER, VERTICAL_ALIGN.TOP, 0, 10)
 
-	self.level_0_button =
+	self.interactables[1] =
 		button.new(85, 50, "0", self.level_0_pressed, nil, HORIZONTAL_ALIGN.CENTER, VERTICAL_ALIGN.CENTER, -140, -100)
-	self.level_1_button =
+	self.interactables[2] =
 		button.new(85, 50, "1", self.level_1_pressed, nil, HORIZONTAL_ALIGN.CENTER, VERTICAL_ALIGN.CENTER, 0, -100)
-	self.level_2_button =
+	self.interactables[3] =
 		button.new(85, 50, "2", self.level_2_pressed, nil, HORIZONTAL_ALIGN.CENTER, VERTICAL_ALIGN.CENTER, 140, -100)
-	self.level_3_button =
+	self.interactables[4] =
 		button.new(85, 50, "3", self.level_3_pressed, nil, HORIZONTAL_ALIGN.CENTER, VERTICAL_ALIGN.CENTER, -140)
-	self.level_4_button =
+	self.interactables[5] =
 		button.new(85, 50, "4", self.level_4_pressed, nil, HORIZONTAL_ALIGN.CENTER, VERTICAL_ALIGN.CENTER)
-	self.level_5_button =
+	self.interactables[6] =
 		button.new(85, 50, "5", self.level_5_pressed, nil, HORIZONTAL_ALIGN.CENTER, VERTICAL_ALIGN.CENTER, 140)
-	self.level_6_button =
+	self.interactables[7] =
 		button.new(85, 50, "6", self.level_6_pressed, nil, HORIZONTAL_ALIGN.CENTER, VERTICAL_ALIGN.CENTER, -140, 100)
-	self.level_7_button =
+	self.interactables[8] =
 		button.new(85, 50, "7", self.level_7_pressed, nil, HORIZONTAL_ALIGN.CENTER, VERTICAL_ALIGN.CENTER, 0, 100)
-	self.level_8_button =
+	self.interactables[9] =
 		button.new(85, 50, "8", self.level_8_pressed, nil, HORIZONTAL_ALIGN.CENTER, VERTICAL_ALIGN.CENTER, 140, 100)
-	self.back_button =
+	self.interactables[10] =
 		button.new(100, 50, "Back", self.back_pressed, nil, HORIZONTAL_ALIGN.LEFT, VERTICAL_ALIGN.BOTTOM, 50, -50)
 end
 
@@ -103,45 +105,31 @@ function Level_scene:update(dt)
 
 	if x_difference >= RESIZE_DIFFERENCE then
 		self.title_text:auto_resize_x()
-		self.level_0_button:auto_resize_x()
-		self.level_1_button:auto_resize_x()
-		self.level_2_button:auto_resize_x()
-		self.level_3_button:auto_resize_x()
-		self.level_4_button:auto_resize_x()
-		self.level_5_button:auto_resize_x()
-		self.level_6_button:auto_resize_x()
-		self.level_7_button:auto_resize_x()
-		self.level_8_button:auto_resize_x()
+
+		for _, interactable in ipairs(self.interactables) do
+			interactable.auto_resize_x()
+		end
+
 		window_x = love.graphics.getWidth()
 	end
 
 	if y_difference >= RESIZE_DIFFERENCE then
 		self.title_text:auto_resize_y()
-		self.level_0_button:auto_resize_y()
-		self.level_1_button:auto_resize_y()
-		self.level_2_button:auto_resize_y()
-		self.level_3_button:auto_resize_y()
-		self.level_4_button:auto_resize_y()
-		self.level_5_button:auto_resize_y()
-		self.level_6_button:auto_resize_y()
-		self.level_7_button:auto_resize_y()
-		self.level_8_button:auto_resize_y()
+
+		for _, interactable in ipairs(self.interactables) do
+			interactable.auto_resize_y()
+		end
+
 		window_y = love.graphics.getHeight()
 	end
 end
 
 function Level_scene:draw()
 	self.title_text:draw()
-	self.level_0_button:draw()
-	self.level_1_button:draw()
-	self.level_2_button:draw()
-	self.level_3_button:draw()
-	self.level_4_button:draw()
-	self.level_5_button:draw()
-	self.level_6_button:draw()
-	self.level_7_button:draw()
-	self.level_8_button:draw()
-	self.back_button:draw()
+
+	for _, interactable in ipairs(self.interactables) do
+		interactable:draw()
+	end
 end
 
 function Level_scene:unload()

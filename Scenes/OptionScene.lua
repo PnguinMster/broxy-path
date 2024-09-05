@@ -14,16 +14,25 @@ function Option_scene:load()
 	window_x = love.graphics.getWidth()
 	window_y = love.graphics.getHeight()
 
+	self.interactables = {}
+
 	self.start_pressed = function()
 		print("Start button pressed")
+	end
+	self.back_pressed = function()
+		print("Back pressed")
+		Game:set_scene(SCENE.MENU)
 	end
 
 	self.title_text = text.new("Options", 3, HORIZONTAL_ALIGN.CENTER, VERTICAL_ALIGN.TOP, 0, 10)
 
-	self.start_button =
+	self.interactables[1] =
 		button.new(70, 50, "Start", self.start_pressed, nil, HORIZONTAL_ALIGN.CENTER, VERTICAL_ALIGN.CENTER)
 
-	self.test_checkbox = checkbox.new(false, 1, HORIZONTAL_ALIGN.CENTER, VERTICAL_ALIGN.CENTER, 0, 80)
+	self.interactables[2] = checkbox.new(false, 1, HORIZONTAL_ALIGN.CENTER, VERTICAL_ALIGN.CENTER, 0, 80)
+
+	self.interactables[3] =
+		button.new(100, 50, "Back", self.back_pressed, nil, HORIZONTAL_ALIGN.LEFT, VERTICAL_ALIGN.BOTTOM, 50, -50)
 end
 
 function Option_scene:update(dt)
@@ -32,21 +41,26 @@ function Option_scene:update(dt)
 
 	if x_difference >= RESIZE_DIFFERENCE then
 		self.title_text:auto_resize_x()
-		self.start_button:auto_resize_x()
+		for _, interactable in ipairs(self.interactables) do
+			interactable:auto_resize_x()
+		end
 		window_x = love.graphics.getWidth()
 	end
 
 	if y_difference >= RESIZE_DIFFERENCE then
 		self.title_text:auto_resize_y()
-		self.start_button:auto_resize_y()
+		for _, interactable in ipairs(self.interactables) do
+			interactable:auto_resize_y()
+		end
 		window_y = love.graphics.getHeight()
 	end
 end
 
 function Option_scene:draw()
 	self.title_text:draw()
-	self.start_button:draw()
-	self.test_checkbox:draw()
+	for _, interactable in ipairs(self.interactables) do
+		interactable:draw()
+	end
 end
 
 function Option_scene:unload()

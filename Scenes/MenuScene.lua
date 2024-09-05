@@ -13,6 +13,8 @@ function Menu_scene:load()
 	window_x = love.graphics.getWidth()
 	window_y = love.graphics.getHeight()
 
+	self.interactables = {}
+
 	self.start_pressed = function()
 		print("Start button pressed")
 		Game:set_scene(SCENE.LEVEL)
@@ -30,11 +32,11 @@ function Menu_scene:load()
 
 	self.title_text = text.new("Broxy Grath", 3, HORIZONTAL_ALIGN.CENTER, VERTICAL_ALIGN.TOP, 0, 10)
 
-	self.start_button =
+	self.interactables[1] =
 		button.new(70, 50, "Start", self.start_pressed, nil, HORIZONTAL_ALIGN.CENTER, VERTICAL_ALIGN.CENTER)
-	self.options_button =
+	self.interactables[2] =
 		button.new(70, 50, "Options", self.options_pressed, nil, HORIZONTAL_ALIGN.CENTER, VERTICAL_ALIGN.CENTER, 0, 70)
-	self.quit_button =
+	self.interactables[3] =
 		button.new(70, 50, "Quit", self.quit_pressed, nil, HORIZONTAL_ALIGN.CENTER, VERTICAL_ALIGN.CENTER, 0, 140)
 end
 
@@ -44,26 +46,26 @@ function Menu_scene:update(dt)
 
 	if x_difference >= RESIZE_DIFFERENCE then
 		self.title_text:auto_resize_x()
-		self.start_button:auto_resize_x()
-		self.options_button:auto_resize_x()
-		self.quit_button:auto_resize_x()
+		for _, interactable in ipairs(self.interactables) do
+			interactable.auto_resize_x()
+		end
 		window_x = love.graphics.getWidth()
 	end
 
 	if y_difference >= RESIZE_DIFFERENCE then
 		self.title_text:auto_resize_y()
-		self.start_button:auto_resize_y()
-		self.options_button:auto_resize_y()
-		self.quit_button:auto_resize_y()
+		for _, interactable in ipairs(self.interactables) do
+			interactable.auto_resize_y()
+		end
 		window_y = love.graphics.getHeight()
 	end
 end
 
 function Menu_scene:draw()
 	self.title_text:draw()
-	self.start_button:draw()
-	self.options_button:draw()
-	self.quit_button:draw()
+	for _, interactable in ipairs(self.interactables) do
+		interactable:draw()
+	end
 end
 
 function Menu_scene:unload()

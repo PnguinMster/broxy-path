@@ -13,6 +13,8 @@ function Pause_menu:load()
 	window_x = love.graphics.getWidth()
 	window_y = love.graphics.getHeight()
 
+	self.interactables = {}
+
 	self.continue_pressed = function()
 		print("Continue pressed")
 		self.active = false
@@ -43,9 +45,9 @@ function Pause_menu:load()
 		0,
 		-140
 	)
-	self.retry_button =
+	self.interactables[1] =
 		button.new(85, 50, "Retry", self.retry_pressed, nil, HORIZONTAL_ALIGN.CENTER, VERTICAL_ALIGN.CENTER, 0, 0)
-	self.menu_button =
+	self.interactables[2] =
 		button.new(85, 50, "Main Menu", self.menu_pressed, nil, HORIZONTAL_ALIGN.CENTER, VERTICAL_ALIGN.CENTER, 0, 140)
 end
 
@@ -55,16 +57,18 @@ function Pause_menu:update(dt)
 
 	if x_difference >= RESIZE_DIFFERENCE then
 		self.title_text:auto_resize_x()
-		self.continue_button:auto_resize_x()
-		self.retry_button:auto_resize_x()
-		self.menu_button:auto_resize_x()
+		for _, interactable in ipairs(self.interactables) do
+			interactable.auto_resize_x()
+		end
+		self.continue_b:auto_resize_x()
 		window_x = love.graphics.getWidth()
 	end
 
 	if y_difference >= RESIZE_DIFFERENCE then
-		self.continue_button:auto_resize_y()
-		self.retry_button:auto_resize_y()
-		self.menu_button:auto_resize_y()
+		self.title_text:auto_resize_y()
+		for _, interactable in ipairs(self.interactables) do
+			interactable.auto_resize_y()
+		end
 		window_y = love.graphics.getHeight()
 	end
 end
@@ -75,9 +79,9 @@ function Pause_menu:draw()
 	end
 
 	self.title_text:draw()
-	self.continue_button:draw()
-	self.retry_button:draw()
-	self.menu_button:draw()
+	for _, interactable in ipairs(self.interactables) do
+		interactable:draw()
+	end
 end
 
 function Pause_menu:unload()
