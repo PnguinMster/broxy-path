@@ -1,8 +1,5 @@
 require("Utility.StateEnum")
 require("Utility.SceneEnum")
-require("Scenes.GameScene")
-require("Scenes.MenuScene")
-require("Scenes.LevelScene")
 
 function love.keyreleased(key)
 	if Game.scene == SCENE.GAME then
