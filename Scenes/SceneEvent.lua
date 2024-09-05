@@ -20,28 +20,19 @@ end
 
 function love.mousereleased(x, y, index)
 	if index == 1 then
-		if Game.scene == SCENE.MENU then
-			for _, interactable in ipairs(Menu_scene.interactables) do
-				interactable:check_pressed(x, y)
-			end
-		elseif Game.scene == SCENE.LEVEL then
-			for _, interactable in ipairs(Level_scene.interactables) do
-				interactable:check_pressed(x, y)
-			end
-		elseif Game.scene == SCENE.GAME then
+		local check_display = nil
+		check_display = Game.scene
+
+		if Game.scene == SCENE.GAME then
 			if Pause_menu.active then
-				for _, interactable in ipairs(Pause_menu.interactables) do
-					interactable:check_pressed(x, y)
-				end
+				check_display = Pause_menu
 			elseif End_menu.active then
-				for _, interactable in ipairs(End_menu.interactables) do
-					interactable:check_pressed(x, y)
-				end
+				check_display = End_menu
 			end
-		elseif Game.scene == SCENE.OPTION then
-			for _, interactable in ipairs(Option_scene.interactables) do
-				interactable:check_pressed(x, y)
-			end
+		end
+
+		for _, interactable in ipairs(check_display.interactables) do
+			interactable:check_pressed(x, y)
 		end
 	end
 end
