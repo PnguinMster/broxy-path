@@ -8,6 +8,7 @@ local Checkbox = {
 	vertical_align = VERTICAL_ALIGN.TOP,
 	x = 0,
 	y = 0,
+	func = nil,
 	box_size = 0,
 	check_size = 0,
 	check_offset = 0,
@@ -17,7 +18,7 @@ Checkbox.__index = Checkbox
 local check_scale = 0.8
 local default_size = 25
 
-function Checkbox.new(checked, scale, horizontal_align, vertical_align, offset_x, offset_y)
+function Checkbox.new(checked, scale, func, horizontal_align, vertical_align, offset_x, offset_y)
 	local x = offset_x or 0
 	local y = offset_y or 0
 	local box_size = default_size * scale
@@ -47,6 +48,9 @@ function Checkbox.new(checked, scale, horizontal_align, vertical_align, offset_x
 		scale = scale or 1,
 		offset_x = offset_x or 0,
 		offset_y = offset_y or 0,
+		func = func or function()
+			print("No Function")
+		end,
 		horizontal_align = horizontal_align or HORIZONTAL_ALIGN.LEFT,
 		vertical_align = vertical_align or VERTICAL_ALIGN.TOP,
 		box_size = box_size or default_size,
@@ -55,16 +59,13 @@ function Checkbox.new(checked, scale, horizontal_align, vertical_align, offset_x
 	}, Checkbox)
 end
 
-function Checkbox:is_checked()
-	return self.checked
-end
-
 function Checkbox:check_pressed(mouse_x, mouse_y)
 	local offset_x = self.box_size
 	local offset_y = self.box_size
 
 	if mouse_x <= self.x + offset_x and mouse_x >= self.x and mouse_y <= self.y + offset_y and mouse_y >= self.y then
 		self.checked = not self.checked
+		self.func(self.checked)
 	end
 end
 

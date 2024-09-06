@@ -19,6 +19,10 @@ function Option_scene:load()
 	self.start_pressed = function()
 		print("Start button pressed")
 	end
+	self.checkbox_pressed = function(is_checked)
+		print("Checkbox pressed")
+		print("Value is: " .. tostring(is_checked))
+	end
 	self.back_pressed = function()
 		print("Back pressed")
 		Game:set_scene(SCENE.MENU)
@@ -29,7 +33,8 @@ function Option_scene:load()
 	self.interactables[1] =
 		button.new(70, 50, "Start", self.start_pressed, nil, HORIZONTAL_ALIGN.CENTER, VERTICAL_ALIGN.CENTER)
 
-	self.interactables[2] = checkbox.new(false, 1, HORIZONTAL_ALIGN.CENTER, VERTICAL_ALIGN.CENTER, 0, 80)
+	self.interactables[2] =
+		checkbox.new(false, 1, self.checkbox_pressed, HORIZONTAL_ALIGN.CENTER, VERTICAL_ALIGN.CENTER, 0, 80)
 
 	self.interactables[3] =
 		button.new(100, 50, "Back", self.back_pressed, nil, HORIZONTAL_ALIGN.LEFT, VERTICAL_ALIGN.BOTTOM, 50, -50)
