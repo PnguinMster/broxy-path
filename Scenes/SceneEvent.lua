@@ -31,5 +31,23 @@ function love.mousereleased(x, y, index)
 		for _, interactable in ipairs(check_display.interactables) do
 			interactable:check_pressed(x, y)
 		end
+
+		if check_display == SCENE.OPTION then
+			check_display.test_slider:mouse_released()
+		end
+	end
+end
+
+function love.mousepressed(x, y, index)
+	if index == 1 then
+		if Game.scene == SCENE.OPTION then
+			Game.scene.test_slider:check_pressed(x, y)
+		end
+	end
+end
+
+function love.mousemoved(x, y)
+	if Game.scene == SCENE.OPTION then
+		Game.scene.test_slider:mouse_moved(x, y)
 	end
 end

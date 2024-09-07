@@ -1,6 +1,7 @@
 local button = require("UI.Button")
 local text = require("UI.Text")
-local checkbox = require("UI.checkbox")
+local checkbox = require("UI.Checkbox")
+local slider = require("UI.Slider")
 
 Option_scene = {}
 Option_scene.__index = Option_scene
@@ -27,6 +28,9 @@ function Option_scene:load()
 		print("Back pressed")
 		Game:set_scene(SCENE.MENU)
 	end
+	self.slider_pressed = function()
+		print("Slider pressed")
+	end
 
 	self.title_text = text.new("Options", 3, HORIZONTAL_ALIGN.CENTER, VERTICAL_ALIGN.TOP, 0, 10)
 
@@ -35,6 +39,9 @@ function Option_scene:load()
 
 	self.interactables[2] =
 		checkbox.new(false, 1, self.checkbox_pressed, HORIZONTAL_ALIGN.CENTER, VERTICAL_ALIGN.CENTER, 0, 80)
+
+	self.test_slider =
+		slider.new(12, 240, 8, self.slider_pressed, HORIZONTAL_ALIGN.CENTER, VERTICAL_ALIGN.CENTER, 0, 120)
 
 	self.interactables[3] =
 		button.new(100, 50, "Back", self.back_pressed, nil, HORIZONTAL_ALIGN.LEFT, VERTICAL_ALIGN.BOTTOM, 50, -50)
@@ -66,6 +73,7 @@ function Option_scene:draw()
 	for _, interactable in ipairs(self.interactables) do
 		interactable:draw()
 	end
+	self.test_slider:draw()
 end
 
 function Option_scene:unload()
