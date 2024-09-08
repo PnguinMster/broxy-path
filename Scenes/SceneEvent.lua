@@ -46,8 +46,8 @@ function love.mousepressed(x, y, index)
 	end
 end
 
-function love.mousemoved(x, y)
+function love.mousemoved(x)
 	if Game.scene == SCENE.OPTION then
-		Game.scene.test_slider:mouse_moved(x, y)
+		Game.scene.test_slider:mouse_moved(x)
 	end
 end
