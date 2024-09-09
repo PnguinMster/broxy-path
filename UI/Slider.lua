@@ -16,6 +16,7 @@ local Slider = {
 	bar_min_position = 0,
 	bar_max_position = 0,
 	is_dragging_slider = false,
+	handle_drag_offset = 0,
 	value = 0,
 	min_value = 0,
 	max_value = 10,
@@ -90,12 +91,13 @@ function Slider:check_pressed(mouse_x, mouse_y)
 		and mouse_y >= self.y - offset
 	then
 		self.is_dragging_slider = true
+		self.handle_drag_offset = (self.x + self.handle_offset_postion) - mouse_x
 	end
 end
 
 function Slider:mouse_moved(x)
 	if self.is_dragging_slider == true then
-		local offset = x - self.x
+		local offset = x - self.x + self.handle_drag_offset
 		local position = self.x + offset
 
 		if position <= self.bar_min_position then
