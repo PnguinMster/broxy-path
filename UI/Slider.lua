@@ -16,10 +16,25 @@ local Slider = {
 	bar_min_position = 0,
 	bar_max_position = 0,
 	is_dragging_slider = false,
+	value = 0,
+	min_value = 0,
+	max_value = 10,
 }
 Slider.__index = Slider
 
-function Slider.new(handle_radius, bar_width, bar_height, func, horizontal_align, vertical_align, offset_x, offset_y)
+function Slider.new(
+	start_value,
+	min_value,
+	max_value,
+	handle_radius,
+	bar_width,
+	bar_height,
+	func,
+	horizontal_align,
+	vertical_align,
+	offset_x,
+	offset_y
+)
 	local x = offset_x or 0
 	local y = offset_y or 0
 
@@ -58,6 +73,9 @@ function Slider.new(handle_radius, bar_width, bar_height, func, horizontal_align
 		vertical_align = vertical_align or VERTICAL_ALIGN.TOP,
 		bar_min_position = bar_min_position or 0,
 		bar_max_position = bar_max_position or 0,
+		value = start_value or 0,
+		min_value = min_value or 0,
+		max_value = max_value or 0,
 	}, Slider)
 end
 

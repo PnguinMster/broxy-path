@@ -41,7 +41,7 @@ function Option_scene:load()
 		checkbox.new(false, 1, self.checkbox_pressed, HORIZONTAL_ALIGN.CENTER, VERTICAL_ALIGN.CENTER, 0, 80)
 
 	self.test_slider =
-		slider.new(12, 240, 8, self.slider_pressed, HORIZONTAL_ALIGN.CENTER, VERTICAL_ALIGN.CENTER, 0, 120)
+		slider.new(5, 0, 1, 12, 240, 8, self.slider_pressed, HORIZONTAL_ALIGN.CENTER, VERTICAL_ALIGN.CENTER, 0, 120)
 
 	self.interactables[3] =
 		button.new(100, 50, "Back", self.back_pressed, nil, HORIZONTAL_ALIGN.LEFT, VERTICAL_ALIGN.BOTTOM, 50, -50)
