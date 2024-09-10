@@ -21,7 +21,6 @@ local Slider = {
 	bar_width = 0,
 	func = nil,
 	handle_offset_postion = 0,
-	bar_min_position = 0,
 	bar_max_position = 0,
 	is_dragging_slider = false,
 	handle_drag_offset = 0,
@@ -59,9 +58,7 @@ function Slider.new(
 		y = (love.graphics:getHeight() / 2) + y
 	end
 
-	local bar_min_position = x
 	local bar_max_position = x + bar_width
-
 	local handle_drag_offset = value_to_handle(start_value, bar_width, min_value, max_value)
 
 	return setmetatable({
@@ -76,7 +73,6 @@ function Slider.new(
 		end,
 		horizontal_align = horizontal_align or HORIZONTAL_ALIGN.LEFT,
 		vertical_align = vertical_align or VERTICAL_ALIGN.TOP,
-		bar_min_position = bar_min_position or 0,
 		bar_max_position = bar_max_position or 0,
 		value = start_value or 0,
 		min_value = min_value or 0,
@@ -104,7 +100,7 @@ function Slider:mouse_moved(x)
 		local offset = x - self.x + self.handle_drag_offset
 		local position = self.x + offset
 
-		if position <= self.bar_min_position then
+		if position <= self.x then
 			self.handle_offset_postion = 0
 		elseif position > self.bar_max_position then
 			self.handle_offset_postion = self.bar_width
