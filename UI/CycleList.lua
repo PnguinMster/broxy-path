@@ -9,9 +9,6 @@ local CycleList = {
 	offset_y = 0,
 	horizontal_align = HORIZONTAL_ALIGN.LEFT,
 	vertical_align = VERTICAL_ALIGN.TOP,
-	list_text = nil,
-	left_button = nil,
-	right_button = nil,
 }
 CycleList.__index = CycleList
 
