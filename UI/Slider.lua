@@ -103,7 +103,6 @@ function Slider:mouse_moved(x)
 	if self.is_dragging_slider == true then
 		local offset = x - self.x + self.handle_drag_offset
 		local position = self.x + offset
-		local value_range = self.max_value - self.min_value
 
 		if position <= self.bar_min_position then
 			self.handle_offset_postion = 0
@@ -111,12 +110,10 @@ function Slider:mouse_moved(x)
 			self.handle_offset_postion = self.bar_width
 		else
 			self.handle_offset_postion =
-				math.round_to_nearest_step(offset, 0, self.bar_width, math.floor(self.bar_width / value_range))
+				math.round_to_nearest_step(offset, 0, self.bar_width, self.max_value - self.min_value)
 		end
 
-		local bar_ratio = self.handle_offset_postion / self.bar_width
-		self.value = value_range * bar_ratio
-		print("Value: " .. self.value)
+		self.value = handle_to_value(self.handle_offset_postion, self.bar_width, self.min_value, self.max_value)
 	end
 end
 
@@ -129,9 +126,9 @@ function Slider:auto_resize_x()
 	local x = self.offset_x - (self.box_size / 2)
 
 	if self.horizontal_align == HORIZONTAL_ALIGN.RIGHT then
-		x = x + love.graphics:getWidth()
+		x = x + love.graphics:getWidth() - self.bar_width
 	elseif self.horizontal_align == HORIZONTAL_ALIGN.CENTER then
-		x = (love.graphics:getWidth() / 2) + x
+		x = (love.graphics:getWidth() / 2) + x - (self.bar_width / 2)
 	end
 
 	self.x = x
