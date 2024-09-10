@@ -6,8 +6,6 @@ local Slider = {
 	vertical_align = VERTICAL_ALIGN.TOP,
 	x = 0,
 	y = 0,
-	bar_offset_x = 0,
-	bar_offset_y = 0,
 	handle_radius = 0,
 	bar_height = 0,
 	bar_width = 0,
@@ -40,9 +38,9 @@ function Slider.new(
 	local y = offset_y or 0
 
 	if horizontal_align == HORIZONTAL_ALIGN.RIGHT then
-		x = x + love.graphics:getWidth()
+		x = x + love.graphics:getWidth() - bar_width
 	elseif horizontal_align == HORIZONTAL_ALIGN.CENTER then
-		x = (love.graphics:getWidth() / 2) + x
+		x = (love.graphics:getWidth() / 2) + x - (bar_width / 2)
 	end
 
 	if vertical_align == VERTICAL_ALIGN.BOTTOM then
@@ -51,13 +49,10 @@ function Slider.new(
 		y = (love.graphics:getHeight() / 2) + y
 	end
 
-	local bar_offset_x = bar_width / 2
-	local bar_offset_y = bar_height / 2
-	local bar_min_position = x - bar_offset_x
-	local bar_max_position = x + bar_offset_x
+	--TODO: have value align with bar with start and on change
 
-	print("bar widht is:" .. bar_min_position)
-	print("bar height is:" .. bar_max_position)
+	local bar_min_position = x
+	local bar_max_position = x + bar_width
 
 	return setmetatable({
 		x = x or 0,
@@ -65,8 +60,6 @@ function Slider.new(
 		handle_radius = handle_radius or 0,
 		bar_height = bar_height or 0,
 		bar_width = bar_width or 0,
-		bar_offset_x = bar_offset_x or 0,
-		bar_offset_y = bar_offset_y or 0,
 		func = func or function()
 			print("No Function")
 		end,
@@ -101,9 +94,9 @@ function Slider:mouse_moved(x)
 		local position = self.x + offset
 
 		if position <= self.bar_min_position then
-			self.handle_offset_postion = -self.bar_offset_x
+			self.handle_offset_postion = 0
 		elseif position > self.bar_max_position then
-			self.handle_offset_postion = self.bar_offset_x
+			self.handle_offset_postion = self.bar_width
 		else
 			self.handle_offset_postion = offset
 		end
@@ -142,13 +135,7 @@ end
 function Slider:draw()
 	love.graphics.setColor(1, 1, 1, 0.8)
 	love.graphics.circle("line", self.x + self.handle_offset_postion, self.y, self.handle_radius)
-	love.graphics.rectangle(
-		"line",
-		self.x - self.bar_offset_x,
-		self.y - self.bar_offset_y,
-		self.bar_width,
-		self.bar_height
-	)
+	love.graphics.rectangle("line", self.x, self.y - (self.bar_height / 2), self.bar_width, self.bar_height)
 end
 
 function Slider.unload()
