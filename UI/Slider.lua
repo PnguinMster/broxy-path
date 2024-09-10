@@ -1,6 +1,16 @@
 require("Utility.AlignEnum")
 require("Utility/Math")
 
+local function handle_to_value(handle_x, bar_width, min_value, max_value)
+	local ratio = handle_x / bar_width
+	return min_value + ratio * (max_value - min_value)
+end
+
+local function value_to_handle(value, bar_width, min_value, max_value)
+	local ratio = (value - min_value) / (max_value - min_value)
+	return ratio * bar_width
+end
+
 local Slider = {
 	horizontal_align = HORIZONTAL_ALIGN.LEFT,
 	vertical_align = VERTICAL_ALIGN.TOP,
@@ -49,10 +59,10 @@ function Slider.new(
 		y = (love.graphics:getHeight() / 2) + y
 	end
 
-	--TODO: have value align with bar with start and on change
-
 	local bar_min_position = x
 	local bar_max_position = x + bar_width
+
+	local handle_drag_offset = value_to_handle(start_value, bar_width, min_value, max_value)
 
 	return setmetatable({
 		x = x or 0,
@@ -60,6 +70,7 @@ function Slider.new(
 		handle_radius = handle_radius or 0,
 		bar_height = bar_height or 0,
 		bar_width = bar_width or 0,
+		handle_offset_postion = handle_drag_offset,
 		func = func or function()
 			print("No Function")
 		end,
@@ -92,14 +103,20 @@ function Slider:mouse_moved(x)
 	if self.is_dragging_slider == true then
 		local offset = x - self.x + self.handle_drag_offset
 		local position = self.x + offset
+		local value_range = self.max_value - self.min_value
 
 		if position <= self.bar_min_position then
 			self.handle_offset_postion = 0
 		elseif position > self.bar_max_position then
 			self.handle_offset_postion = self.bar_width
 		else
-			self.handle_offset_postion = offset
+			self.handle_offset_postion =
+				math.round_to_nearest_step(offset, 0, self.bar_width, math.floor(self.bar_width / value_range))
 		end
+
+		local bar_ratio = self.handle_offset_postion / self.bar_width
+		self.value = value_range * bar_ratio
+		print("Value: " .. self.value)
 	end
 end
 
