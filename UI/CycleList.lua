@@ -9,24 +9,42 @@ local CycleList = {
 	offset_y = 0,
 	horizontal_align = HORIZONTAL_ALIGN.LEFT,
 	vertical_align = VERTICAL_ALIGN.TOP,
-	list = {},
 	list_text = nil,
 	left_button = nil,
 	right_button = nil,
 }
 CycleList.__index = CycleList
 
-local left_button_func = function()
+local current_element_index = 1
+local max_element_index = 1
+local list = {}
+
+local left_button_func = function(ui_text)
 	print("Left button pressed")
+
+	current_element_index = current_element_index - 1
+	if current_element_index < 1 then
+		current_element_index = max_element_index
+	end
+
+	ui_text.text = list[current_element_index]
 end
 
-local right_button_func = function()
+local right_button_func = function(ui_text)
 	print("Right button pressed")
+
+	current_element_index = current_element_index + 1
+	if current_element_index > max_element_index then
+		current_element_index = 1
+	end
+
+	ui_text.text = list[current_element_index]
 end
 
-function CycleList.new(list, func, horizontal_align, vertical_align, offset_x, offset_y)
+function CycleList.new(items, func, horizontal_align, vertical_align, offset_x, offset_y)
 	local x = offset_x or 0
 	local y = offset_y or 0
+	list = items
 
 	if horizontal_align == HORIZONTAL_ALIGN.RIGHT then
 		x = x + love.graphics:getWidth()
@@ -41,9 +59,12 @@ function CycleList.new(list, func, horizontal_align, vertical_align, offset_x, o
 	end
 
 	local first_item = "Empty"
-	if list then
-		first_item = list[0]
+	if items then
+		first_item = items[1]
+		max_element_index = #items
 	end
+
+	local ui_text = text.new(first_item, 1, horizontal_align, vertical_align, offset_x, offset_y) or text.new()
 
 	return setmetatable({
 		x = x or 0,
@@ -55,30 +76,29 @@ function CycleList.new(list, func, horizontal_align, vertical_align, offset_x, o
 		offset_y = offset_y or 0,
 		horizontal_align = horizontal_align or HORIZONTAL_ALIGN.LEFT,
 		vertical_align = vertical_align or VERTICAL_ALIGN.TOP,
-		list = list or {},
-		list_text = text.new(first_item, 1, horizontal_align, vertical_align, offset_x, offset_y) or text.new(),
+		list_text = ui_text,
 		left_button = button.new(
-			50,
-			50,
+			30,
+			30,
 			"<",
 			left_button_func,
-			nil,
+			ui_text,
 			horizontal_align,
 			vertical_align,
 			offset_x - 55,
 			offset_y
-		) or nil,
+		) or button.new(),
 		right_button = button.new(
-			50,
-			50,
+			30,
+			30,
 			">",
 			right_button_func,
-			nil,
+			ui_text,
 			horizontal_align,
 			vertical_align,
 			offset_x + 55,
 			offset_y
-		) or nil,
+		) or button.new(),
 	}, CycleList)
 end
 

@@ -12,6 +12,8 @@ local RESIZE_DIFFERENCE = 5
 local window_x = 0
 local window_y = 0
 
+local test_list = { "first", "second", "third", "last" }
+
 function Option_scene:load()
 	window_x = love.graphics.getWidth()
 	window_y = love.graphics.getHeight()
@@ -51,7 +53,7 @@ function Option_scene:load()
 		button.new(100, 50, "Back", self.back_pressed, nil, HORIZONTAL_ALIGN.LEFT, VERTICAL_ALIGN.BOTTOM, 50, -50)
 
 	self.interactables[4] =
-		cycle_list.new(nil, self.cycle_list_pressed, HORIZONTAL_ALIGN.CENTER, VERTICAL_ALIGN.CENTER, 0, 200)
+		cycle_list.new(test_list, self.cycle_list_pressed, HORIZONTAL_ALIGN.CENTER, VERTICAL_ALIGN.CENTER, 0, 200)
 end
 
 function Option_scene:update(dt)
