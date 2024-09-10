@@ -68,7 +68,7 @@ function Slider.new(
 		bar_height = bar_height or 0,
 		bar_width = bar_width or 0,
 		handle_offset_postion = handle_drag_offset,
-		func = func or function()
+		func = func or function(value)
 			print("No Function")
 		end,
 		horizontal_align = horizontal_align or HORIZONTAL_ALIGN.LEFT,
@@ -110,6 +110,7 @@ function Slider:mouse_moved(x)
 		end
 
 		self.value = handle_to_value(self.handle_offset_postion, self.bar_width, self.min_value, self.max_value)
+		self.func(self.value)
 	end
 end
 
