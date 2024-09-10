@@ -2,6 +2,7 @@ local button = require("UI.Button")
 local text = require("UI.Text")
 local checkbox = require("UI.Checkbox")
 local slider = require("UI.Slider")
+local cycle_list = require("UI.CycleList")
 
 Option_scene = {}
 Option_scene.__index = Option_scene
@@ -31,6 +32,9 @@ function Option_scene:load()
 	self.slider_pressed = function()
 		print("Slider pressed")
 	end
+	self.cycle_list_pressed = function()
+		print("Cycle List pressed")
+	end
 
 	self.title_text = text.new("Options", 3, HORIZONTAL_ALIGN.CENTER, VERTICAL_ALIGN.TOP, 0, 10)
 
@@ -45,6 +49,9 @@ function Option_scene:load()
 
 	self.interactables[3] =
 		button.new(100, 50, "Back", self.back_pressed, nil, HORIZONTAL_ALIGN.LEFT, VERTICAL_ALIGN.BOTTOM, 50, -50)
+
+	self.interactables[4] =
+		cycle_list.new(nil, self.cycle_list_pressed, HORIZONTAL_ALIGN.CENTER, VERTICAL_ALIGN.CENTER, 0, 200)
 end
 
 function Option_scene:update(dt)
