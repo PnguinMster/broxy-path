@@ -15,4 +15,6 @@ function love.conf(t)
 	t.modules.video = false
 
 	t.version = "11.5"
+
+	t.identity = "game_data"
 end
