@@ -29,6 +29,7 @@ function Checkbox.new(checked, scale, func, horizontal_align, vertical_align, of
 
 	if horizontal_align == HORIZONTAL_ALIGN.RIGHT then
 		x = x + love.graphics:getWidth()
+		x = x - (box_size / 2)
 	elseif horizontal_align == HORIZONTAL_ALIGN.CENTER then
 		x = (love.graphics:getWidth() / 2) + x
 	end
