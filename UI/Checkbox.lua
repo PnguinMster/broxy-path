@@ -75,6 +75,7 @@ function Checkbox:auto_resize_x()
 
 	if self.horizontal_align == HORIZONTAL_ALIGN.RIGHT then
 		x = x + love.graphics:getWidth()
+		x = x - (self.box_size / 2)
 	elseif self.horizontal_align == HORIZONTAL_ALIGN.CENTER then
 		x = (love.graphics:getWidth() / 2) + x
 	end

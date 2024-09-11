@@ -15,8 +15,12 @@ CycleList.__index = CycleList
 local current_element_index = 1
 local max_element_index = 1
 local list = {}
+local ui_text
 
-local left_button_func = function(ui_text)
+local buttons_size = 30
+local button_offset = 55
+
+local left_button_func = function()
 	print("Left button pressed")
 
 	current_element_index = current_element_index - 1
@@ -27,7 +31,7 @@ local left_button_func = function(ui_text)
 	ui_text.text = list[current_element_index]
 end
 
-local right_button_func = function(ui_text)
+local right_button_func = function()
 	print("Right button pressed")
 
 	current_element_index = current_element_index + 1
@@ -45,6 +49,7 @@ function CycleList.new(items, func, horizontal_align, vertical_align, offset_x, 
 
 	if horizontal_align == HORIZONTAL_ALIGN.RIGHT then
 		x = x + love.graphics:getWidth()
+		offset_x = offset_x - button_offset - (buttons_size / 2)
 	elseif horizontal_align == HORIZONTAL_ALIGN.CENTER then
 		x = (love.graphics:getWidth() / 2) + x
 	end
@@ -61,7 +66,7 @@ function CycleList.new(items, func, horizontal_align, vertical_align, offset_x, 
 		max_element_index = #items
 	end
 
-	local ui_text = text.new(first_item, 1, horizontal_align, vertical_align, offset_x, offset_y) or text.new()
+	ui_text = text.new(first_item, 1, horizontal_align, vertical_align, offset_x, offset_y) or text.new()
 
 	return setmetatable({
 		x = x or 0,
@@ -73,27 +78,26 @@ function CycleList.new(items, func, horizontal_align, vertical_align, offset_x, 
 		offset_y = offset_y or 0,
 		horizontal_align = horizontal_align or HORIZONTAL_ALIGN.LEFT,
 		vertical_align = vertical_align or VERTICAL_ALIGN.TOP,
-		list_text = ui_text,
 		left_button = button.new(
-			30,
-			30,
+			buttons_size,
+			buttons_size,
 			"<",
 			left_button_func,
-			ui_text,
+			nil,
 			horizontal_align,
 			vertical_align,
-			offset_x - 55,
+			offset_x - button_offset,
 			offset_y
 		) or button.new(),
 		right_button = button.new(
-			30,
-			30,
+			buttons_size,
+			buttons_size,
 			">",
 			right_button_func,
-			ui_text,
+			nil,
 			horizontal_align,
 			vertical_align,
-			offset_x + 55,
+			offset_x + button_offset,
 			offset_y
 		) or button.new(),
 	}, CycleList)
@@ -109,14 +113,14 @@ function CycleList:auto_resize_x()
 
 	if self.horizontal_align == HORIZONTAL_ALIGN.RIGHT then
 		x = x + love.graphics:getWidth()
-		x = x - self.width / 2
 	elseif self.horizontal_align == HORIZONTAL_ALIGN.CENTER then
 		x = (love.graphics:getWidth() / 2) + x
-		x = x - self.width / 2
 	end
 
 	self.x = x
-	self.string:auto_resize_x()
+	ui_text:auto_resize_x()
+	self.left_button:auto_resize_x()
+	self.right_button:auto_resize_x()
 end
 
 function CycleList:auto_resize_y()
@@ -124,19 +128,19 @@ function CycleList:auto_resize_y()
 
 	if self.vertical_align == VERTICAL_ALIGN.BOTTOM then
 		y = y + love.graphics:getHeight()
-		y = y - self.height / 2
 	elseif self.vertical_align == VERTICAL_ALIGN.CENTER then
 		y = (love.graphics:getHeight() / 2) + y
-		y = y - self.height / 2
 	end
 
 	self.y = y
-	self.string:auto_resize_y()
+	ui_text:auto_resize_y()
+	self.left_button:auto_resize_y()
+	self.right_button:auto_resize_y()
 end
 
 function CycleList:draw()
 	love.graphics.setColor(1, 1, 1, 0.8)
-	self.list_text:draw()
+	ui_text:draw()
 	self.left_button:draw()
 	self.right_button:draw()
 end
