@@ -62,6 +62,7 @@ function Menu_scene:update(dt)
 end
 
 function Menu_scene:draw()
+	love.graphics.setColor(love.math.colorFromBytes(235, 237, 233))
 	self.title_text:draw()
 	for _, interactable in ipairs(self.interactables) do
 		interactable:draw()
