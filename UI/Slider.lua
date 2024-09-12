@@ -48,6 +48,7 @@ function Slider.new(
 
 	if horizontal_align == HORIZONTAL_ALIGN.RIGHT then
 		x = x + love.graphics:getWidth() - bar_width
+		x = x - handle_radius
 	elseif horizontal_align == HORIZONTAL_ALIGN.CENTER then
 		x = (love.graphics:getWidth() / 2) + x - (bar_width / 2)
 	end
@@ -144,7 +145,7 @@ function Slider:auto_resize_y()
 end
 
 function Slider:draw()
-	love.graphics.setColor(1, 1, 1, 0.8)
+	love.graphics.setColor(love.math.colorFromBytes(235, 237, 233))
 	love.graphics.circle("line", self.x + self.handle_offset_postion, self.y, self.handle_radius)
 	love.graphics.rectangle("line", self.x, self.y - (self.bar_height / 2), self.bar_width, self.bar_height)
 end
