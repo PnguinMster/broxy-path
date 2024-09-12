@@ -33,7 +33,9 @@ function love.mousereleased(x, y, index)
 		end
 
 		if check_display == SCENE.OPTION then
-			check_display.test_slider:mouse_released()
+			for _, option_slider in ipairs(check_display.option_sliders) do
+				option_slider:mouse_released()
+			end
 		end
 	end
 end
@@ -41,13 +43,17 @@ end
 function love.mousepressed(x, y, index)
 	if index == 1 then
 		if Game.scene == SCENE.OPTION then
-			Game.scene.test_slider:check_pressed(x, y)
+			for _, option_slider in ipairs(Game.scene.option_sliders) do
+				option_slider:check_pressed(x, y)
+			end
 		end
 	end
 end
 
 function love.mousemoved(x)
 	if Game.scene == SCENE.OPTION then
-		Game.scene.test_slider:mouse_moved(x)
+		for _, option_slider in ipairs(Game.scene.option_sliders) do
+			option_slider:mouse_moved(x)
+		end
 	end
 end
