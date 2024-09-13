@@ -170,10 +170,10 @@ function Option_scene:draw()
 		interactable:draw()
 	end
 
-	love.graphics.setColor(love.math.colorFromBytes(235, 237, 233))
 	for _, text_display in ipairs(self.text_displays) do
 		text_display:draw()
 	end
+
 	for _, option_slider in ipairs(self.option_sliders) do
 		option_slider:draw()
 	end

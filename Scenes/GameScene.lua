@@ -48,7 +48,6 @@ function Game_scene:draw()
 	Camera:set()
 	Tilemap:draw_map()
 	Player:draw()
-	love.graphics.setColor(1, 0.5, 0)
 	Camera:unset()
 
 	Pause_menu:draw()
