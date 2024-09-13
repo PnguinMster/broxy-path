@@ -1,3 +1,4 @@
+require("Utility.ColorEnum")
 local button = require("UI.Button")
 local text = require("UI.Text")
 local checkbox = require("UI.Checkbox")

@@ -1,5 +1,6 @@
 require("Utility.LayerEnum")
 require("Utility.Math")
+require("Utility.ColorEnum")
 
 local Player = {}
 Player.__index = Player
@@ -106,7 +107,7 @@ function Player:update(dt)
 end
 
 function Player:draw()
-	love.graphics.setColor(love.math.colorFromBytes(218, 212, 94))
+	love.graphics.setColor(COLOR.ORANGE:rgb_color())
 
 	local x1, y1, x2, y2, x5, y5, x6, y6 = self.top_body:getWorldPoints(self.top_shape:getPoints())
 	local x7, y7, x8, y8, x3, y3, x4, y4 = self.bottom_body:getWorldPoints(self.bottom_shape:getPoints())
@@ -142,7 +143,7 @@ end
 function Player:hover_bar()
 	local bar_height = math.lerp(self.height, 0, hover_timer)
 
-	love.graphics.setColor(love.math.colorFromBytes(222, 238, 214))
+	love.graphics.setColor(COLOR.GREEN:rgb_color())
 	local x1, y1, x2, y2, x5, y5, x6, y6 = self.top_body:getWorldPoints(self.top_shape:getPoints())
 	local x7, y7, x8, y8, x3, y3, x4, y4 = self.bottom_body:getWorldPoints(self.bottom_shape:getPoints())
 

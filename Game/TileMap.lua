@@ -1,5 +1,6 @@
 require("Game.Block")
 require("Utility.BlockTypeEnum")
+require("Utility.ColorEnum")
 
 local love = require("love")
 
@@ -27,8 +28,8 @@ function Tilemap:create_map(image, player_width, player_height)
 	for x = 1, level:getWidth() do
 		self.map[x] = {}
 		for y = 1, level:getHeight() do
-			local r = love.math.colorToBytes(level:getPixel(x - 1, y - 1))
-			local type = self.has_block_value(r)
+			local r, g, b = love.math.colorToBytes(level:getPixel(x - 1, y - 1))
+			local type = self.has_block_value(r, g, b)
 
 			if r == BLOCK_TYPE.START.r then
 				self.start_x = -x
@@ -90,16 +91,12 @@ end
 
 function Tilemap:draw_map()
 	for _, block in ipairs(self.static_blocks) do
-		love.graphics.setColor(
-			love.math.colorFromBytes(block.map_info.type.r, block.map_info.type.g, block.map_info.type.b)
-		)
+		love.graphics.setColor(block.map_info.type:rgb_color())
 		love.graphics.polygon("line", block.body:getWorldPoints(block.shape:getPoints()))
 	end
 
 	for _, block in ipairs(self.movable_blocks) do
-		love.graphics.setColor(
-			love.math.colorFromBytes(block.map_info.type.r, block.map_info.type.g, block.map_info.type.b)
-		)
+		love.graphics.setColor(block.map_info.type:rgb_color())
 		love.graphics.polygon("line", block.body:getWorldPoints(block.shape:getPoints()))
 	end
 end
@@ -108,10 +105,10 @@ function Tilemap.unload()
 	setmetatable(Tilemap, nil)
 end
 
-function Tilemap.has_block_value(value)
-	for _, val in pairs(BLOCK_TYPE) do
-		if value == val.r then
-			return val
+function Tilemap.has_block_value(r, g, b)
+	for _, type in pairs(BLOCK_TYPE) do
+		if type:has_values(r, g, b) then
+			return type
 		end
 	end
 	return nil

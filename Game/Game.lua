@@ -1,5 +1,6 @@
 require("Utility.StateEnum")
 require("Utility.SceneEnum")
+require("Utility.ColorEnum")
 require("Utility.LevelImagesEnum")
 require("Scenes.SceneEvent")
 
@@ -23,7 +24,7 @@ function Game:set_state(state)
 end
 
 function Game:load()
-	love.graphics.setBackgroundColor(love.math.colorFromBytes(25, 18, 28))
+	love.graphics.setBackgroundColor(COLOR.BLACK:rgb_color())
 
 	self.scene:load()
 end
@@ -33,7 +34,7 @@ function Game:update(dt)
 end
 
 function Game:draw()
-	love.graphics.setColor(1, 1, 1)
+	love.graphics.setColor(COLOR.WHITE:rgb_color())
 	love.graphics.print("FPS: " .. tostring(love.timer.getFPS()), 10, 10)
 
 	self.scene:draw()
