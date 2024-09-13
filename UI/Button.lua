@@ -1,3 +1,4 @@
+require("Utility.ColorEnum")
 local text = require("UI.Text")
 
 local Button = {
@@ -15,7 +16,19 @@ local Button = {
 }
 Button.__index = Button
 
-function Button.new(width, height, string, func, func_param, horizontal_align, vertical_align, offset_x, offset_y)
+function Button.new(
+	width,
+	height,
+	string,
+	func,
+	func_param,
+	horizontal_align,
+	vertical_align,
+	offset_x,
+	offset_y,
+	button_color,
+	text_color
+)
 	local x = offset_x or 0
 	local y = offset_y or 0
 	local text_offset_x = offset_x or 0
@@ -49,7 +62,8 @@ function Button.new(width, height, string, func, func_param, horizontal_align, v
 		y = y or 0,
 		width = width or 0,
 		height = height or 0,
-		string = text.new(string, 1, horizontal_align, vertical_align, text_offset_x, text_offset_y) or text.new(),
+		string = text.new(string, 1, horizontal_align, vertical_align, text_offset_x, text_offset_y, text_color)
+			or text.new(),
 		func = func or function()
 			print("No Function")
 		end,
@@ -58,6 +72,7 @@ function Button.new(width, height, string, func, func_param, horizontal_align, v
 		offset_y = offset_y or 0,
 		horizontal_align = horizontal_align or HORIZONTAL_ALIGN.LEFT,
 		vertical_align = vertical_align or VERTICAL_ALIGN.TOP,
+		button_color = button_color or COLOR.WHITE,
 	}, Button)
 end
 
@@ -101,9 +116,8 @@ function Button:auto_resize_y()
 end
 
 function Button:draw()
-	love.graphics.setColor(1, 1, 1, 0.8)
+	love.graphics.setColor(self.button_color:rgb_color())
 	love.graphics.rectangle("fill", self.x, self.y, self.width, self.height)
-	love.graphics.setColor(love.math.colorFromBytes(25, 18, 28))
 	self.string:draw()
 end
 

@@ -1,3 +1,4 @@
+require("Utility.ColorEnum")
 require("Utility.AlignEnum")
 
 local Text = {
@@ -14,7 +15,7 @@ local Text = {
 }
 Text.__index = Text
 
-function Text.new(text, scale, horizontal_align, vertical_align, offset_x, offset_y)
+function Text.new(text, scale, horizontal_align, vertical_align, offset_x, offset_y, color)
 	local font = love.graphics:getFont()
 	local text_width = font:getWidth(text)
 	local text_height = font:getHeight()
@@ -50,6 +51,7 @@ function Text.new(text, scale, horizontal_align, vertical_align, offset_x, offse
 		offset_y = offset_y or 0,
 		horizontal_align = horizontal_align or HORIZONTAL_ALIGN.LEFT,
 		vertical_align = vertical_align or VERTICAL_ALIGN.TOP,
+		color = color or COLOR.BLACK,
 	}, Text)
 end
 
@@ -78,6 +80,7 @@ function Text:auto_resize_y()
 end
 
 function Text:draw()
+	love.graphics.setColor(self.color:rgb_color())
 	love.graphics.print(
 		self.text,
 		self.x,

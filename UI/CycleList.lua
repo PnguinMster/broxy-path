@@ -42,7 +42,17 @@ local right_button_func = function()
 	ui_text.text = list[current_element_index]
 end
 
-function CycleList.new(items, func, horizontal_align, vertical_align, offset_x, offset_y)
+function CycleList.new(
+	items,
+	func,
+	horizontal_align,
+	vertical_align,
+	offset_x,
+	offset_y,
+	text_color,
+	button_color,
+	text_button_color
+)
 	local x = offset_x or 0
 	local y = offset_y or 0
 	list = items
@@ -66,7 +76,8 @@ function CycleList.new(items, func, horizontal_align, vertical_align, offset_x, 
 		max_element_index = #items
 	end
 
-	ui_text = text.new(first_item, 1, horizontal_align, vertical_align, offset_x, offset_y) or text.new()
+	local ui_text_color = text_color or COLOR.WHITE
+	ui_text = text.new(first_item, 1, horizontal_align, vertical_align, offset_x, offset_y, ui_text_color) or text.new()
 
 	return setmetatable({
 		x = x or 0,
@@ -87,7 +98,9 @@ function CycleList.new(items, func, horizontal_align, vertical_align, offset_x, 
 			horizontal_align,
 			vertical_align,
 			offset_x - button_offset,
-			offset_y
+			offset_y,
+			button_color,
+			text_button_color
 		) or button.new(),
 		right_button = button.new(
 			buttons_size,
@@ -98,7 +111,9 @@ function CycleList.new(items, func, horizontal_align, vertical_align, offset_x, 
 			horizontal_align,
 			vertical_align,
 			offset_x + button_offset,
-			offset_y
+			offset_y,
+			button_color,
+			text_button_color
 		) or button.new(),
 	}, CycleList)
 end
@@ -139,7 +154,6 @@ function CycleList:auto_resize_y()
 end
 
 function CycleList:draw()
-	love.graphics.setColor(1, 1, 1, 0.8)
 	ui_text:draw()
 	self.left_button:draw()
 	self.right_button:draw()

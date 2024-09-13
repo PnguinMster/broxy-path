@@ -1,5 +1,6 @@
 require("Utility.AlignEnum")
-require("Utility/Math")
+require("Utility.Math")
+require("Utility.ColorEnum")
 
 local function handle_to_value(handle_x, bar_width, min_value, max_value)
 	local ratio = handle_x / bar_width
@@ -41,7 +42,9 @@ function Slider.new(
 	horizontal_align,
 	vertical_align,
 	offset_x,
-	offset_y
+	offset_y,
+	bar_color,
+	handle_color
 )
 	local x = offset_x or 0
 	local y = offset_y or 0
@@ -69,7 +72,7 @@ function Slider.new(
 		bar_height = bar_height or 0,
 		bar_width = bar_width or 0,
 		handle_offset_postion = handle_drag_offset,
-		func = func or function(value)
+		func = func or function()
 			print("No Function")
 		end,
 		horizontal_align = horizontal_align or HORIZONTAL_ALIGN.LEFT,
@@ -78,6 +81,8 @@ function Slider.new(
 		value = start_value or 0,
 		min_value = min_value or 0,
 		max_value = max_value or 0,
+		bar_color = bar_color or COLOR.WHITE,
+		handle_color = handle_color or bar_color or COLOR.WHITE,
 	}, Slider)
 end
 

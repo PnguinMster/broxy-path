@@ -1,3 +1,4 @@
+require("Utility.ColorEnum")
 require("Utility.AlignEnum")
 
 local Checkbox = {
@@ -18,7 +19,17 @@ Checkbox.__index = Checkbox
 local check_scale = 0.8
 local default_size = 25
 
-function Checkbox.new(checked, scale, func, horizontal_align, vertical_align, offset_x, offset_y)
+function Checkbox.new(
+	checked,
+	scale,
+	func,
+	horizontal_align,
+	vertical_align,
+	offset_x,
+	offset_y,
+	outer_color,
+	inner_color
+)
 	local x = offset_x or 0
 	local y = offset_y or 0
 	local box_size = default_size * scale
@@ -57,6 +68,8 @@ function Checkbox.new(checked, scale, func, horizontal_align, vertical_align, of
 		box_size = box_size or default_size,
 		check_size = check_size or default_size * check_size,
 		check_offset = check_offset,
+		outer_color = outer_color or COLOR.WHITE,
+		inner_color = inner_color or outer_color or COLOR.WHITE,
 	}, Checkbox)
 end
 
@@ -96,10 +109,11 @@ function Checkbox:auto_resize_y()
 end
 
 function Checkbox:draw()
-	love.graphics.setColor(1, 1, 1, 0.8)
+	love.graphics.setColor(self.outer_color:rgb_color())
 	love.graphics.rectangle("line", self.x, self.y, self.box_size, self.box_size)
 
 	if self.checked then
+		love.graphics.setColor(self.inner_color:rgb_color())
 		love.graphics.rectangle(
 			"fill",
 			self.x + self.check_offset,
