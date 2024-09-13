@@ -1,3 +1,4 @@
+require("Utility.ColorEnum")
 local button = require("UI.Button")
 local text = require("UI.Text")
 
@@ -32,7 +33,7 @@ function Pause_menu:load()
 		Game:set_scene(SCENE.MENU)
 	end
 
-	self.title_text = text.new("Paused", 3, HORIZONTAL_ALIGN.CENTER, VERTICAL_ALIGN.TOP, 0, 10)
+	self.title_text = text.new("Paused", 3, HORIZONTAL_ALIGN.CENTER, VERTICAL_ALIGN.TOP, 0, 10, COLOR.WHITE)
 
 	self.continue_button = button.new(
 		85,

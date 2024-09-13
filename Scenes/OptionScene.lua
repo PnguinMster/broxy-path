@@ -63,7 +63,7 @@ function Option_scene:load()
 		print("Master Changed to:" .. tostring(new_value))
 	end
 
-	self.title_text = text.new("Options", 3, HORIZONTAL_ALIGN.CENTER, VERTICAL_ALIGN.TOP, 0, 10)
+	self.title_text = text.new("Options", 3, HORIZONTAL_ALIGN.CENTER, VERTICAL_ALIGN.TOP, 0, 10, COLOR.WHITE)
 	--
 	-- self.interactables[7] =
 	-- 	button.new(70, 50, "Start", self.start_pressed, nil, HORIZONTAL_ALIGN.CENTER, VERTICAL_ALIGN.CENTER)
@@ -81,27 +81,30 @@ function Option_scene:load()
 		button.new(100, 50, "Back", self.back_pressed, nil, HORIZONTAL_ALIGN.LEFT, VERTICAL_ALIGN.BOTTOM, 50, -50)
 
 	self.text_displays[1] =
-		text.new("Audio Plays in Background", 1, HORIZONTAL_ALIGN.LEFT, VERTICAL_ALIGN.CENTER, 0, -270)
+		text.new("Audio Plays in Background", 1, HORIZONTAL_ALIGN.LEFT, VERTICAL_ALIGN.CENTER, 0, -270, COLOR.WHITE)
 	self.interactables[2] =
 		checkbox.new(true, 1, self.mix_with_system_pressed, HORIZONTAL_ALIGN.RIGHT, VERTICAL_ALIGN.CENTER, 0, -270)
 
-	self.text_displays[2] = text.new("Borderless", 1, HORIZONTAL_ALIGN.LEFT, VERTICAL_ALIGN.CENTER, 0, -225)
+	self.text_displays[2] =
+		text.new("Borderless", 1, HORIZONTAL_ALIGN.LEFT, VERTICAL_ALIGN.CENTER, 0, -225, COLOR.WHITE)
 	self.interactables[3] =
 		checkbox.new(false, 1, self.borderless_pressed, HORIZONTAL_ALIGN.RIGHT, VERTICAL_ALIGN.CENTER, 0, -225)
 
-	self.text_displays[3] = text.new("Fullscreen", 1, HORIZONTAL_ALIGN.LEFT, VERTICAL_ALIGN.CENTER, 0, -180)
+	self.text_displays[3] =
+		text.new("Fullscreen", 1, HORIZONTAL_ALIGN.LEFT, VERTICAL_ALIGN.CENTER, 0, -180, COLOR.WHITE)
 	self.interactables[4] =
 		checkbox.new(false, 1, self.fullscreen_pressed, HORIZONTAL_ALIGN.RIGHT, VERTICAL_ALIGN.CENTER, 0, -180)
 
-	self.text_displays[4] = text.new("Exclusive Fullscreen", 1, HORIZONTAL_ALIGN.LEFT, VERTICAL_ALIGN.CENTER, 0, -135)
+	self.text_displays[4] =
+		text.new("Exclusive Fullscreen", 1, HORIZONTAL_ALIGN.LEFT, VERTICAL_ALIGN.CENTER, 0, -135, COLOR.WHITE)
 	self.interactables[5] =
 		checkbox.new(false, 1, self.exclusive, HORIZONTAL_ALIGN.RIGHT, VERTICAL_ALIGN.CENTER, 0, -135)
 
-	self.text_displays[5] = text.new("Vsync", 1, HORIZONTAL_ALIGN.LEFT, VERTICAL_ALIGN.CENTER, 0, -90)
+	self.text_displays[5] = text.new("Vsync", 1, HORIZONTAL_ALIGN.LEFT, VERTICAL_ALIGN.CENTER, 0, -90, COLOR.WHITE)
 	self.interactables[6] =
 		checkbox.new(false, 1, self.vsync_pressed, HORIZONTAL_ALIGN.RIGHT, VERTICAL_ALIGN.CENTER, 0, -90)
 
-	self.text_displays[6] = text.new("Display", 1, HORIZONTAL_ALIGN.LEFT, VERTICAL_ALIGN.CENTER, 0, -45)
+	self.text_displays[6] = text.new("Display", 1, HORIZONTAL_ALIGN.LEFT, VERTICAL_ALIGN.CENTER, 0, -45, COLOR.WHITE)
 	self.interactables[7] = cycle_list.new(
 		self.displays_list,
 		self.cycle_displays_pressed,
@@ -111,7 +114,8 @@ function Option_scene:load()
 		-45
 	)
 
-	self.text_displays[7] = text.new("Master Volume", 1, HORIZONTAL_ALIGN.LEFT, VERTICAL_ALIGN.CENTER, 0, 0)
+	self.text_displays[7] =
+		text.new("Master Volume", 1, HORIZONTAL_ALIGN.LEFT, VERTICAL_ALIGN.CENTER, 0, 0, COLOR.WHITE)
 	self.option_sliders[1] = slider.new(
 		100,
 		0,

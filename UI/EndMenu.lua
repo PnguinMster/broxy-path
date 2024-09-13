@@ -1,3 +1,4 @@
+require("Utility.ColorEnum")
 local button = require("UI.Button")
 local text = require("UI.Text")
 
@@ -27,7 +28,7 @@ function End_menu:load()
 		Game:set_scene(SCENE.MENU)
 	end
 
-	self.title_text = text.new("Finished", 3, HORIZONTAL_ALIGN.CENTER, VERTICAL_ALIGN.TOP, 0, 10)
+	self.title_text = text.new("Finished", 3, HORIZONTAL_ALIGN.CENTER, VERTICAL_ALIGN.TOP, 0, 10, COLOR.WHITE)
 
 	self.interactables[1] =
 		button.new(85, 50, "Retry", self.retry_pressed, nil, HORIZONTAL_ALIGN.CENTER, VERTICAL_ALIGN.CENTER, 0, 0)

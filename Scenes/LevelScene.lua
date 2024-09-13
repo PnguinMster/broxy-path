@@ -1,3 +1,4 @@
+require("Utility.ColorEnum")
 local button = require("UI.Button")
 local text = require("UI.Text")
 
@@ -75,7 +76,7 @@ function Level_scene:load()
 		Game:set_scene(SCENE.MENU)
 	end
 
-	self.title_text = text.new("Select Level", 3, HORIZONTAL_ALIGN.CENTER, VERTICAL_ALIGN.TOP, 0, 10)
+	self.title_text = text.new("Select Level", 3, HORIZONTAL_ALIGN.CENTER, VERTICAL_ALIGN.TOP, 0, 10, COLOR.WHITE)
 
 	self.interactables[1] =
 		button.new(85, 50, "0", self.level_0_pressed, nil, HORIZONTAL_ALIGN.CENTER, VERTICAL_ALIGN.CENTER, -140, -100)
