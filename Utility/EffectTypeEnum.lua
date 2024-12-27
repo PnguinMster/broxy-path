@@ -1,0 +1,5 @@
+EFFECT = {
+	BLOCK_STEP = 1,
+	CLICK = 2,
+	UI_HOVER = 3,
+}
