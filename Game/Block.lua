@@ -55,7 +55,7 @@ function Block_info.new(map_info, x, y, offset_x, offset_y)
 						is_go_to = false
 					end
 					body:setLinearVelocity(0, -BLOCK_MOVE_SPEED)
-				else
+		 		else
 					if body:getY() >= first then
 						is_go_to = true
 					end
