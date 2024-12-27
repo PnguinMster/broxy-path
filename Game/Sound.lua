@@ -1,5 +1,4 @@
 require("Utility.SoundTypeEnum")
-require("Utility.SoundEffectEnum")
 
 Sound = {}
 Sound.__index = Sound
