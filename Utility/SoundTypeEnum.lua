@@ -1,0 +1,5 @@
+SOUND_TYPE = {
+	MASTER = 1,
+	MUSIC = 2,
+	SOUND = 3,
+}
