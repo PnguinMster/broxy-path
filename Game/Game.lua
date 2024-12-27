@@ -24,6 +24,7 @@ function Game:set_state(state)
 end
 
 function Game:load()
+	math.randomseed(os.time())
 	love.graphics.setBackgroundColor(COLOR.BLACK:rgb_color())
 
 	self.scene:load()
