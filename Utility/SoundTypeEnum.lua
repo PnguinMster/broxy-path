@@ -1,5 +1,5 @@
 SOUND_TYPE = {
-	MASTER = 1,
-	MUSIC = 2,
-	EFFECT = 3,
+	MASTER = "master",
+	MUSIC = "music",
+	EFFECT = "effect",
 }

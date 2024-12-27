@@ -40,13 +40,13 @@ function Sound:update(dt)
 end
 
 function Sound:set_volume(new_volume, sound_type)
-	if sound_type == SOUND_TYPE.MASTER then
-		Sound.master_volume = new_volume
-	elseif sound_type == SOUND_TYPE.MUSIC then
-		Sound.music_volume = new_volume
-	elseif sound_type == SOUND_TYPE.EFFECT then
-		Sound.effect_volume = new_volume
+	Sound[sound_type .. "_volume"] = new_volume
+
+	if sound_type == SOUND_TYPE.MASTER or sound_type == SOUND_TYPE.MUSIC then
+		Sound.Music:setVolume(Sound.master_volume * Sound.music_volume)
 	end
 
-	Sound.Music:setVolume(Sound.master_volume * Sound.music_volume)
+	if sound_type == SOUND_TYPE.MASTER or sound_type == SOUND_TYPE.EFFECT then
+		Sound.Effects:setVolume(Sound.master_volume * Sound.effect_volume)
+	end
 end
