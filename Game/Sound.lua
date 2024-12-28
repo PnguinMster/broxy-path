@@ -80,14 +80,17 @@ function Sound:set_volume(new_volume, sound_type)
 end
 
 function Sound:play_sound_effect(sound_effect)
+	local random_variation = nil
+
 	if sound_effect == SOUND_EFFECT.BLOCK_STEP then
-		local random_variation = self.Effects.block_steps[math.random(#self.Effects.block_steps)]
-		love.audio.play(self.Effects.block_steps[random_variation])
+		random_variation = self.Effects.block_steps[math.random(#self.Effects.block_steps)]
 	elseif sound_effect == SOUND_EFFECT.CLICK then
-		local random_variation = self.Effects.clicks[math.random(#self.Effects.clicks)]
-		love.audio.play(self.Effects.clicks[random_variation])
+		random_variation = self.Effects.clicks[math.random(#self.Effects.clicks)]
 	elseif sound_effect == SOUND_EFFECT.UI_HOVER then
-		local random_variation = self.Effects.ui_hovers[math.random(#self.Effects.ui_hovers)]
-		love.audio.play(self.Effects.ui_hovers[random_variation])
+		random_variation = self.Effects.ui_hovers[math.random(#self.Effects.ui_hovers)]
+	end
+
+	if random_variation then
+		love.audio.play(random_variation)
 	end
 end
