@@ -1,4 +1,5 @@
 require("Utility.SoundTypeEnum")
+require("Utility.SoundEffectEnum")
 
 Sound = {}
 Sound.__index = Sound
@@ -75,5 +76,18 @@ function Sound:set_volume(new_volume, sound_type)
 
 	if sound_type == SOUND_TYPE.MASTER or sound_type == SOUND_TYPE.EFFECT then
 		self.Effects:setVolume(self.master_volume * self.effect_volume)
+	end
+end
+
+function Sound:play_sound_effect(sound_effect)
+	if sound_effect == SOUND_EFFECT.BLOCK_STEP then
+		local random_variation = self.Effects.block_steps[math.random(#self.Effects.block_steps)]
+		love.audio.play(self.Effects.block_steps[random_variation])
+	elseif sound_effect == SOUND_EFFECT.CLICK then
+		local random_variation = self.Effects.clicks[math.random(#self.Effects.clicks)]
+		love.audio.play(self.Effects.clicks[random_variation])
+	elseif sound_effect == SOUND_EFFECT.UI_HOVER then
+		local random_variation = self.Effects.ui_hovers[math.random(#self.Effects.ui_hovers)]
+		love.audio.play(self.Effects.ui_hovers[random_variation])
 	end
 end
