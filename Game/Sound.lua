@@ -22,10 +22,10 @@ local click_effect_files = {
 	"Sound/ClickSoundBase_2.wav",
 }
 local ui_hover_effect_files = {
-	"UIOnHover_1.wav",
-	"UIOnHover_2.wav",
-	"UIOnHover_3.wav",
-	"UIOnHover_4.wav",
+	"Sound/UIOnHover_1.wav",
+	"Sound/UIOnHover_2.wav",
+	"Sound/UIOnHover_3.wav",
+	"Sound/UIOnHover_4.wav",
 }
 
 local function create_effect_variations(files)
