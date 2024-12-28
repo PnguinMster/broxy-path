@@ -62,6 +62,12 @@ function Option_scene:load()
 	self.master_volume_changed = function(new_value)
 		print("Master Changed to:" .. tostring(new_value))
 	end
+	self.music_volume_changed = function(new_value)
+		print("Music Changed to:" .. tostring(new_value))
+	end
+	self.sound_volume_changed = function(new_value)
+		print("Sound Changed to:" .. tostring(new_value))
+	end
 
 	self.title_text = text.new("Options", 3, HORIZONTAL_ALIGN.CENTER, VERTICAL_ALIGN.TOP, 0, 10, COLOR.WHITE)
 	--
@@ -128,6 +134,38 @@ function Option_scene:load()
 		VERTICAL_ALIGN.CENTER,
 		0,
 		0
+	)
+
+	self.text_displays[8] =
+		text.new("Music Volume", 1, HORIZONTAL_ALIGN.LEFT, VERTICAL_ALIGN.CENTER, 0, 45, COLOR.WHITE)
+	self.option_sliders[2] = slider.new(
+		100,
+		0,
+		100,
+		5,
+		200,
+		3,
+		self.music_volume_changed,
+		HORIZONTAL_ALIGN.RIGHT,
+		VERTICAL_ALIGN.CENTER,
+		0,
+		45
+	)
+
+	self.text_displays[9] =
+		text.new("Sound Volume", 1, HORIZONTAL_ALIGN.LEFT, VERTICAL_ALIGN.CENTER, 0, 90, COLOR.WHITE)
+	self.option_sliders[3] = slider.new(
+		100,
+		0,
+		100,
+		5,
+		200,
+		3,
+		self.sound_volume_changed,
+		HORIZONTAL_ALIGN.RIGHT,
+		VERTICAL_ALIGN.CENTER,
+		0,
+		90
 	)
 end
 
