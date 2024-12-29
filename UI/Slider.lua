@@ -17,6 +17,8 @@ local Slider = {
 	vertical_align = VERTICAL_ALIGN.TOP,
 	x = 0,
 	y = 0,
+	offset_x = 0,
+	offset_y = 0,
 	handle_radius = 0,
 	bar_height = 0,
 	bar_width = 0,
@@ -68,6 +70,8 @@ function Slider.new(
 	return setmetatable({
 		x = x or 0,
 		y = y or 0,
+		offset_x = offset_x or 0,
+		offset_y = offset_y or 0,
 		handle_radius = handle_radius or 0,
 		bar_height = bar_height or 0,
 		bar_width = bar_width or 0,
@@ -126,7 +130,7 @@ function Slider:mouse_released()
 end
 
 function Slider:auto_resize_x()
-	local x = self.offset_x - (self.box_size / 2)
+	local x = self.offset_x
 
 	if self.horizontal_align == HORIZONTAL_ALIGN.RIGHT then
 		x = x + love.graphics:getWidth() - self.bar_width
@@ -138,7 +142,7 @@ function Slider:auto_resize_x()
 end
 
 function Slider:auto_resize_y()
-	local y = self.offset_y - (self.box_size / 2)
+	local y = self.offset_y
 
 	if self.vertical_align == VERTICAL_ALIGN.BOTTOM then
 		y = y + love.graphics:getHeight()

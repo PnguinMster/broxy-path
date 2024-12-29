@@ -108,7 +108,7 @@ function Level_scene:update(dt)
 		self.title_text:auto_resize_x()
 
 		for _, interactable in ipairs(self.interactables) do
-			interactable.auto_resize_x()
+			interactable:auto_resize_x()
 		end
 
 		window_x = love.graphics.getWidth()
@@ -118,7 +118,7 @@ function Level_scene:update(dt)
 		self.title_text:auto_resize_y()
 
 		for _, interactable in ipairs(self.interactables) do
-			interactable.auto_resize_y()
+			interactable:auto_resize_y()
 		end
 
 		window_y = love.graphics.getHeight()
