@@ -5,6 +5,7 @@ function love.conf(t)
 	t.window.title = "Broxy Grath"
 	t.window.resizable = true
 	t.window.vsync = 0
+	t.window.msaa = 3
 	t.window.minwidth = 400
 	t.window.minheight = 300
 	t.window.display = 2
@@ -15,4 +16,6 @@ function love.conf(t)
 	t.modules.video = false
 
 	t.version = "11.5"
+
+	t.identity = "game_data"
 end
