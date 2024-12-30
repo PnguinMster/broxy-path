@@ -107,6 +107,11 @@ function Block_info:unload()
 	self.map_info = nil
 	self.body:destroy()
 	self.move = nil
+
+	-- Clear rest of data
+	for k, v in pairs(self) do
+		self[k] = nil
+	end
 end
 
 return Block_info

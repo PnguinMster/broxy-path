@@ -128,6 +128,11 @@ function Tilemap:unload()
 			self.movable_blocks[x] = nil
 		end
 	end
+
+	-- Clear rest of data
+	for k, v in pairs(self) do
+		self[k] = nil
+	end
 end
 
 function Tilemap.has_block_value(r, g, b)
