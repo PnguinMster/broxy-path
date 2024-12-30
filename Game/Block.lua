@@ -1,4 +1,5 @@
 require("Utility.BlockTypeEnum")
+require("Game.MapInfo")
 
 Block_info = {}
 Block_info.__index = Block_info
@@ -98,10 +99,14 @@ function Block_info.new(map_info, x, y, offset_x, offset_y)
 	return setmetatable({
 		map_info = map_info or Map_info.new(),
 		body = body,
-		shape = shape,
-		fixture = fixture,
 		move = move,
 	}, Block_info)
+end
+
+function Block_info:unload()
+	self.map_info = nil
+	self.body:destroy()
+	self.move = nil
 end
 
 return Block_info

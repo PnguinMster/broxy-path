@@ -1,4 +1,5 @@
 require("Game.Block")
+require("Game.MapInfo")
 require("Utility.BlockTypeEnum")
 require("Utility.ColorEnum")
 
@@ -74,18 +75,21 @@ function Tilemap:load_map()
 	for x, column in pairs(self.map) do
 		for y, map_info in pairs(column) do
 			local block = Block_info.new(map_info, x, y, start_offset_x, start_offset_y)
+
 			if block.body:getType() == "kinematic" then
 				table.insert(self.movable_blocks, block)
 			else
 				table.insert(self.static_blocks, block)
 			end
+
+			self.map[x][y] = nil
 		end
 	end
 end
 
 function Tilemap:update(dt)
 	for _, block in ipairs(self.movable_blocks) do
-		block.move()
+		block:move()
 	end
 end
 
@@ -101,8 +105,29 @@ function Tilemap:draw_map()
 	end
 end
 
-function Tilemap.unload()
-	setmetatable(Tilemap, nil)
+function Tilemap:unload()
+	-- Unload Map
+	for y, row in pairs(self.map) do
+		for x, _ in pairs(row) do
+			self.map[y][x] = nil
+		end
+		self.map[y] = nil
+	end
+
+	-- Unload physic blocks
+	for x, block in pairs(self.static_blocks) do
+		if block.body then
+			block:unload()
+			self.static_blocks[x] = nil
+		end
+	end
+
+	for x, block in pairs(self.movable_blocks) do
+		if block.body then
+			block:unload()
+			self.movable_blocks[x] = nil
+		end
+	end
 end
 
 function Tilemap.has_block_value(r, g, b)
@@ -116,13 +141,6 @@ end
 
 function Tilemap:get_spawnpoint()
 	return self.start_x, self.start_y
-end
-
-Map_info = { width = 1, height = 1 }
-Map_info.__index = Map_info
-
-function Map_info.new(type)
-	return setmetatable({ type = type or BLOCK_TYPE.STATIC_BLOCK }, Map_info)
 end
 
 return Tilemap
