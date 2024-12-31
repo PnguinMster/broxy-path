@@ -67,9 +67,8 @@ end
 
 function Game_scene:unload()
 	World:destroy()
-	Player.unload()
-	Tilemap.unload()
+	Player:unload()
+	Tilemap:unload()
 	Pause_menu:unload()
 	End_menu:unload()
-	setmetatable(Game_scene, nil)
 end
