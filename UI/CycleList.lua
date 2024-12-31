@@ -9,13 +9,15 @@ local CycleList = {
 	offset_y = 0,
 	horizontal_align = HORIZONTAL_ALIGN.LEFT,
 	vertical_align = VERTICAL_ALIGN.TOP,
+	left_button = {},
+	right_button = {},
 }
 CycleList.__index = CycleList
 
 local current_element_index = 1
 local max_element_index = 1
 local list = {}
-local ui_text
+local ui_text = {}
 
 local buttons_size = 30
 local button_offset = 55
@@ -159,8 +161,26 @@ function CycleList:draw()
 	self.right_button:draw()
 end
 
-function CycleList.unload()
-	setmetatable(CycleList, nil)
+function CycleList:unload()
+	-- Unload list
+	for x, _ in pairs(list) do
+		self.map[x] = nil
+	end
+
+	-- Unload button
+	self.left_button:unload()
+	self.right_button:unload()
+	self.left_button = nil
+	self.right_button = nil
+
+	-- Unload text
+	ui_text:unload()
+	ui_text = nil
+
+	-- Unload rest of data
+	for k, _ in pairs(self) do
+		self[k] = nil
+	end
 end
 
 return CycleList

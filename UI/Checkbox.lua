@@ -124,8 +124,11 @@ function Checkbox:draw()
 	end
 end
 
-function Checkbox.unload()
-	setmetatable(Checkbox, nil)
+function Checkbox:unload()
+	-- Clear rest of data
+	for k, _ in pairs(self) do
+		self[k] = nil
+	end
 end
 
 return Checkbox

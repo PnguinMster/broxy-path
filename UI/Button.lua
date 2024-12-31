@@ -122,9 +122,11 @@ function Button:draw()
 end
 
 function Button:unload()
+	-- Unload text
 	self.text:unload()
+	self.text = nil
 
-	-- Clear rest of data
+	-- Unload rest of data
 	for k, _ in pairs(self) do
 		self[k] = nil
 	end
