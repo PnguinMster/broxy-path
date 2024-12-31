@@ -12,13 +12,9 @@ local FRICTION = 0.9
 local CATEGORY = LAYERS.PLAYER
 local USER_DATA = "player"
 local ANGULAR_DAMPENING = 12
-
 local HOVER_TIME_GAIN = 1.5
 local HOVER_TIME_LOSE = 1
 local CAN_HOVER_TIME = 0.15
-local hover_timer = 1
-local can_hover_timer = 0
-local hover_enabled = true
 
 function Player.new()
 	return setmetatable({
@@ -37,6 +33,10 @@ function Player.new()
 		bottom_shape = {},
 
 		joint = {},
+
+		hover_timer = 1,
+		can_hover_timer = 0,
+		hover_enabled = true,
 	}, Player)
 end
 
@@ -79,29 +79,29 @@ function Player:update(dt)
 		self.bottom_body:applyForce(-self.linear_force, 0)
 	end
 
-	if love.keyboard.isDown("up") and hover_enabled then
+	if love.keyboard.isDown("up") and self.hover_enabled then
 		self.top_body:applyForce(0, -9.8 * self.hover_force)
 		self.bottom_body:applyForce(0, -9.8 * self.hover_force)
-		hover_timer = hover_timer - dt * HOVER_TIME_LOSE
-	elseif love.keyboard.isDown("down") and hover_enabled then
+		self.hover_timer = self.hover_timer - dt * HOVER_TIME_LOSE
+	elseif love.keyboard.isDown("down") and self.hover_enabled then
 		self.top_body:applyForce(0, 9.8 * self.hover_force)
 		self.bottom_body:applyForce(0, 9.8 * self.hover_force)
-		hover_timer = hover_timer - dt / HOVER_TIME_LOSE
-	elseif hover_enabled then
-		hover_timer = hover_timer + dt / HOVER_TIME_GAIN
+		self.hover_timer = self.hover_timer - dt / HOVER_TIME_LOSE
+	elseif self.hover_enabled then
+		self.hover_timer = self.hover_timer + dt / HOVER_TIME_GAIN
 	end
 
-	if hover_timer <= 0 then
-		can_hover_timer = can_hover_timer + dt / CAN_HOVER_TIME
-		hover_enabled = false
-		if can_hover_timer > 1 then
-			hover_enabled = true
-			can_hover_timer = 0
-			hover_timer = 0
+	if self.hover_timer <= 0 then
+		self.can_hover_timer = self.can_hover_timer + dt / CAN_HOVER_TIME
+		self.hover_enabled = false
+		if self.can_hover_timer > 1 then
+			self.hover_enabled = true
+			self.can_hover_timer = 0
+			self.hover_timer = 0
 		end
 	end
 
-	hover_timer = math.clamp(hover_timer, -1, 1)
+	self.hover_timer = math.clamp(self.hover_timer, -1, 1)
 end
 
 function Player:draw()
@@ -139,7 +139,7 @@ function Player:draw()
 end
 
 function Player:hover_bar()
-	local bar_height = math.lerp(self.height, 0, hover_timer)
+	local bar_height = math.lerp(self.height, 0, self.hover_timer)
 
 	love.graphics.setColor(COLOR.GREEN:rgb_color())
 	local x1, y1, x2, y2, x5, y5, x6, y6 = self.top_body:getWorldPoints(self.top_shape:getPoints())
@@ -204,8 +204,8 @@ function Player:reset_player()
 	self.bottom_body:setLinearVelocity(0, 0)
 	self.bottom_body:setAngularVelocity(0)
 
-	hover_timer = 1
-	hover_enabled = true
+	self.hover_timer = 1
+	self.hover_enabled = true
 end
 
 function Player:unload()
