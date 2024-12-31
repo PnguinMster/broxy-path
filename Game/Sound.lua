@@ -90,7 +90,7 @@ function Sound:play_sound_effect(sound_effect)
 		random_variation = self.Effects.ui_hovers[math.random(#self.Effects.ui_hovers)]
 	end
 
-	if random_variation then
+	if random_variation ~= nil then
 		love.audio.play(random_variation)
 	end
 end
