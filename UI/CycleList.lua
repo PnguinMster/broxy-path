@@ -30,7 +30,7 @@ local left_button_func = function()
 		CycleList.current_element_index = CycleList.max_element_index
 	end
 
-	ui_text.text = list[CycleList.current_element_index]
+	CycleList.ui_text.text = CycleList.list[CycleList.current_element_index]
 end
 
 local right_button_func = function()
@@ -41,7 +41,7 @@ local right_button_func = function()
 		CycleList.current_element_index = 1
 	end
 
-	ui_text.text = list[CycleList.current_element_index]
+	CycleList.ui_text.text = CycleList.list[CycleList.current_element_index]
 end
 
 function CycleList.new(
@@ -57,7 +57,6 @@ function CycleList.new(
 )
 	local x = offset_x or 0
 	local y = offset_y or 0
-	list = items
 
 	if horizontal_align == HORIZONTAL_ALIGN.RIGHT then
 		x = x + love.graphics:getWidth()
@@ -75,15 +74,14 @@ function CycleList.new(
 	local first_item = "Empty"
 	if items then
 		first_item = items[1]
-		max_element_index = #items
 	end
 
 	local ui_text_color = text_color or COLOR.WHITE
-	ui_text = text.new(first_item, 1, horizontal_align, vertical_align, offset_x, offset_y, ui_text_color) or text.new()
 
 	return setmetatable({
 		x = x or 0,
 		y = y or 0,
+		list = items,
 		func = func or function()
 			print("No Function")
 		end,
@@ -117,6 +115,9 @@ function CycleList.new(
 			button_color,
 			text_button_color
 		) or button.new(),
+		ui_text = text.new(first_item, 1, horizontal_align, vertical_align, offset_x, offset_y, ui_text_color)
+			or text.new(),
+		max_element_index = #items,
 	}, CycleList)
 end
 
@@ -135,7 +136,7 @@ function CycleList:auto_resize_x()
 	end
 
 	self.x = x
-	ui_text:auto_resize_x()
+	self.ui_text:auto_resize_x()
 	self.left_button:auto_resize_x()
 	self.right_button:auto_resize_x()
 end
@@ -150,20 +151,20 @@ function CycleList:auto_resize_y()
 	end
 
 	self.y = y
-	ui_text:auto_resize_y()
+	self.ui_text:auto_resize_y()
 	self.left_button:auto_resize_y()
 	self.right_button:auto_resize_y()
 end
 
 function CycleList:draw()
-	ui_text:draw()
+	self.ui_text:draw()
 	self.left_button:draw()
 	self.right_button:draw()
 end
 
 function CycleList:unload()
 	-- Unload list
-	for x, _ in pairs(CycleList.list) do
+	for x, _ in pairs(self.list) do
 		self.map[x] = nil
 	end
 
@@ -174,8 +175,8 @@ function CycleList:unload()
 	self.right_button = nil
 
 	-- Unload text
-	CycleList.ui_text:unload()
-	CycleList.ui_text = nil
+	self.ui_text:unload()
+	self.ui_text = nil
 
 	-- Unload rest of data
 	for k, _ in pairs(self) do
