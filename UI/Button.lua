@@ -6,7 +6,7 @@ local Button = {
 	y = 0,
 	width = 0,
 	height = 0,
-	text = nil,
+	text = {},
 	func = nil,
 	func_param = nil,
 	offset_x = 0,
@@ -121,8 +121,13 @@ function Button:draw()
 	self.string:draw()
 end
 
-function Button.unload()
-	setmetatable(Button, nil)
+function Button:unload()
+	self.text:unload()
+
+	-- Clear rest of data
+	for k, _ in pairs(self) do
+		self[k] = nil
+	end
 end
 
 return Button
