@@ -2,7 +2,7 @@ require("Utility.ColorEnum")
 local button = require("UI.Button")
 local text = require("UI.Text")
 
-Pause_menu = { active = false }
+Pause_menu = {}
 Pause_menu.__index = Pause_menu
 setmetatable({}, Pause_menu)
 
@@ -13,6 +13,7 @@ local window_y = 0
 Pause_menu.interactables = {}
 Pause_menu.active = false
 
+--- UI Functiions
 local continue_pressed = function()
 	print("Continue pressed")
 	Pause_menu.active = false
