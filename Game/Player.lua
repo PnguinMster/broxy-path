@@ -213,7 +213,7 @@ function Player:unload()
 	self.bottom_body:destroy()
 
 	-- Clear rest of data
-	for k, v in pairs(self) do
+	for k, _ in pairs(self) do
 		self[k] = nil
 	end
 end
