@@ -10,35 +10,35 @@ local RESIZE_DIFFERENCE = 5
 local window_x = 0
 local window_y = 0
 
+Menu_scene.interactables = {}
+
+local start_pressed = function()
+	print("Start button pressed")
+	Game:set_scene(SCENE.LEVEL)
+end
+
+local options_pressed = function()
+	print("Options button pressed")
+	Game:set_scene(SCENE.OPTION)
+end
+
+local quit_pressed = function()
+	print("Quit button pressed")
+	love.event.push("quit")
+end
+
 function Menu_scene:load()
 	window_x = love.graphics.getWidth()
 	window_y = love.graphics.getHeight()
 
-	self.interactables = {}
-
-	self.start_pressed = function()
-		print("Start button pressed")
-		Game:set_scene(SCENE.LEVEL)
-	end
-
-	self.options_pressed = function()
-		print("Options button pressed")
-		Game:set_scene(SCENE.OPTION)
-	end
-
-	self.quit_pressed = function()
-		print("Quit button pressed")
-		love.event.push("quit")
-	end
-
 	self.title_text = text.new("Broxy Grath", 3, HORIZONTAL_ALIGN.CENTER, VERTICAL_ALIGN.TOP, 0, 10, COLOR.WHITE)
 
 	self.interactables[1] =
-		button.new(70, 50, "Start", self.start_pressed, nil, HORIZONTAL_ALIGN.CENTER, VERTICAL_ALIGN.CENTER)
+		button.new(70, 50, "Start", start_pressed, nil, HORIZONTAL_ALIGN.CENTER, VERTICAL_ALIGN.CENTER)
 	self.interactables[2] =
-		button.new(70, 50, "Options", self.options_pressed, nil, HORIZONTAL_ALIGN.CENTER, VERTICAL_ALIGN.CENTER, 0, 70)
+		button.new(70, 50, "Options", options_pressed, nil, HORIZONTAL_ALIGN.CENTER, VERTICAL_ALIGN.CENTER, 0, 70)
 	self.interactables[3] =
-		button.new(70, 50, "Quit", self.quit_pressed, nil, HORIZONTAL_ALIGN.CENTER, VERTICAL_ALIGN.CENTER, 0, 140)
+		button.new(70, 50, "Quit", quit_pressed, nil, HORIZONTAL_ALIGN.CENTER, VERTICAL_ALIGN.CENTER, 0, 140)
 end
 
 function Menu_scene:update(dt)
@@ -70,5 +70,19 @@ function Menu_scene:draw()
 end
 
 function Menu_scene:unload()
-	setmetatable(Menu_scene, nil)
+	-- Title
+	self.title_text:unload()
+	self.title_text = nil
+
+	-- Unload interactables
+	for x, element in pairs(self.interactables) do
+		element:unload()
+		self.interactables[x] = nil
+	end
+
+	-- Unload rest of data
+	for k, _ in pairs(self) do
+		self[k] = nil
+	end
 end
+setmetatable(Menu_scene, nil)
