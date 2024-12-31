@@ -93,8 +93,11 @@ function Text:draw()
 	)
 end
 
-function Text.unload()
-	setmetatable(Text, nil)
+function Text:unload()
+	-- Clear rest of data
+	for k, v in pairs(self) do
+		self[k] = nil
+	end
 end
 
 return Text
