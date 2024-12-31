@@ -159,8 +159,11 @@ function Slider:draw()
 	love.graphics.rectangle("line", self.x, self.y - (self.bar_height / 2), self.bar_width, self.bar_height)
 end
 
-function Slider.unload()
-	setmetatable(Slider, nil)
+function Slider:unload()
+	-- Clear rest of data
+	for k, _ in pairs(self) do
+		self[k] = nil
+	end
 end
 
 return Slider
