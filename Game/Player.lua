@@ -33,10 +33,8 @@ function Player.new()
 
 		top_body = {},
 		top_shape = {},
-		top_fixture = {},
 		bottom_body = {},
 		bottom_shape = {},
-		bottom_fixture = {},
 
 		joint = {},
 	}, Player)
@@ -45,24 +43,24 @@ end
 function Player:load()
 	self.top_body = love.physics.newBody(World, self.start_x, self.start_y, "dynamic")
 	self.top_shape = love.physics.newRectangleShape(0, -self.height / 4, self.width, self.height / 2)
-	self.top_fixture = love.physics.newFixture(self.top_body, self.top_shape, 2)
+	local top_fixture = love.physics.newFixture(self.top_body, self.top_shape, 2)
 	self.bottom_body = love.physics.newBody(World, self.start_x, self.start_y, "dynamic")
 	self.bottom_shape = love.physics.newRectangleShape(0, self.height / 4, self.width, self.height / 2)
-	self.bottom_fixture = love.physics.newFixture(self.bottom_body, self.bottom_shape, 2)
+	local bottom_fixture = love.physics.newFixture(self.bottom_body, self.bottom_shape, 2)
 
 	self.joint = love.physics.newWeldJoint(self.top_body, self.bottom_body, self.start_x, self.start_y, false)
 
 	self.joint:setDampingRatio(DAMPING_RATIO)
 	self.joint:setFrequency(FREQUENCY)
 
-	self.top_fixture:setRestitution(RESTITUTION)
-	self.top_fixture:setFriction(FRICTION)
-	self.top_fixture:setCategory(CATEGORY)
-	self.top_fixture:setUserData(USER_DATA)
-	self.bottom_fixture:setRestitution(RESTITUTION)
-	self.bottom_fixture:setFriction(FRICTION)
-	self.bottom_fixture:setCategory(CATEGORY)
-	self.bottom_fixture:setUserData(USER_DATA)
+	top_fixture:setRestitution(RESTITUTION)
+	top_fixture:setFriction(FRICTION)
+	top_fixture:setCategory(CATEGORY)
+	top_fixture:setUserData(USER_DATA)
+	bottom_fixture:setRestitution(RESTITUTION)
+	bottom_fixture:setFriction(FRICTION)
+	bottom_fixture:setCategory(CATEGORY)
+	bottom_fixture:setUserData(USER_DATA)
 
 	self.top_body:setAngularDamping(ANGULAR_DAMPENING)
 	self.bottom_body:setAngularDamping(ANGULAR_DAMPENING)
@@ -210,8 +208,14 @@ function Player:reset_player()
 	hover_enabled = true
 end
 
-function Player.unload()
-	setmetatable(Player, nil)
+function Player:unload()
+	self.top_body:destroy()
+	self.bottom_body:destroy()
+
+	-- Clear rest of data
+	for k, v in pairs(self) do
+		self[k] = nil
+	end
 end
 
 return Player
