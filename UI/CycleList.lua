@@ -14,10 +14,10 @@ local CycleList = {
 }
 CycleList.__index = CycleList
 
-local current_element_index = 1
-local max_element_index = 1
-local list = {}
-local ui_text = {}
+CycleList.current_element_index = 1
+CycleList.max_element_index = 1
+CycleList.list = {}
+CycleList.ui_text = {}
 
 local buttons_size = 30
 local button_offset = 55
@@ -25,23 +25,23 @@ local button_offset = 55
 local left_button_func = function()
 	print("Left button pressed")
 
-	current_element_index = current_element_index - 1
-	if current_element_index < 1 then
-		current_element_index = max_element_index
+	CycleList.current_element_index = CycleList.current_element_index - 1
+	if CycleList.current_element_index < 1 then
+		CycleList.current_element_index = CycleList.max_element_index
 	end
 
-	ui_text.text = list[current_element_index]
+	ui_text.text = list[CycleList.current_element_index]
 end
 
 local right_button_func = function()
 	print("Right button pressed")
 
-	current_element_index = current_element_index + 1
-	if current_element_index > max_element_index then
-		current_element_index = 1
+	CycleList.current_element_index = CycleList.current_element_index + 1
+	if CycleList.current_element_index > CycleList.max_element_index then
+		CycleList.current_element_index = 1
 	end
 
-	ui_text.text = list[current_element_index]
+	ui_text.text = list[CycleList.current_element_index]
 end
 
 function CycleList.new(
@@ -163,7 +163,7 @@ end
 
 function CycleList:unload()
 	-- Unload list
-	for x, _ in pairs(list) do
+	for x, _ in pairs(CycleList.list) do
 		self.map[x] = nil
 	end
 
@@ -174,8 +174,8 @@ function CycleList:unload()
 	self.right_button = nil
 
 	-- Unload text
-	ui_text:unload()
-	ui_text = nil
+	CycleList.ui_text:unload()
+	CycleList.ui_text = nil
 
 	-- Unload rest of data
 	for k, _ in pairs(self) do
