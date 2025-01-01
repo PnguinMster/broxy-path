@@ -6,7 +6,7 @@ local Button = {
 	y = 0,
 	width = 0,
 	height = 0,
-	text = {},
+	string = {},
 	func = nil,
 	func_param = nil,
 	offset_x = 0,
@@ -123,8 +123,8 @@ end
 
 function Button:unload()
 	-- Unload text
-	self.text:unload()
-	self.text = nil
+	self.string:unload()
+	self.string = nil
 
 	-- Unload rest of data
 	for k, _ in pairs(self) do
