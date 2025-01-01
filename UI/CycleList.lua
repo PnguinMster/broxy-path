@@ -165,7 +165,7 @@ end
 function CycleList:unload()
 	-- Unload list
 	for x, _ in pairs(self.list) do
-		self.map[x] = nil
+		self.list[x] = nil
 	end
 
 	-- Unload button
