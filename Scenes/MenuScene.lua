@@ -85,4 +85,3 @@ function Menu_scene:unload()
 		self[k] = nil
 	end
 end
-setmetatable(Menu_scene, nil)
