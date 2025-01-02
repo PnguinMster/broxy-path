@@ -1,15 +1,17 @@
 require("Utility.StateEnum")
 require("Utility.SceneEnum")
+local pause_menu = require("UI.PauseMenu")
+local end_menu = require("UI.EndMenu")
 
 function love.keyreleased(key)
 	if Game.scene == SCENE.GAME then
 		if key == "escape" then
-			if Game.state == STATE.GAME and End_menu.active == false then
+			if Game.state == STATE.GAME and end_menu.active == false then
 				Game:set_state(STATE.MENU)
-				Pause_menu.active = true
+				pause_menu.active = true
 			else
 				Game:set_state(STATE.GAME)
-				Pause_menu.active = false
+				pause_menu.active = false
 			end
 		end
 	end
@@ -21,10 +23,10 @@ function love.mousereleased(x, y, index)
 		check_display = Game.scene
 
 		if Game.scene == SCENE.GAME then
-			if Pause_menu.active then
-				check_display = Pause_menu
-			elseif End_menu.active then
-				check_display = End_menu
+			if pause_menu.active then
+				check_display = pause_menu
+			elseif end_menu.active then
+				check_display = end_menu
 			end
 		end
 

@@ -25,8 +25,11 @@ end
 function Game_scene:update(dt)
 	if Game.state ~= STATE.GAME then
 		if Game.state == STATE.MENU then
-			pause_menu:update(dt)
-			end_menu:update(dt)
+			if pause_menu.active then
+				pause_menu:update(dt)
+			elseif end_menu.active then
+				end_menu:update(dt)
+			end
 		end
 
 		return
