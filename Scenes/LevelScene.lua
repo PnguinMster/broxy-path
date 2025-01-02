@@ -145,9 +145,9 @@ function Level_scene:unload()
 	end
 
 	-- Unload rest of data
-	for k, _ in pairs(self) do
-		self[k] = nil
-	end
+	-- for k, _ in pairs(self) do
+	-- 	self[k] = nil
+	-- end
 end
 
 return Level_scene
