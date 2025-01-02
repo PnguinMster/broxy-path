@@ -14,7 +14,6 @@ local window_y = 0
 Option_scene.interactables = {}
 Option_scene.text_displays = {}
 Option_scene.option_sliders = {}
-Option_scene.displays_list = { "1", "2", "3" }
 
 --- UI Functiions
 local back_pressed = function()
@@ -52,6 +51,7 @@ end
 function Option_scene:load()
 	window_x = love.graphics.getWidth()
 	window_y = love.graphics.getHeight()
+	self.displays_list = { "1", "2", "3" }
 
 	-- UI elements
 	--  Title
@@ -77,7 +77,7 @@ function Option_scene:load()
 	self.interactables[4] =
 		checkbox.new(false, 1, fullscreen_pressed, HORIZONTAL_ALIGN.RIGHT, VERTICAL_ALIGN.CENTER, 0, -180)
 
-	--Exculsibe fullscreen
+	--Exculsive fullscreen
 	self.text_displays[4] =
 		text.new("Exclusive Fullscreen", 1, HORIZONTAL_ALIGN.LEFT, VERTICAL_ALIGN.CENTER, 0, -135, COLOR.WHITE)
 	self.interactables[5] = checkbox.new(false, 1, exclusive, HORIZONTAL_ALIGN.RIGHT, VERTICAL_ALIGN.CENTER, 0, -135)
