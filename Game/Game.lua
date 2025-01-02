@@ -5,7 +5,6 @@ require("Utility.LevelImagesEnum")
 require("Scenes.SceneEvent")
 
 Game = {}
-Game.__index = Game
 
 Game.scene = SCENE.MENU
 Game.state = SCENE.MENU

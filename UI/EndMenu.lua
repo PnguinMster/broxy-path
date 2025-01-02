@@ -2,9 +2,7 @@ require("Utility.ColorEnum")
 local button = require("UI.Button")
 local text = require("UI.Text")
 
-End_menu = {}
-End_menu.__index = End_menu
-setmetatable({}, End_menu)
+local End_menu = {}
 
 local RESIZE_DIFFERENCE = 5
 local window_x = 0
@@ -87,3 +85,5 @@ function End_menu:unload()
 		self[k] = nil
 	end
 end
+
+return End_menu

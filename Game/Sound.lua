@@ -2,7 +2,6 @@ require("Utility.SoundTypeEnum")
 require("Utility.SoundEffectEnum")
 
 Sound = {}
-Sound.__index = Sound
 
 Sound.master_volume = 1
 Sound.music_volume = 1

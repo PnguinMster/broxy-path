@@ -11,38 +11,13 @@ local CycleList = {
 	vertical_align = VERTICAL_ALIGN.TOP,
 	left_button = {},
 	right_button = {},
+	list = {},
+	ui_text = {},
 }
 CycleList.__index = CycleList
 
-CycleList.current_element_index = 1
-CycleList.max_element_index = 1
-CycleList.list = {}
-CycleList.ui_text = {}
-
 local buttons_size = 30
 local button_offset = 55
-
-local left_button_func = function()
-	print("Left button pressed")
-
-	CycleList.current_element_index = CycleList.current_element_index - 1
-	if CycleList.current_element_index < 1 then
-		CycleList.current_element_index = CycleList.max_element_index
-	end
-
-	CycleList.ui_text.text = CycleList.list[CycleList.current_element_index]
-end
-
-local right_button_func = function()
-	print("Right button pressed")
-
-	CycleList.current_element_index = CycleList.current_element_index + 1
-	if CycleList.current_element_index > CycleList.max_element_index then
-		CycleList.current_element_index = 1
-	end
-
-	CycleList.ui_text.text = CycleList.list[CycleList.current_element_index]
-end
 
 function CycleList.new(
 	items,
@@ -77,6 +52,32 @@ function CycleList.new(
 	end
 
 	local ui_text_color = text_color or COLOR.WHITE
+	local current_element_index = 1
+	local max_element_index = #items
+	local list = {}
+	local ui_text = text.new(first_item, 1, horizontal_align, vertical_align, offset_x, offset_y, ui_text_color)
+
+	local left_button_func = function()
+		print("Left button pressed")
+
+		current_element_index = current_element_index - 1
+		if current_element_index < 1 then
+			current_element_index = max_element_index
+		end
+
+		ui_text.text = list[current_element_index]
+	end
+
+	local right_button_func = function()
+		print("Right button pressed")
+
+		current_element_index = current_element_index + 1
+		if current_element_index > max_element_index then
+			current_element_index = 1
+		end
+
+		ui_text.text = list[current_element_index]
+	end
 
 	return setmetatable({
 		x = x or 0,
@@ -115,9 +116,7 @@ function CycleList.new(
 			button_color,
 			text_button_color
 		) or button.new(),
-		ui_text = text.new(first_item, 1, horizontal_align, vertical_align, offset_x, offset_y, ui_text_color)
-			or text.new(),
-		max_element_index = #items,
+		ui_text = ui_text or text.new(),
 	}, CycleList)
 end
 
@@ -177,11 +176,6 @@ function CycleList:unload()
 	-- Unload text
 	self.ui_text:unload()
 	self.ui_text = nil
-
-	-- Unload rest of data
-	for k, _ in pairs(self) do
-		self[k] = nil
-	end
 end
 
 return CycleList

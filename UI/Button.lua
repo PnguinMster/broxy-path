@@ -6,7 +6,7 @@ local Button = {
 	y = 0,
 	width = 0,
 	height = 0,
-	string = {},
+	text_block = {},
 	func = nil,
 	func_param = nil,
 	offset_x = 0,
@@ -19,7 +19,7 @@ Button.__index = Button
 function Button.new(
 	width,
 	height,
-	string,
+	text_block,
 	func,
 	func_param,
 	horizontal_align,
@@ -42,7 +42,7 @@ function Button.new(
 		x = x - width / 2
 	elseif horizontal_align == HORIZONTAL_ALIGN.LEFT then
 		local font = love.graphics:getFont()
-		local text_width = font:getWidth(string)
+		local text_width = font:getWidth(text_block)
 		text_offset_x = text_offset_x + (width / 2) - (text_width / 2)
 	end
 
@@ -62,8 +62,15 @@ function Button.new(
 		y = y or 0,
 		width = width or 0,
 		height = height or 0,
-		string = text.new(string, 1, horizontal_align, vertical_align, text_offset_x, text_offset_y, text_color)
-			or text.new(),
+		text_block = text.new(
+			text_block,
+			1,
+			horizontal_align,
+			vertical_align,
+			text_offset_x,
+			text_offset_y,
+			text_color
+		) or text.new(),
 		func = func or function()
 			print("No Function")
 		end,
@@ -97,7 +104,7 @@ function Button:auto_resize_x()
 	end
 
 	self.x = x
-	self.string:auto_resize_x()
+	self.text_block:auto_resize_x()
 end
 
 function Button:auto_resize_y()
@@ -112,23 +119,24 @@ function Button:auto_resize_y()
 	end
 
 	self.y = y
-	self.string:auto_resize_y()
+	self.text_block:auto_resize_y()
 end
 
 function Button:draw()
 	love.graphics.setColor(self.button_color:rgb_color())
 	love.graphics.rectangle("fill", self.x, self.y, self.width, self.height)
-	self.string:draw()
+	self.text_block:draw()
 end
 
 function Button:unload()
 	-- Unload text
-	self.string:unload()
-	self.string = nil
+	self.text_block:unload()
+	self.text_block = nil
 
-	-- Unload rest of data
 	for k, _ in pairs(self) do
-		self[k] = nil
+		if k ~= "__index" then
+			self[k] = nil
+		end
 	end
 end
 

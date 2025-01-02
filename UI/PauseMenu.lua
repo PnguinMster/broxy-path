@@ -2,9 +2,7 @@ require("Utility.ColorEnum")
 local button = require("UI.Button")
 local text = require("UI.Text")
 
-Pause_menu = {}
-Pause_menu.__index = Pause_menu
-setmetatable({}, Pause_menu)
+local Pause_menu = {}
 
 local RESIZE_DIFFERENCE = 5
 local window_x = 0
@@ -93,3 +91,5 @@ function Pause_menu:unload()
 		self[k] = nil
 	end
 end
+
+return Pause_menu

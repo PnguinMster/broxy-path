@@ -1,13 +1,11 @@
 require("Game.Camera")
-require("UI.PauseMenu")
-require("UI.EndMenu")
+local pause_menu = require("UI.PauseMenu")
+local end_menu = require("UI.EndMenu")
 
 local player = require("Game.Player")
 local tilemap = require("Game.TileMap")
 
-Game_scene = {}
-Game_scene.__index = Game_scene
-setmetatable({}, Game_scene)
+local Game_scene = {}
 
 function Game_scene:load()
 	World = love.physics.newWorld(0, 9.8 * 16, true)
@@ -20,15 +18,15 @@ function Game_scene:load()
 	Tilemap:load_map()
 
 	Player:load()
-	Pause_menu:load()
-	End_menu:load()
+	pause_menu:load()
+	end_menu:load()
 end
 
 function Game_scene:update(dt)
 	if Game.state ~= STATE.GAME then
 		if Game.state == STATE.MENU then
-			Pause_menu:update(dt)
-			End_menu:update(dt)
+			pause_menu:update(dt)
+			end_menu:update(dt)
 		end
 
 		return
@@ -50,8 +48,8 @@ function Game_scene:draw()
 	Player:draw()
 	Camera:unset()
 
-	Pause_menu:draw()
-	End_menu:draw()
+	pause_menu:draw()
+	end_menu:draw()
 end
 
 function Game_scene.on_begin_contact(a, b, contact)
@@ -60,7 +58,7 @@ function Game_scene.on_begin_contact(a, b, contact)
 
 	if user_data_1 and user_data_2 then
 		print(user_data_1 .. " triggered " .. user_data_2)
-		End_menu.active = true
+		end_menu.active = true
 		Game:set_state(STATE.MENU)
 	end
 end
@@ -69,6 +67,8 @@ function Game_scene:unload()
 	World:destroy()
 	Player:unload()
 	Tilemap:unload()
-	Pause_menu:unload()
-	End_menu:unload()
+	pause_menu:unload()
+	end_menu:unload()
 end
+
+return Game_scene

@@ -5,9 +5,7 @@ local checkbox = require("UI.Checkbox")
 local slider = require("UI.Slider")
 local cycle_list = require("UI.CycleList")
 
-Option_scene = {}
-Option_scene.__index = Option_scene
-setmetatable({}, Option_scene)
+local Option_scene = {}
 
 local RESIZE_DIFFERENCE = 5
 local window_x = 0
@@ -194,9 +192,6 @@ function Option_scene:unload()
 		text_slider:unload()
 		self.text_displays[x] = nil
 	end
-
-	-- Unload rest of data
-	for k, _ in pairs(self) do
-		self[k] = nil
-	end
 end
+
+return Option_scene

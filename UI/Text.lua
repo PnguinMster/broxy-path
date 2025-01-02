@@ -94,10 +94,6 @@ function Text:draw()
 end
 
 function Text:unload()
-	-- Unload rest of data
-	for k, _ in pairs(self) do
-		self[k] = nil
-	end
 end
 
 return Text

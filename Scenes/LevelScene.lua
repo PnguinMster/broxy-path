@@ -6,9 +6,7 @@ local RESIZE_DIFFERENCE = 5
 local window_x = 0
 local window_y = 0
 
-Level_scene = {}
-Level_scene.__index = Level_scene
-setmetatable({}, Level_scene)
+local Level_scene = {}
 
 Level_scene.interactables = {}
 
@@ -151,3 +149,5 @@ function Level_scene:unload()
 		self[k] = nil
 	end
 end
+
+return Level_scene
