@@ -101,7 +101,7 @@ function Block_info.new(map_info, x, y, offset_x, offset_y)
 	end
 
 	return setmetatable({
-		map_info = map_info or Map_info.new(),
+		map_info = map_info or map_info.new(),
 		shape = shape,
 		body = body,
 		move = move,
@@ -110,7 +110,7 @@ end
 
 function Block_info:unload()
 	self.map_info = nil
-	self.body:destroy()
+	self.body = nil
 	self.move = nil
 
 	-- Clear rest of data

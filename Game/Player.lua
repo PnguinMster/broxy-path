@@ -2,7 +2,27 @@ require("Utility.LayerEnum")
 require("Utility.Math")
 require("Utility.ColorEnum")
 
-local Player = {}
+local Player = {
+	angular_force = 250 * 100,
+	linear_force = 30,
+	hover_force = 70,
+
+	width = 30,
+	height = 60,
+	start_x = 0,
+	start_y = 0,
+
+	top_body = {},
+	top_shape = {},
+	bottom_body = {},
+	bottom_shape = {},
+
+	joint = {},
+
+	hover_timer = 1,
+	can_hover_timer = 0,
+	hover_enabled = true,
+}
 Player.__index = Player
 
 local DAMPING_RATIO = 1
@@ -17,27 +37,7 @@ local HOVER_TIME_LOSE = 1
 local CAN_HOVER_TIME = 0.15
 
 function Player.new()
-	return setmetatable({
-		angular_force = 250 * 100,
-		linear_force = 30,
-		hover_force = 70,
-
-		width = 30,
-		height = 60,
-		start_x = 0,
-		start_y = 0,
-
-		top_body = {},
-		top_shape = {},
-		bottom_body = {},
-		bottom_shape = {},
-
-		joint = {},
-
-		hover_timer = 1,
-		can_hover_timer = 0,
-		hover_enabled = true,
-	}, Player)
+	return setmetatable({}, Player)
 end
 
 function Player:load()
@@ -209,8 +209,8 @@ function Player:reset_player()
 end
 
 function Player:unload()
-	self.top_body:destroy()
-	self.bottom_body:destroy()
+	self.top_body = nil
+	self.bottom_body = nil
 
 	-- Clear rest of data
 	for k, _ in pairs(self) do
