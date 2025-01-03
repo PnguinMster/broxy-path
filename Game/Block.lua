@@ -1,7 +1,12 @@
 require("Utility.BlockTypeEnum")
 require("Game.MapInfo")
 
-Block_info = {}
+local Block_info = {
+	map_info = {},
+	shape = {},
+	body = {},
+	move = {},
+}
 Block_info.__index = Block_info
 
 BLOCK_SIZE = 50
@@ -97,6 +102,7 @@ function Block_info.new(map_info, x, y, offset_x, offset_y)
 
 	return setmetatable({
 		map_info = map_info or Map_info.new(),
+		shape = shape,
 		body = body,
 		move = move,
 	}, Block_info)

@@ -1,5 +1,5 @@
-require("Game.Block")
-require("Game.MapInfo")
+local block_info = require("Game.Block")
+local map_info = require("Game.MapInfo")
 require("Utility.BlockTypeEnum")
 require("Utility.ColorEnum")
 
@@ -36,7 +36,7 @@ function Tilemap:create_map(image, player_width, player_height)
 				self.start_x = -x
 				self.start_y = -y
 			elseif type ~= nil then
-				self.map[x][y] = Map_info.new(type)
+				self.map[x][y] = map_info.new(type)
 			end
 		end
 	end
@@ -73,8 +73,8 @@ function Tilemap:load_map()
 	local start_offset_y = self.start_y * BLOCK_SIZE + self.player_offset_y
 
 	for x, column in pairs(self.map) do
-		for y, map_info in pairs(column) do
-			local block = Block_info.new(map_info, x, y, start_offset_x, start_offset_y)
+		for y, info in pairs(column) do
+			local block = block_info.new(info, x, y, start_offset_x, start_offset_y)
 
 			if block.body:getType() == "kinematic" then
 				table.insert(self.movable_blocks, block)

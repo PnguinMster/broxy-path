@@ -1,4 +1,4 @@
-Map_info = { width = 1, height = 1 }
+local Map_info = { width = 1, height = 1 }
 Map_info.__index = Map_info
 
 function Map_info.new(type)
