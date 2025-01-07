@@ -77,11 +77,6 @@ function Menu_scene:unload()
 		element:unload()
 		self.interactables[x] = nil
 	end
-
-	-- Unload rest of data
-	-- for k, _ in pairs(self) do
-	-- 	self[k] = nil
-	-- end
 end
 
 return Menu_scene

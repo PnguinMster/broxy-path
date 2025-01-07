@@ -211,11 +211,6 @@ end
 function Player:unload()
 	self.top_body = nil
 	self.bottom_body = nil
-
-	-- Clear rest of data
-	for k, _ in pairs(self) do
-		self[k] = nil
-	end
 end
 
 return Player

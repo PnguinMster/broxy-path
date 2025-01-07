@@ -93,7 +93,6 @@ function Text:draw()
 	)
 end
 
-function Text:unload()
-end
+function Text:unload() end
 
 return Text

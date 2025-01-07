@@ -124,11 +124,6 @@ function Checkbox:draw()
 	end
 end
 
-function Checkbox:unload()
-	-- Clear rest of data
-	for k, _ in pairs(self) do
-		self[k] = nil
-	end
-end
+function Checkbox:unload() end
 
 return Checkbox

@@ -5,26 +5,25 @@ require("Utility.ColorEnum")
 
 local love = require("love")
 
-Tilemap = {}
+local Tilemap = {
+	map = {},
+	static_blocks = {},
+	movable_blocks = {},
+	start_x = 0,
+	start_y = 0,
+	player_offset_x = 0,
+	player_offset_y = 0,
+}
 Tilemap.__index = Tilemap
 
-function Tilemap.new()
-	return setmetatable({
-		map = {},
-		static_blocks = {},
-		movable_blocks = {},
-		start_x = 0,
-		start_y = 0,
-		player_offset_x = 0,
-		player_offset_y = 0,
-	}, Tilemap)
+function Tilemap.new(player_width, player_height)
+	local player_offset_x = player_width / 2
+	local player_offset_y = player_height / 2
+	return setmetatable({ player_offset_x = player_offset_x or 0, player_offset_y = player_offset_y or 0 }, Tilemap)
 end
 
-function Tilemap:create_map(image, player_width, player_height)
+function Tilemap:create_map(image)
 	local level = love.image.newImageData(image)
-
-	self.player_offset_x = player_width / 2
-	self.player_offset_y = player_height / 2
 
 	for x = 1, level:getWidth() do
 		self.map[x] = {}
@@ -127,11 +126,6 @@ function Tilemap:unload()
 			block:unload()
 			self.movable_blocks[x] = nil
 		end
-	end
-
-	-- Clear rest of data
-	for k, _ in pairs(self) do
-		self[k] = nil
 	end
 end
 

@@ -12,9 +12,9 @@ function Game_scene:load()
 	World:setCallbacks(self.on_begin_contact)
 
 	Player = player.new()
-	Tilemap = tilemap.new()
+	Tilemap = tilemap.new(Player.width, Player.height)
 
-	Tilemap:create_map(Game.level, Player.width, Player.height)
+	Tilemap:create_map(Game.level)
 	Tilemap:load_map()
 
 	Player:load()

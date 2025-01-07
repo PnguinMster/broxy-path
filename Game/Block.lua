@@ -112,11 +112,6 @@ function Block_info:unload()
 	self.map_info = nil
 	self.body = nil
 	self.move = nil
-
-	-- Clear rest of data
-	for k, _ in pairs(self) do
-		self[k] = nil
-	end
 end
 
 return Block_info
