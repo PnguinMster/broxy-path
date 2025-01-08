@@ -12,7 +12,7 @@ Block_info.__index = Block_info
 BLOCK_SIZE = 50
 local BLOCK_MOVE_DISTANCE = 3
 local BLOCK_ROTATE_SPEED = 1
-local BLOCK_MOVE_SPEED
+local BLOCK_MOVE_SPEED = 25
 
 function Block_info.new(map_info, x, y, offset_x, offset_y)
 	-- Set body type
@@ -62,15 +62,15 @@ function Block_info.new(map_info, x, y, offset_x, offset_y)
 		if map_info.type == BLOCK_TYPE.VERTICAL_BLOCK or map_info.type == BLOCK_TYPE.VERTICAL_BOUNCE then
 			local first = body:getY()
 			local last = first - (BLOCK_MOVE_DISTANCE * BLOCK_SIZE)
-			move = function(self)
-				if self.is_go_to then
+			move = function()
+				if is_go_to then
 					if body:getY() <= last then
-						self.is_go_to = false
+						is_go_to = false
 					end
 					body:setLinearVelocity(0, -BLOCK_MOVE_SPEED)
 				else
 					if body:getY() >= first then
-						self.is_go_to = true
+						is_go_to = true
 					end
 					body:setLinearVelocity(0, BLOCK_MOVE_SPEED)
 				end
