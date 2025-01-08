@@ -1,6 +1,7 @@
 require("Utility.LayerEnum")
 require("Utility.Math")
 require("Utility.ColorEnum")
+require("Game.Camera")
 
 local Player = {
 	angular_force = 250 * 100,
@@ -36,6 +37,13 @@ local HOVER_TIME_GAIN = 1.5
 local HOVER_TIME_LOSE = 1
 local CAN_HOVER_TIME = 0.15
 
+local function reset_camera_to_player(self)
+	local x, y = self:get_position()
+	x = x - love.graphics.getWidth() / 2
+	y = y - love.graphics.getHeight() / 2
+	Camera:setPosition(x, y)
+end
+
 function Player.new()
 	return setmetatable({}, Player)
 end
@@ -64,6 +72,8 @@ function Player:load()
 
 	self.top_body:setAngularDamping(ANGULAR_DAMPENING)
 	self.bottom_body:setAngularDamping(ANGULAR_DAMPENING)
+
+	reset_camera_to_player(self)
 end
 
 function Player:update(dt)
@@ -206,6 +216,8 @@ function Player:reset_player()
 
 	self.hover_timer = 1
 	self.hover_enabled = true
+
+	reset_camera_to_player(self)
 end
 
 function Player:unload()
