@@ -92,6 +92,17 @@ function Button:check_pressed(mouse_x, mouse_y)
 	end
 end
 
+function Button:check_is_hovered(mouse_x, mouse_y)
+	local offset_x = self.width
+	local offset_y = self.height
+
+	if mouse_x <= self.x + offset_x and mouse_x >= self.x and mouse_y <= self.y + offset_y and mouse_y >= self.y then
+		return self
+	end
+
+	return nil
+end
+
 function Button:auto_resize_x()
 	local x = self.offset_x
 

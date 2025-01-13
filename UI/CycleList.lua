@@ -125,6 +125,18 @@ function CycleList:check_pressed(mouse_x, mouse_y)
 	self.right_button:check_pressed(mouse_x, mouse_y)
 end
 
+function CycleList:check_is_hovered(mouse_x, mouse_y)
+	local hovered_ui = nil
+
+	hovered_ui = self.left_button:check_is_hovered(mouse_x, mouse_y)
+
+	if hovered_ui then
+		return hovered_ui
+	end
+
+	return self.right_button:check_is_hovered(mouse_x, mouse_y)
+end
+
 function CycleList:auto_resize_x()
 	local x = self.offset_x
 
