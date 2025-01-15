@@ -175,7 +175,7 @@ end
 function Slider:draw()
 	love.graphics.setColor(love.math.colorFromBytes(235, 237, 233))
 	if self.is_hovered then
-		love.graphics.circle("line", self.x + self.handle_offset_postion - 1, self.y - 1, self.handle_radius + 2)
+		love.graphics.circle("line", self.x + self.handle_offset_postion, self.y, self.handle_radius + 1)
 	else
 		love.graphics.circle("line", self.x + self.handle_offset_postion, self.y, self.handle_radius)
 	end
