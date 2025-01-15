@@ -74,20 +74,18 @@ function Checkbox.new(
 end
 
 function Checkbox:check_pressed(mouse_x, mouse_y)
-	local offset_x = self.box_size
-	local offset_y = self.box_size
+	local offset = self.box_size
 
-	if mouse_x <= self.x + offset_x and mouse_x >= self.x and mouse_y <= self.y + offset_y and mouse_y >= self.y then
+	if mouse_x <= self.x + offset and mouse_x >= self.x and mouse_y <= self.y + offset and mouse_y >= self.y then
 		self.checked = not self.checked
 		self.func(self.checked)
 	end
 end
 
 function Checkbox:check_is_hovered(mouse_x, mouse_y)
-	local offset_x = self.width
-	local offset_y = self.height
+	local offset = self.box_size
 
-	if mouse_x <= self.x + offset_x and mouse_x >= self.x and mouse_y <= self.y + offset_y and mouse_y >= self.y then
+	if mouse_x <= self.x + offset and mouse_x >= self.x and mouse_y <= self.y + offset and mouse_y >= self.y then
 		return self
 	end
 
