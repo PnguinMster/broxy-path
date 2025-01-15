@@ -13,6 +13,7 @@ local Button = {
 	offset_y = 0,
 	horizontal_align = HORIZONTAL_ALIGN.LEFT,
 	vertical_align = VERTICAL_ALIGN.TOP,
+	is_hovered = false,
 }
 Button.__index = Button
 
@@ -103,6 +104,10 @@ function Button:check_is_hovered(mouse_x, mouse_y)
 	return nil
 end
 
+function Button:set_hovered(hovered)
+	self.is_hovered = hovered
+end
+
 function Button:auto_resize_x()
 	local x = self.offset_x
 
@@ -135,7 +140,11 @@ end
 
 function Button:draw()
 	love.graphics.setColor(self.button_color:rgb_color())
-	love.graphics.rectangle("fill", self.x, self.y, self.width, self.height)
+	if self.is_hovered then
+		love.graphics.rectangle("fill", self.x - 2, self.y - 2, self.width + 4, self.height + 4)
+	else
+		love.graphics.rectangle("fill", self.x, self.y, self.width, self.height)
+	end
 	self.text_block:draw()
 end
 
