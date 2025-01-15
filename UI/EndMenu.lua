@@ -2,14 +2,13 @@ require("Utility.ColorEnum")
 local button = require("UI.Button")
 local text = require("UI.Text")
 
-local End_menu = {}
+local End_menu = { active = false }
 
 local RESIZE_DIFFERENCE = 5
 local window_x = 0
 local window_y = 0
 
 End_menu.interactables = {}
-End_menu.active = false
 
 -- UI Function
 local retry_pressed = function()
@@ -25,6 +24,8 @@ local menu_pressed = function()
 end
 
 function End_menu:load()
+	self.active = false
+
 	window_x = love.graphics.getWidth()
 	window_y = love.graphics.getHeight()
 

@@ -60,6 +60,11 @@ function love.mousemoved(x, y)
 		end
 	end
 
+	if check_display == nil or check_display.interactables == nil then
+		hovered_ui = nil
+		return
+	end
+
 	--Slider Specific
 	if is_holding then
 		if hovered_ui then
