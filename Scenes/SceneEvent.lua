@@ -37,10 +37,8 @@ end
 
 function love.mousepressed(x, y, index)
 	if index == 1 then
-		if Game.scene == SCENE.OPTION then
-			for _, option_slider in ipairs(Game.scene.option_sliders) do
-				option_slider:check_held(x, y)
-			end
+		if hovered_ui and hovered_ui.check_held then
+			hovered_ui:check_held(x, y)
 		end
 	end
 end
