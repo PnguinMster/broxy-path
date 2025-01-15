@@ -30,6 +30,7 @@ function love.mousereleased(x, y, index)
 				Sound:play_sound_effect(SOUND_EFFECT.CLICK)
 				hovered_ui = nil
 			else
+				--Slider Specific
 				hovered_ui:mouse_released()
 				is_holding = false
 			end
@@ -39,6 +40,7 @@ end
 
 function love.mousepressed(x, y, index)
 	if index == 1 then
+		--Slider Specific
 		if hovered_ui and hovered_ui.check_held then
 			hovered_ui:check_held(x, y)
 			is_holding = true
@@ -58,6 +60,7 @@ function love.mousemoved(x, y)
 		end
 	end
 
+	--Slider Specific
 	if is_holding then
 		if hovered_ui then
 			hovered_ui:mouse_moved(x)
@@ -73,6 +76,7 @@ function love.mousemoved(x, y)
 		end
 	end
 
+	--Slider Specific
 	if check_display == SCENE.OPTION then
 		for _, option_slider in ipairs(check_display.option_sliders) do
 			if ui_item == nil then
