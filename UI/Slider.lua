@@ -90,9 +90,8 @@ function Slider.new(
 	}, Slider)
 end
 
-function Slider:check_pressed(mouse_x, mouse_y)
+function Slider:check_held(mouse_x, mouse_y)
 	local offset = self.handle_radius
-	print("check pressed")
 
 	if
 		mouse_x <= self.x + offset + self.handle_offset_postion
@@ -103,6 +102,21 @@ function Slider:check_pressed(mouse_x, mouse_y)
 		self.is_dragging_slider = true
 		self.handle_drag_offset = (self.x + self.handle_offset_postion) - mouse_x
 	end
+end
+
+function Slider:check_is_hovered(mouse_x, mouse_y)
+	local offset = self.handle_radius
+
+	if
+		mouse_x <= self.x + offset + self.handle_offset_postion
+		and mouse_x >= self.x - offset + self.handle_offset_postion
+		and mouse_y <= self.y + offset
+		and mouse_y >= self.y - offset
+	then
+		return self
+	end
+
+	return nil
 end
 
 function Slider:mouse_moved(x)

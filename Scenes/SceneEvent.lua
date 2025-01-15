@@ -23,18 +23,13 @@ end
 
 function love.mousereleased(x, y, index)
 	if index == 1 then
-		local check_display = nil
-		check_display = Game.scene
-
 		if hovered_ui then
-			hovered_ui:check_pressed(x, y)
-			Sound:play_sound_effect(SOUND_EFFECT.CLICK)
-			hovered_ui = nil
-		end
-
-		if check_display == SCENE.OPTION then
-			for _, option_slider in ipairs(check_display.option_sliders) do
-				option_slider:mouse_released()
+			if hovered_ui.check_pressed then
+				hovered_ui:check_pressed(x, y)
+				Sound:play_sound_effect(SOUND_EFFECT.CLICK)
+				hovered_ui = nil
+			else
+				hovered_ui:mouse_released()
 			end
 		end
 	end
@@ -44,19 +39,13 @@ function love.mousepressed(x, y, index)
 	if index == 1 then
 		if Game.scene == SCENE.OPTION then
 			for _, option_slider in ipairs(Game.scene.option_sliders) do
-				option_slider:check_pressed(x, y)
+				option_slider:check_held(x, y)
 			end
 		end
 	end
 end
 
 function love.mousemoved(x, y)
-	if Game.scene == SCENE.OPTION then
-		for _, option_slider in ipairs(Game.scene.option_sliders) do
-			option_slider:mouse_moved(x)
-		end
-	end
-
 	local check_display = nil
 	check_display = Game.scene
 
@@ -73,6 +62,18 @@ function love.mousemoved(x, y)
 		ui_item = interactable:check_is_hovered(x, y)
 		if ui_item then
 			break
+		end
+	end
+
+	if check_display == SCENE.OPTION then
+		for _, option_slider in ipairs(check_display.option_sliders) do
+			option_slider:mouse_moved(x)
+			if ui_item == nil then
+				ui_item = option_slider:check_is_hovered(x, y)
+				if ui_item then
+					break
+				end
+			end
 		end
 	end
 
