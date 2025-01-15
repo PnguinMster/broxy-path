@@ -13,6 +13,7 @@ local Checkbox = {
 	box_size = 0,
 	check_size = 0,
 	check_offset = 0,
+	is_hovered = false,
 }
 Checkbox.__index = Checkbox
 
@@ -92,6 +93,10 @@ function Checkbox:check_is_hovered(mouse_x, mouse_y)
 	return nil
 end
 
+function Checkbox:set_hovered(hovered)
+	self.is_hovered = hovered
+end
+
 function Checkbox:auto_resize_x()
 	local x = self.offset_x - (self.box_size / 2)
 
@@ -119,7 +124,11 @@ end
 
 function Checkbox:draw()
 	love.graphics.setColor(self.outer_color:rgb_color())
-	love.graphics.rectangle("line", self.x, self.y, self.box_size, self.box_size)
+	if self.is_hovered then
+		love.graphics.rectangle("line", self.x - 2, self.y - 2, self.box_size + 4, self.box_size + 4)
+	else
+		love.graphics.rectangle("line", self.x, self.y, self.box_size, self.box_size)
+	end
 
 	if self.checked then
 		love.graphics.setColor(self.inner_color:rgb_color())

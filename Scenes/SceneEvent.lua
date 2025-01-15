@@ -6,6 +6,7 @@ local pause_menu = require("UI.PauseMenu")
 local end_menu = require("UI.EndMenu")
 
 local hovered_ui = nil
+local is_holding = false
 
 function love.keyreleased(key)
 	if Game.scene == SCENE.GAME then
@@ -35,6 +36,8 @@ function love.mousereleased(x, y, index)
 				hovered_ui = nil
 			else
 				hovered_ui:mouse_released()
+				hovered_ui:set_hovered(false)
+				is_holding = false
 			end
 		end
 	end
@@ -44,6 +47,7 @@ function love.mousepressed(x, y, index)
 	if index == 1 then
 		if hovered_ui and hovered_ui.check_held then
 			hovered_ui:check_held(x, y)
+			is_holding = true
 		end
 	end
 end
@@ -60,6 +64,13 @@ function love.mousemoved(x, y)
 		end
 	end
 
+	if is_holding then
+		if hovered_ui then
+			hovered_ui:mouse_moved(x)
+		end
+		return
+	end
+
 	local ui_item = nil
 	for _, interactable in ipairs(check_display.interactables) do
 		ui_item = interactable:check_is_hovered(x, y)
@@ -70,7 +81,6 @@ function love.mousemoved(x, y)
 
 	if check_display == SCENE.OPTION then
 		for _, option_slider in ipairs(check_display.option_sliders) do
-			option_slider:mouse_moved(x)
 			if ui_item == nil then
 				ui_item = option_slider:check_is_hovered(x, y)
 				if ui_item then

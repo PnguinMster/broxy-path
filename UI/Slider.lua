@@ -30,6 +30,7 @@ local Slider = {
 	value = 0,
 	min_value = 0,
 	max_value = 10,
+	is_hovered = false,
 }
 Slider.__index = Slider
 
@@ -119,6 +120,10 @@ function Slider:check_is_hovered(mouse_x, mouse_y)
 	return nil
 end
 
+function Slider:set_hovered(hovered)
+	self.is_hovered = hovered
+end
+
 function Slider:mouse_moved(x)
 	if self.is_dragging_slider == true then
 		local offset = x - self.x + self.handle_drag_offset
@@ -169,7 +174,11 @@ end
 
 function Slider:draw()
 	love.graphics.setColor(love.math.colorFromBytes(235, 237, 233))
-	love.graphics.circle("line", self.x + self.handle_offset_postion, self.y, self.handle_radius)
+	if self.is_hovered then
+		love.graphics.circle("line", self.x + self.handle_offset_postion - 1, self.y - 1, self.handle_radius + 2)
+	else
+		love.graphics.circle("line", self.x + self.handle_offset_postion, self.y, self.handle_radius)
+	end
 	love.graphics.rectangle("line", self.x, self.y - (self.bar_height / 2), self.bar_width, self.bar_height)
 end
 
