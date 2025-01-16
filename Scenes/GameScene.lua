@@ -23,6 +23,7 @@ function Game_scene:load()
 end
 
 function Game_scene:update(dt)
+	--handle which menu to show
 	if Game.state ~= STATE.GAME then
 		if Game.state == STATE.MENU then
 			if pause_menu.active then
@@ -55,7 +56,7 @@ function Game_scene:draw()
 	end_menu:draw()
 end
 
-function Game_scene.on_begin_contact(a, b, contact)
+function Game_scene.on_begin_contact(a, b, _)
 	local user_data_1 = a:getUserData()
 	local user_data_2 = b:getUserData()
 

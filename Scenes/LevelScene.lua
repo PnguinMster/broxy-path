@@ -74,8 +74,10 @@ function Level_scene:load()
 	window_x = love.graphics.getWidth()
 	window_y = love.graphics.getHeight()
 
+	--title
 	self.title_text = text.new("Select Level", 3, HORIZONTAL_ALIGN.CENTER, VERTICAL_ALIGN.TOP, 0, 10, COLOR.WHITE)
 
+	--buttons
 	self.interactables[1] =
 		button.new(85, 50, "0", level_0_pressed, nil, HORIZONTAL_ALIGN.CENTER, VERTICAL_ALIGN.CENTER, -140, -100)
 	self.interactables[2] =

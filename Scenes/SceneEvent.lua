@@ -24,6 +24,7 @@ end
 
 function love.mousereleased(x, y, index)
 	if index == 1 then
+		--press button that is being hovered
 		if hovered_ui then
 			if hovered_ui.check_pressed then
 				hovered_ui:check_pressed(x, y)
@@ -52,6 +53,8 @@ function love.mousemoved(x, y)
 	local check_display = nil
 	check_display = Game.scene
 
+	--get menu for game
+	--pause or end menu since not always active
 	if Game.scene == SCENE.GAME then
 		if pause_menu.active then
 			check_display = pause_menu
@@ -60,6 +63,7 @@ function love.mousemoved(x, y)
 		end
 	end
 
+	--return if no ui elemnts found
 	if check_display == nil or check_display.interactables == nil then
 		hovered_ui = nil
 		return
@@ -74,6 +78,7 @@ function love.mousemoved(x, y)
 	end
 
 	local ui_item = nil
+	--check for basic interactables
 	for _, interactable in ipairs(check_display.interactables) do
 		ui_item = interactable:check_is_hovered(x, y)
 		if ui_item then
@@ -93,13 +98,16 @@ function love.mousemoved(x, y)
 		end
 	end
 
+	--set which ui is being hovered on
 	if ui_item ~= hovered_ui then
+		--for when it is not hovering on anything
 		if hovered_ui ~= nil and hovered_ui.set_hovered then
 			hovered_ui:set_hovered(false)
 		end
 
 		hovered_ui = ui_item
 
+		--play sound when hovered
 		if hovered_ui then
 			Sound:play_sound_effect(SOUND_EFFECT.UI_HOVER)
 			if hovered_ui.set_hovered then
