@@ -16,12 +16,14 @@ local Text = {
 Text.__index = Text
 
 function Text.new(text, scale, horizontal_align, vertical_align, offset_x, offset_y, color)
+	--set local variabbles from parameters
 	local font = love.graphics:getFont()
 	local text_width = font:getWidth(text)
 	local text_height = font:getHeight()
 	local x = offset_x or 0
 	local y = offset_y or 0
 
+	--align horizontally
 	if horizontal_align == HORIZONTAL_ALIGN.RIGHT then
 		x = x + love.graphics:getWidth()
 	elseif horizontal_align == HORIZONTAL_ALIGN.CENTER then
@@ -31,6 +33,7 @@ function Text.new(text, scale, horizontal_align, vertical_align, offset_x, offse
 		text_width = 0
 	end
 
+	--align vertically
 	if vertical_align == VERTICAL_ALIGN.BOTTOM then
 		y = y + love.graphics:getHeight()
 	elseif vertical_align == VERTICAL_ALIGN.CENTER then

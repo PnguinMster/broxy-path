@@ -31,14 +31,17 @@ function Checkbox.new(
 	outer_color,
 	inner_color
 )
+	--set parameters to local variables
 	local x = offset_x or 0
 	local y = offset_y or 0
 	local box_size = default_size * scale
 	local check_size = box_size * check_scale
 
+	--offset position based of box size
 	x = x - (box_size / 2)
 	y = y - (box_size / 2)
 
+	--align horizontally
 	if horizontal_align == HORIZONTAL_ALIGN.RIGHT then
 		x = x + love.graphics:getWidth()
 		x = x - (box_size / 2)
@@ -46,6 +49,7 @@ function Checkbox.new(
 		x = (love.graphics:getWidth() / 2) + x
 	end
 
+	--align vertically
 	if vertical_align == VERTICAL_ALIGN.BOTTOM then
 		y = y + love.graphics:getHeight()
 	elseif vertical_align == VERTICAL_ALIGN.CENTER then

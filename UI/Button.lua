@@ -30,11 +30,13 @@ function Button.new(
 	button_color,
 	text_color
 )
+	--set local variables from parameters
 	local x = offset_x or 0
 	local y = offset_y or 0
 	local text_offset_x = offset_x or 0
 	local text_offset_y = offset_y or 0
 
+	--align button horizontally
 	if horizontal_align == HORIZONTAL_ALIGN.RIGHT then
 		x = x + love.graphics:getWidth()
 		x = x - width / 2
@@ -47,6 +49,7 @@ function Button.new(
 		text_offset_x = text_offset_x + (width / 2) - (text_width / 2)
 	end
 
+	--align button vertically
 	if vertical_align == VERTICAL_ALIGN.BOTTOM then
 		local font = love.graphics:getFont()
 		local text_height = font:getHeight()

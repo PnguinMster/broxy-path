@@ -52,6 +52,7 @@ function Slider.new(
 	local x = offset_x or 0
 	local y = offset_y or 0
 
+	--align horizontally
 	if horizontal_align == HORIZONTAL_ALIGN.RIGHT then
 		x = x + love.graphics:getWidth() - bar_width
 		x = x - handle_radius
@@ -59,6 +60,7 @@ function Slider.new(
 		x = (love.graphics:getWidth() / 2) + x - (bar_width / 2)
 	end
 
+	--align vertically
 	if vertical_align == VERTICAL_ALIGN.BOTTOM then
 		y = y + love.graphics:getHeight()
 	elseif vertical_align == VERTICAL_ALIGN.CENTER then
@@ -129,6 +131,8 @@ function Slider:mouse_moved(x)
 		local offset = x - self.x + self.handle_drag_offset
 		local position = self.x + offset
 
+		--create handle offset
+		--making sure it does not go past the slider bar
 		if position <= self.x then
 			self.handle_offset_postion = 0
 		elseif position > self.bar_max_position then
@@ -174,11 +178,13 @@ end
 
 function Slider:draw()
 	love.graphics.setColor(love.math.colorFromBytes(235, 237, 233))
+
 	if self.is_hovered then
 		love.graphics.circle("line", self.x + self.handle_offset_postion, self.y, self.handle_radius + 1)
 	else
 		love.graphics.circle("line", self.x + self.handle_offset_postion, self.y, self.handle_radius)
 	end
+
 	love.graphics.rectangle("line", self.x, self.y - (self.bar_height / 2), self.bar_width, self.bar_height)
 end
 

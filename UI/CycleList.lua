@@ -33,6 +33,7 @@ function CycleList.new(
 	local x = offset_x or 0
 	local y = offset_y or 0
 
+	--align horizontally
 	if horizontal_align == HORIZONTAL_ALIGN.RIGHT then
 		x = x + love.graphics:getWidth()
 		offset_x = offset_x - button_offset - (buttons_size / 2)
@@ -40,17 +41,20 @@ function CycleList.new(
 		x = (love.graphics:getWidth() / 2) + x
 	end
 
+	--align vertically
 	if vertical_align == VERTICAL_ALIGN.BOTTOM then
 		y = y + love.graphics:getHeight()
 	elseif vertical_align == VERTICAL_ALIGN.CENTER then
 		y = (love.graphics:getHeight() / 2) + y
 	end
 
+	--check first item on list
 	local first_item = "Empty"
 	if items then
 		first_item = items[1]
 	end
 
+	--create local variables for text and button
 	local ui_text_color = text_color or COLOR.WHITE
 	local current_element_index = 1
 	local max_element_index = #items

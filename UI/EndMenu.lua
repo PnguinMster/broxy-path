@@ -29,8 +29,10 @@ function End_menu:load()
 	window_x = love.graphics.getWidth()
 	window_y = love.graphics.getHeight()
 
+	--title
 	self.title_text = text.new("Finished", 3, HORIZONTAL_ALIGN.CENTER, VERTICAL_ALIGN.TOP, 0, 10, COLOR.WHITE)
 
+	--buttons
 	self.interactables[1] =
 		button.new(85, 50, "Retry", retry_pressed, nil, HORIZONTAL_ALIGN.CENTER, VERTICAL_ALIGN.CENTER, 0, 0)
 	self.interactables[2] =
@@ -41,6 +43,7 @@ function End_menu:update(dt)
 	local x_difference = math.abs(window_x - love.graphics.getWidth())
 	local y_difference = math.abs(window_y - love.graphics.getHeight())
 
+	--auto resize horizontally 
 	if x_difference >= RESIZE_DIFFERENCE then
 		self.title_text:auto_resize_x()
 		for _, interactable in ipairs(self.interactables) do
@@ -50,6 +53,7 @@ function End_menu:update(dt)
 		window_x = love.graphics.getWidth()
 	end
 
+	--auto resize vertically 
 	if y_difference >= RESIZE_DIFFERENCE then
 		self.title_text:auto_resize_y()
 		for _, interactable in ipairs(self.interactables) do
