@@ -45,12 +45,14 @@ end
 function Sound:load()
 	self.Music = love.audio.newSource(music_file, "stream")
 
+	--set table of sound effects and variations
 	self.Effects = {
 		block_steps = create_effect_variations(block_step_effect_files),
 		clicks = create_effect_variations(click_effect_files),
 		ui_hovers = create_effect_variations(ui_hover_effect_files),
 	}
 
+	--set bolime for all sond effects
 	function self.Effects:setVolume(new_volume)
 		for _, effect in pairs(self) do
 			if type(effect) == "table" then
@@ -81,6 +83,7 @@ end
 function Sound:play_sound_effect(sound_effect)
 	local random_variation = nil
 
+	--get random variation of sound effect
 	if sound_effect == SOUND_EFFECT.BLOCK_STEP then
 		random_variation = self.Effects.block_steps[math.random(#self.Effects.block_steps)]
 	elseif sound_effect == SOUND_EFFECT.CLICK then
@@ -89,6 +92,7 @@ function Sound:play_sound_effect(sound_effect)
 		random_variation = self.Effects.ui_hovers[math.random(#self.Effects.ui_hovers)]
 	end
 
+	--play variation of sound
 	if random_variation ~= nil then
 		love.audio.play(random_variation)
 	end

@@ -31,6 +31,7 @@ function Tilemap:create_map(image)
 			local r, g, b = love.math.colorToBytes(level:getPixel(x - 1, y - 1))
 			local type = self.has_block_value(r, g, b)
 
+			--check if tile is start tile
 			if r == BLOCK_TYPE.START.r then
 				self.start_x = -x
 				self.start_y = -y
@@ -42,6 +43,9 @@ function Tilemap:create_map(image)
 end
 
 function Tilemap:optimize_map()
+	--greedy mesh vertical
+	--check if top block is the same as current
+	--if yes then combine
 	for x, _ in pairs(self.map) do
 		for y, _ in pairs(self.map[x]) do
 			if self.map[x][y - 1] ~= nil and self.map[x][y].type == self.map[x][y - 1].type then
@@ -51,6 +55,9 @@ function Tilemap:optimize_map()
 		end
 	end
 
+	--greedy mesh horizontal
+	--check if left mesh is same as current
+	--if yes then combine
 	for x = 2, #self.map do
 		for y, block in pairs(self.map[x]) do
 			if
@@ -68,6 +75,7 @@ end
 function Tilemap:load_map()
 	self:optimize_map()
 
+	--offset map so player at start tile
 	local start_offset_x = self.start_x * BLOCK_SIZE + self.player_offset_x
 	local start_offset_y = self.start_y * BLOCK_SIZE + self.player_offset_y
 
@@ -75,6 +83,7 @@ function Tilemap:load_map()
 		for y, info in pairs(column) do
 			local block = block_info.new(info, x, y, start_offset_x, start_offset_y)
 
+			--check if block is static or kinematic
 			if block.body:getType() == "kinematic" then
 				table.insert(self.movable_blocks, block)
 			else
@@ -93,11 +102,13 @@ function Tilemap:update(dt)
 end
 
 function Tilemap:draw_map()
+	--draw static blocks
 	for _, block in ipairs(self.static_blocks) do
 		love.graphics.setColor(block.map_info.type:rgb_color())
 		love.graphics.polygon("line", block.body:getWorldPoints(block.shape:getPoints()))
 	end
 
+	--draw kinematic blocks
 	for _, block in ipairs(self.movable_blocks) do
 		love.graphics.setColor(block.map_info.type:rgb_color())
 		love.graphics.polygon("line", block.body:getWorldPoints(block.shape:getPoints()))
