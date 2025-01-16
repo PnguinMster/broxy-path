@@ -62,7 +62,7 @@ function Sound:load()
 	end
 end
 
-function Sound:update(dt)
+function Sound:update(_)
 	if not self.Music:isPlaying() then
 		love.audio.play(self.Music)
 	end
