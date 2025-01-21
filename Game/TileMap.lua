@@ -31,7 +31,7 @@ function Tilemap:create_map(image)
 			local type = self.has_block_value(r, g, b)
 
 			--check if tile is start tile
-			if r == BLOCK_TYPE.START.r then
+			if BLOCK_TYPE.START:has_values(r, g, b) then
 				self.start_x = -x
 				self.start_y = -y
 			elseif type ~= nil then
