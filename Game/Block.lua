@@ -48,9 +48,11 @@ function Block_info.new(map_info, x, y, offset_x, offset_y)
 
 	-- check if block is end block
 	if map_info.type == BLOCK_TYPE.END then
-		fixture:setSensor(true)
+		-- fixture:setSensor(true)
 		fixture:setCategory(LAYERS.TRIGGER)
-		fixture:setUserData("trigger")
+		fixture:setUserData("end")
+	elseif map_info.type ~= BLOCK_TYPE.START then
+		fixture:setUserData("block")
 	end
 
 	-- set specific move type function
