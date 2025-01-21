@@ -1,7 +1,7 @@
 require("Game.Camera")
+require("Game.Sound")
 local pause_menu = require("UI.PauseMenu")
 local end_menu = require("UI.EndMenu")
-
 local player = require("Game.Player")
 local tilemap = require("Game.TileMap")
 
@@ -61,9 +61,20 @@ function Game_scene.on_begin_contact(a, b, _)
 	local user_data_2 = b:getUserData()
 
 	if user_data_1 and user_data_2 then
-		print(user_data_1 .. " triggered " .. user_data_2)
-		end_menu.active = true
-		Game:set_state(STATE.MENU)
+		if
+			(user_data_1.entity == "player" and user_data_2.entity == "block")
+			or (user_data_1.entity == "block" and user_data_2.entity == "player")
+		then
+			if user_data_1.part == "end" or user_data_2.entity == "end" then
+				end_menu.active = true
+				Game:set_state(STATE.MENU)
+				-- end sound effect?
+			elseif user_data_1.part == "solid" or user_data_2.entity == "solid" then
+				-- solid sound effect?
+			elseif user_data_1.part == "bounce" or user_data_2.entity == "bounce" then
+				-- bounce sound effect?
+			end
+		end
 	end
 end
 

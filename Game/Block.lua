@@ -46,13 +46,27 @@ function Block_info.new(map_info, x, y, offset_x, offset_y)
 		fixture:setRestitution(0.9)
 	end
 
-	-- check if block is end block
+	-- Set userdata based of block
 	if map_info.type == BLOCK_TYPE.END then
 		-- fixture:setSensor(true)
 		fixture:setCategory(LAYERS.TRIGGER)
-		fixture:setUserData("end")
-	elseif map_info.type ~= BLOCK_TYPE.START then
-		fixture:setUserData("block")
+		fixture:setUserData({ entity = "block", part = "end" })
+	elseif map_info.type == BLOCK_TYPE.START then
+		fixture:setUserData({ entity = "block", part = "start" })
+	elseif
+		map_info.type == BLOCK_TYPE.VERTICAL_BLOCK
+		or map_info.type == BLOCK_TYPE.HORIZONTAL_BLOCK
+		or map_info.type == BLOCK_TYPE.STATIC_BLOCK
+		or map_info.type == BLOCK_TYPE.ROTATING_BLOCK
+	then
+		fixture:setUserData({ entity = "block", part = "solid" })
+	elseif
+		map_info.type == BLOCK_TYPE.BOUNCE_BLOCK
+		or map_info.type == BLOCK_TYPE.ROTATING_BOUNCE
+		or map_info.type == BLOCK_TYPE.VERTICAL_BOUNCE
+		or map_info.type == BLOCK_TYPE.HORIZONTAL_BOUNCE
+	then
+		fixture:setUserData({ entity = "block", part = "bounce" })
 	end
 
 	-- set specific move type function
