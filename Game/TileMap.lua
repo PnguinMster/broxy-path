@@ -2,7 +2,6 @@ local block_info = require("Game.Block")
 local map_info = require("Game.MapInfo")
 require("Utility.BlockTypeEnum")
 require("Utility.ColorEnum")
-
 local love = require("love")
 
 local Tilemap = {
