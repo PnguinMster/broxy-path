@@ -219,6 +219,24 @@ function Player:get_position()
 	return x_average, y_average
 end
 
+function Player:is_touching_ground()
+	local contacts = self.top_body:getContacts()
+	for _, contact in ipairs(contacts) do
+		if contact:isTouching() then
+			return true
+		end
+	end
+
+	contacts = self.bottom_body:getContacts()
+	for _, contact in ipairs(contacts) do
+		if contact:isTouching() then
+			return true
+		end
+	end
+
+	return false
+end
+
 function Player:reset_player()
 	--reset top body
 	self.top_body:setPosition(0, 0)
