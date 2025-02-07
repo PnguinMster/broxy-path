@@ -23,6 +23,7 @@ local Player = {
 	hover_timer = 1,
 	can_hover_timer = 0,
 	hover_enabled = true,
+	time_since_grounded = 0,
 }
 Player.__index = Player
 
@@ -35,6 +36,7 @@ local ANGULAR_DAMPENING = 12
 local HOVER_TIME_GAIN = 1.5
 local HOVER_TIME_LOSE = 1
 local CAN_HOVER_TIME = 0.15
+local AIRBORNE_THRESHOLD = 0.5
 
 local function reset_camera_to_player(self)
 	local x, y = self:get_position()
@@ -121,6 +123,13 @@ function Player:update(dt)
 	end
 
 	self.hover_timer = math.clamp(self.hover_timer, -1, 1)
+
+	--handle airborne logic
+	if self:is_touching_ground() then
+		self.time_since_grounded = 0
+	else
+		self.time_since_grounded = self.time_since_grounded + dt
+	end
 end
 
 function Player:draw()
@@ -235,6 +244,10 @@ function Player:is_touching_ground()
 	end
 
 	return false
+end
+
+function Player:is_airborne()
+	return self.time_since_grounded > AIRBORNE_THRESHOLD
 end
 
 function Player:reset_player()

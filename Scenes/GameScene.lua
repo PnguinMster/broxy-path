@@ -8,13 +8,10 @@ local tilemap = require("Game.TileMap")
 local Game_scene = {}
 local last_part_contact = ""
 local player_grounded = false
-local time_since_grounded = 0
-local AIRBORNE_THRESHOLD = 0.5
 
 function Game_scene:load()
 	last_part_contact = ""
 	player_grounded = false
-	time_since_grounded = 0
 
 	World = love.physics.newWorld(0, 9.8 * 16, true)
 	World:setCallbacks(self.on_begin_contact, self.on_end_contact)
@@ -47,15 +44,6 @@ function Game_scene:update(dt)
 	World:update(dt)
 	Player:update(dt)
 	Tilemap:update(dt)
-
-	-- Handle player ground
-	player_grounded = Player:is_touching_ground()
-
-	if player_grounded then
-		time_since_grounded = 0
-	else
-		time_since_grounded = time_since_grounded + dt
-	end
 
 	local x, y = Player:get_position()
 	x = x - love.graphics.getWidth() / 2
@@ -96,12 +84,12 @@ function Game_scene.on_begin_contact(a, b, _)
 		Game:set_state(STATE.MENU)
 		-- end sound effect?
 	elseif block_part == "solid" then
-		if player_part ~= last_part_contact or time_since_grounded > AIRBORNE_THRESHOLD then
+		if player_part ~= last_part_contact or Player:is_airborne() then
 			Sound:play_sound_effect(SOUND_EFFECT.BLOCK_STEP)
 			last_part_contact = player_part
 		end
 	elseif block_part == "bounce" then
-		if player_part ~= last_part_contact or time_since_grounded > AIRBORNE_THRESHOLD then
+		if player_part ~= last_part_contact or Player:is_airborne() then
 			-- bounce sound effect?
 			last_part_contact = player_part
 		end
