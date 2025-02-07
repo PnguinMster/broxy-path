@@ -2,4 +2,5 @@ SOUND_EFFECT = {
 	BLOCK_STEP = 1,
 	CLICK = 2,
 	UI_HOVER = 3,
+	BLOCK_BOUNCE = 4,
 }

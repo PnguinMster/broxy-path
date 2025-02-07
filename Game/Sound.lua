@@ -16,6 +16,14 @@ local block_step_effect_files = {
 	"Sound/BlockStep_5.wav",
 	"Sound/BlockStep_6.wav",
 }
+local block_bounce_effect_files = {
+	"Sound/BlockBounce_1.wav",
+	"Sound/BlockBounce_2.wav",
+	"Sound/BlockBounce_3.wav",
+	"Sound/BlockBounce_4.wav",
+	"Sound/BlockBounce_5.wav",
+	"Sound/BlockBounce_6.wav",
+}
 local click_effect_files = {
 	"Sound/ClickSoundBase_1.wav",
 	"Sound/ClickSoundBase_2.wav",
@@ -47,7 +55,8 @@ function Sound:load()
 
 	--set table of sound effects and variations
 	self.Effects = {
-		block_steps = create_effect_variations(block_step_effect_files),
+		block_step = create_effect_variations(block_step_effect_files),
+		block_bounce = create_effect_variations(block_bounce_effect_files),
 		clicks = create_effect_variations(click_effect_files),
 		ui_hovers = create_effect_variations(ui_hover_effect_files),
 	}
@@ -85,11 +94,13 @@ function Sound:play_sound_effect(sound_effect)
 
 	--get random variation of sound effect
 	if sound_effect == SOUND_EFFECT.BLOCK_STEP then
-		random_variation = self.Effects.block_steps[math.random(#self.Effects.block_steps)]
+		random_variation = self.Effects.block_step[math.random(#self.Effects.block_steps)]
 	elseif sound_effect == SOUND_EFFECT.CLICK then
 		random_variation = self.Effects.clicks[math.random(#self.Effects.clicks)]
 	elseif sound_effect == SOUND_EFFECT.UI_HOVER then
 		random_variation = self.Effects.ui_hovers[math.random(#self.Effects.ui_hovers)]
+	elseif sound_effect == SOUND_EFFECT.BLOCK_BOUNCE then
+		random_variation = self.Effects.block_bounce[math.random(#self.Effects.block_bounce)]
 	end
 
 	--play variation of sound

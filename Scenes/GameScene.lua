@@ -90,7 +90,7 @@ function Game_scene.on_begin_contact(a, b, _)
 		end
 	elseif block_part == "bounce" then
 		if player_part ~= last_part_contact or Player:is_airborne() then
-			-- bounce sound effect?
+			Sound:play_sound_effect(SOUND_EFFECT.BLOCK_BOUNCE)
 			last_part_contact = player_part
 		end
 	end
