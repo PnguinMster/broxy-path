@@ -6,10 +6,13 @@ local player = require("Game.Player")
 local tilemap = require("Game.TileMap")
 
 local Game_scene = {}
+local last_part_contact = ""
 
 function Game_scene:load()
+	last_part_contact = ""
+
 	World = love.physics.newWorld(0, 9.8 * 16, true)
-	World:setCallbacks(self.on_begin_contact)
+	World:setCallbacks(self.on_begin_contact, self.on_end_contact)
 
 	Player = player.new()
 	Tilemap = tilemap.new(Player.width, Player.height)
@@ -59,21 +62,34 @@ end
 function Game_scene.on_begin_contact(a, b, _)
 	local user_data_1 = a:getUserData()
 	local user_data_2 = b:getUserData()
+	local player_part = ""
+	local block_part = ""
 
-	if user_data_1 and user_data_2 then
-		if
-			(user_data_1.entity == "player" and user_data_2.entity == "block")
-			or (user_data_1.entity == "block" and user_data_2.entity == "player")
-		then
-			if user_data_1.part == "end" or user_data_2.entity == "end" then
-				end_menu.active = true
-				Game:set_state(STATE.MENU)
-				-- end sound effect?
-			elseif user_data_1.part == "solid" or user_data_2.entity == "solid" then
-				-- solid sound effect?
-			elseif user_data_1.part == "bounce" or user_data_2.entity == "bounce" then
-				-- bounce sound effect?
-			end
+	-- check for player and block
+	if user_data_1.entity == "player" and user_data_2.entity == "block" then
+		player_part = user_data_1.part
+		block_part = user_data_2.part
+	elseif user_data_1.entity == "block" and user_data_2.entity == "player" then
+		block_part = user_data_1.part
+		player_part = user_data_2.part
+	else
+		return
+	end
+
+	-- check which type of block it is
+	if block_part == "end" then
+		end_menu.active = true
+		Game:set_state(STATE.MENU)
+		-- end sound effect?
+	elseif block_part == "solid" then
+		if player_part ~= last_part_contact then
+			Sound:play_sound_effect(SOUND_EFFECT.BLOCK_STEP)
+			last_part_contact = player_part
+		end
+	elseif block_part == "bounce" then
+		if player_part ~= last_part_contact then
+			-- bounce sound effect?
+			last_part_contact = player_part
 		end
 	end
 end
