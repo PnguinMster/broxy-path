@@ -61,7 +61,7 @@ function Sound:load()
 		ui_hovers = create_effect_variations(ui_hover_effect_files),
 	}
 
-	--set bolime for all sond effects
+	--set volume for all sound effects
 	function self.Effects:setVolume(new_volume)
 		for _, effect in pairs(self) do
 			if type(effect) == "table" then
