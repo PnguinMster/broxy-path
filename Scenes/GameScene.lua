@@ -7,11 +7,9 @@ local tilemap = require("Game.TileMap")
 
 local Game_scene = {}
 local last_part_contact = ""
-local player_grounded = false
 
 function Game_scene:load()
 	last_part_contact = ""
-	player_grounded = false
 
 	World = love.physics.newWorld(0, 9.8 * 16, true)
 	World:setCallbacks(self.on_begin_contact, self.on_end_contact)
