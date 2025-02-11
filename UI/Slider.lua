@@ -4,12 +4,12 @@ require("Utility.ColorEnum")
 
 local function handle_to_value(handle_x, bar_width, min_value, max_value)
 	local ratio = handle_x / bar_width
-	return min_value + ratio * (max_value - min_value)
+	return ((max_value - min_value) * ratio) + min_value
 end
 
-local function value_to_handle(value, bar_width, min_value, max_value)
-	local ratio = (value - min_value) / (max_value - min_value)
-	return ratio * bar_width
+local function value_to_handle(value, bar_width, min_value, max_value, steps)
+	local snapped_value = math.round_to_nearest_step(value, min_value, max_value, steps)
+	return ((snapped_value - min_value) / (max_value - min_value)) * bar_width
 end
 
 local Slider = {
@@ -29,7 +29,8 @@ local Slider = {
 	handle_drag_offset = 0,
 	value = 0,
 	min_value = 0,
-	max_value = 10,
+	max_value = 1,
+	steps = 10,
 	is_hovered = false,
 }
 Slider.__index = Slider
@@ -38,6 +39,7 @@ function Slider.new(
 	start_value,
 	min_value,
 	max_value,
+	steps,
 	handle_radius,
 	bar_width,
 	bar_height,
@@ -68,7 +70,7 @@ function Slider.new(
 	end
 
 	local bar_max_position = x + bar_width
-	local handle_drag_offset = value_to_handle(start_value, bar_width, min_value, max_value)
+	local handle_drag_offset = value_to_handle(start_value, bar_width, min_value, max_value, steps)
 
 	return setmetatable({
 		x = x or 0,
@@ -88,6 +90,7 @@ function Slider.new(
 		value = start_value or 0,
 		min_value = min_value or 0,
 		max_value = max_value or 0,
+		steps = steps,
 		bar_color = bar_color or COLOR.WHITE,
 		handle_color = handle_color or bar_color or COLOR.WHITE,
 	}, Slider)
@@ -138,12 +141,11 @@ function Slider:mouse_moved(x)
 		elseif position > self.bar_max_position then
 			self.handle_offset_postion = self.bar_width
 		else
-			self.handle_offset_postion =
-				math.round_to_nearest_step(offset, 0, self.bar_width, self.max_value - self.min_value)
+			self.handle_offset_postion = math.round_to_nearest_step(offset, 0, self.bar_width, self.steps)
 		end
 
 		self.value = handle_to_value(self.handle_offset_postion, self.bar_width, self.min_value, self.max_value)
-		self.func(self.value)
+		self.func(self.value * (self.max_value / self.steps))
 	end
 end
 

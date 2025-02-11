@@ -1,9 +1,9 @@
+require("Game.Sound")
 require("Utility.ColorEnum")
 local button = require("UI.Button")
 local text = require("UI.Text")
 local checkbox = require("UI.Checkbox")
 local slider = require("UI.Slider")
-local cycle_list = require("UI.CycleList")
 
 local Option_scene = {}
 
@@ -30,12 +30,15 @@ local vsync_pressed = function(is_checked)
 end
 local master_volume_changed = function(new_value)
 	print("Master Changed to:" .. tostring(new_value))
+	Sound:set_volume(new_value, SOUND_TYPE.MASTER)
 end
 local music_volume_changed = function(new_value)
 	print("Music Changed to:" .. tostring(new_value))
+	Sound:set_volume(new_value, SOUND_TYPE.MUSIC)
 end
-local sound_volume_changed = function(new_value)
+local effect_volume_changed = function(new_value)
 	print("Sound Changed to:" .. tostring(new_value))
+	Sound:set_volume(new_value, SOUND_TYPE.EFFECT)
 end
 
 function Option_scene:load()
@@ -45,6 +48,7 @@ function Option_scene:load()
 	-- UI elements
 	--
 	--  Title
+	--
 	self.title_text = text.new("Options", 3, HORIZONTAL_ALIGN.CENTER, VERTICAL_ALIGN.TOP, 0, 10, COLOR.WHITE)
 	self.interactables[1] =
 		button.new(100, 50, "Back", back_pressed, nil, HORIZONTAL_ALIGN.LEFT, VERTICAL_ALIGN.BOTTOM, 50, -50)
@@ -57,27 +61,40 @@ function Option_scene:load()
 
 	-- Vsync
 	self.text_displays[2] = text.new("Vsync", 1, HORIZONTAL_ALIGN.LEFT, VERTICAL_ALIGN.CENTER, 0, -135, COLOR.WHITE)
-	self.interactables[3] = checkbox.new(false, 1, vsync_pressed, HORIZONTAL_ALIGN.RIGHT, VERTICAL_ALIGN.CENTER, 0, -135)
+	self.interactables[3] =
+		checkbox.new(false, 1, vsync_pressed, HORIZONTAL_ALIGN.RIGHT, VERTICAL_ALIGN.CENTER, 0, -135)
 
 	-- Master Volume
 	self.text_displays[3] =
 		text.new("Master Volume", 1, HORIZONTAL_ALIGN.LEFT, VERTICAL_ALIGN.CENTER, 0, -45, COLOR.WHITE)
-	self.option_sliders[1] =
-		slider.new(100, 0, 100, 5, 200, 3, master_volume_changed, HORIZONTAL_ALIGN.RIGHT, VERTICAL_ALIGN.CENTER, 0, -45)
+	self.option_sliders[1] = slider.new(
+		1,
+		0,
+		1,
+		100,
+		5,
+		200,
+		3,
+		master_volume_changed,
+		HORIZONTAL_ALIGN.RIGHT,
+		VERTICAL_ALIGN.CENTER,
+		0,
+		-45
+	)
 
 	-- Music Volume
 	self.text_displays[4] = text.new("Music Volume", 1, HORIZONTAL_ALIGN.LEFT, VERTICAL_ALIGN.CENTER, 0, 0, COLOR.WHITE)
 	self.option_sliders[2] =
-		slider.new(100, 0, 100, 5, 200, 3, music_volume_changed, HORIZONTAL_ALIGN.RIGHT, VERTICAL_ALIGN.CENTER, 0, 0)
+		slider.new(1, 0, 1, 100, 5, 200, 3, music_volume_changed, HORIZONTAL_ALIGN.RIGHT, VERTICAL_ALIGN.CENTER, 0, 0)
 
 	-- Sound Volume
 	self.text_displays[5] =
 		text.new("Sound Volume", 1, HORIZONTAL_ALIGN.LEFT, VERTICAL_ALIGN.CENTER, 0, 45, COLOR.WHITE)
 	self.option_sliders[3] =
-		slider.new(100, 0, 100, 5, 200, 3, sound_volume_changed, HORIZONTAL_ALIGN.RIGHT, VERTICAL_ALIGN.CENTER, 0, 45)
+		slider.new(1, 0, 1, 100, 5, 200, 3, effect_volume_changed, HORIZONTAL_ALIGN.RIGHT, VERTICAL_ALIGN.CENTER, 0, 45)
 end
 
-function Option_scene:update(dt)
+function Option_scene:update(_)
 	local x_difference = math.abs(window_x - love.graphics.getWidth())
 	local y_difference = math.abs(window_y - love.graphics.getHeight())
 
