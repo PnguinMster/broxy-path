@@ -9,7 +9,8 @@ end
 
 local function value_to_handle(value, bar_width, min_value, max_value, steps)
 	local snapped_value = math.round_to_nearest_step(value, min_value, max_value, steps)
-	return ((snapped_value - min_value) / (max_value - min_value)) * bar_width
+	local ratio = (snapped_value - min_value) / (max_value - min_value)
+	return ratio * bar_width
 end
 
 local Slider = {
