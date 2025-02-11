@@ -87,6 +87,8 @@ function Sound:set_volume(new_volume, sound_type)
 	if sound_type == SOUND_TYPE.MASTER or sound_type == SOUND_TYPE.EFFECT then
 		self.Effects:setVolume(self.master_volume * self.effect_volume)
 	end
+
+	print("changing ", self[sound_type .. "volume"], "to ", new_volume)
 end
 
 function Sound:play_sound_effect(sound_effect)
