@@ -4,7 +4,8 @@ require("Utility.ColorEnum")
 
 local function handle_to_value(handle_x, bar_width, min_value, max_value)
 	local ratio = handle_x / bar_width
-	return ((max_value - min_value) * ratio) + min_value
+	local scaled_value = (max_value - min_value) * ratio
+	return scaled_value + min_value
 end
 
 local function value_to_handle(value, bar_width, min_value, max_value, steps)
