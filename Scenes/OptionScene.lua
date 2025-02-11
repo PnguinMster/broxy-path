@@ -20,17 +20,13 @@ local back_pressed = function()
 	print("Back pressed")
 	Game:set_scene(SCENE.MENU)
 end
-local borderless_pressed = function(is_checked)
-	print("Borderless" .. tostring(is_checked))
-end
 local fullscreen_pressed = function(is_checked)
 	print("Fullscreen" .. tostring(is_checked))
-end
-local exclusive = function(is_checked)
-	print("Exclusive" .. tostring(is_checked))
+	love.window.setFullscreen(is_checked)
 end
 local vsync_pressed = function(is_checked)
 	print("Vsync" .. tostring(is_checked))
+	love.window.setVSync(is_checked)
 end
 local master_volume_changed = function(new_value)
 	print("Master Changed to:" .. tostring(new_value))
@@ -47,45 +43,35 @@ function Option_scene:load()
 	window_y = love.graphics.getHeight()
 
 	-- UI elements
+	--
 	--  Title
 	self.title_text = text.new("Options", 3, HORIZONTAL_ALIGN.CENTER, VERTICAL_ALIGN.TOP, 0, 10, COLOR.WHITE)
 	self.interactables[1] =
 		button.new(100, 50, "Back", back_pressed, nil, HORIZONTAL_ALIGN.LEFT, VERTICAL_ALIGN.BOTTOM, 50, -50)
 
-	-- Borderless
-	self.text_displays[1] =
-		text.new("Borderless", 1, HORIZONTAL_ALIGN.LEFT, VERTICAL_ALIGN.CENTER, 0, -225, COLOR.WHITE)
-	self.interactables[2] =
-		checkbox.new(false, 1, borderless_pressed, HORIZONTAL_ALIGN.RIGHT, VERTICAL_ALIGN.CENTER, 0, -225)
-
 	--Fullscreen
-	self.text_displays[2] =
+	self.text_displays[1] =
 		text.new("Fullscreen", 1, HORIZONTAL_ALIGN.LEFT, VERTICAL_ALIGN.CENTER, 0, -180, COLOR.WHITE)
-	self.interactables[3] =
+	self.interactables[2] =
 		checkbox.new(false, 1, fullscreen_pressed, HORIZONTAL_ALIGN.RIGHT, VERTICAL_ALIGN.CENTER, 0, -180)
 
-	--Exculsive fullscreen
-	self.text_displays[3] =
-		text.new("Exclusive Fullscreen", 1, HORIZONTAL_ALIGN.LEFT, VERTICAL_ALIGN.CENTER, 0, -135, COLOR.WHITE)
-	self.interactables[4] = checkbox.new(false, 1, exclusive, HORIZONTAL_ALIGN.RIGHT, VERTICAL_ALIGN.CENTER, 0, -135)
-
 	-- Vsync
-	self.text_displays[4] = text.new("Vsync", 1, HORIZONTAL_ALIGN.LEFT, VERTICAL_ALIGN.CENTER, 0, -90, COLOR.WHITE)
-	self.interactables[5] = checkbox.new(false, 1, vsync_pressed, HORIZONTAL_ALIGN.RIGHT, VERTICAL_ALIGN.CENTER, 0, -90)
+	self.text_displays[2] = text.new("Vsync", 1, HORIZONTAL_ALIGN.LEFT, VERTICAL_ALIGN.CENTER, 0, -135, COLOR.WHITE)
+	self.interactables[3] = checkbox.new(false, 1, vsync_pressed, HORIZONTAL_ALIGN.RIGHT, VERTICAL_ALIGN.CENTER, 0, -135)
 
 	-- Master Volume
-	self.text_displays[5] =
+	self.text_displays[3] =
 		text.new("Master Volume", 1, HORIZONTAL_ALIGN.LEFT, VERTICAL_ALIGN.CENTER, 0, -45, COLOR.WHITE)
 	self.option_sliders[1] =
 		slider.new(100, 0, 100, 5, 200, 3, master_volume_changed, HORIZONTAL_ALIGN.RIGHT, VERTICAL_ALIGN.CENTER, 0, -45)
 
 	-- Music Volume
-	self.text_displays[6] = text.new("Music Volume", 1, HORIZONTAL_ALIGN.LEFT, VERTICAL_ALIGN.CENTER, 0, 0, COLOR.WHITE)
+	self.text_displays[4] = text.new("Music Volume", 1, HORIZONTAL_ALIGN.LEFT, VERTICAL_ALIGN.CENTER, 0, 0, COLOR.WHITE)
 	self.option_sliders[2] =
 		slider.new(100, 0, 100, 5, 200, 3, music_volume_changed, HORIZONTAL_ALIGN.RIGHT, VERTICAL_ALIGN.CENTER, 0, 0)
 
 	-- Sound Volume
-	self.text_displays[7] =
+	self.text_displays[5] =
 		text.new("Sound Volume", 1, HORIZONTAL_ALIGN.LEFT, VERTICAL_ALIGN.CENTER, 0, 45, COLOR.WHITE)
 	self.option_sliders[3] =
 		slider.new(100, 0, 100, 5, 200, 3, sound_volume_changed, HORIZONTAL_ALIGN.RIGHT, VERTICAL_ALIGN.CENTER, 0, 45)
