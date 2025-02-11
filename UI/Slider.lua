@@ -150,7 +150,7 @@ function Slider:mouse_moved(x)
 end
 
 function Slider:mouse_released()
-	print(" mouse releades")
+	print("mouse released")
 	self.is_dragging_slider = false
 end
 
