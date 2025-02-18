@@ -6,7 +6,7 @@ local RESIZE_DIFFERENCE = 5
 local window_x = 0
 local window_y = 0
 
-local Level_scene = {}
+local Level_scene = { levels_unlocked = 0 }
 
 Level_scene.interactables = {}
 
@@ -100,7 +100,7 @@ function Level_scene:load()
 		button.new(100, 50, "Back", back_pressed, nil, HORIZONTAL_ALIGN.LEFT, VERTICAL_ALIGN.BOTTOM, 50, -50)
 end
 
-function Level_scene:update(dt)
+function Level_scene:update(_)
 	local x_difference = math.abs(window_x - love.graphics.getWidth())
 	local y_difference = math.abs(window_y - love.graphics.getHeight())
 

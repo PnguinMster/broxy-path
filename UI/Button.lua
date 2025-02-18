@@ -14,6 +14,7 @@ local Button = {
 	horizontal_align = HORIZONTAL_ALIGN.LEFT,
 	vertical_align = VERTICAL_ALIGN.TOP,
 	is_hovered = false,
+	is_disabled = false,
 }
 Button.__index = Button
 
@@ -28,7 +29,8 @@ function Button.new(
 	offset_x,
 	offset_y,
 	button_color,
-	text_color
+	text_color,
+	is_disabled
 )
 	--set local variables from parameters
 	local x = offset_x or 0
@@ -84,10 +86,15 @@ function Button.new(
 		horizontal_align = horizontal_align or HORIZONTAL_ALIGN.LEFT,
 		vertical_align = vertical_align or VERTICAL_ALIGN.TOP,
 		button_color = button_color or COLOR.WHITE,
+		is_disabled = is_disabled,
 	}, Button)
 end
 
 function Button:check_pressed(mouse_x, mouse_y)
+	if self.is_disabled then
+		return
+	end
+
 	local offset_x = self.width
 	local offset_y = self.height
 
@@ -109,6 +116,10 @@ end
 
 function Button:set_hovered(hovered)
 	self.is_hovered = hovered
+end
+
+function Button:set_disabled(is_disabled)
+	self.is_disabled = is_disabled
 end
 
 function Button:auto_resize_x()
@@ -142,8 +153,14 @@ function Button:auto_resize_y()
 end
 
 function Button:draw()
-	love.graphics.setColor(self.button_color:rgb_color())
-	if self.is_hovered then
+	if self.is_disabled then
+		local r, g, b = self.button_color:rgb_color()
+		love.graphics.setColor(r, g, b, 0.5)
+	else
+		love.graphics.setColor(self.button_color:rgb_color())
+	end
+
+	if self.is_hovered or not self.is_disabled then
 		love.graphics.rectangle("fill", self.x - 2, self.y - 2, self.width + 4, self.height + 4)
 	else
 		love.graphics.rectangle("fill", self.x, self.y, self.width, self.height)
