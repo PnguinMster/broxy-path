@@ -5,8 +5,9 @@ local text = require("UI.Text")
 local RESIZE_DIFFERENCE = 5
 local window_x = 0
 local window_y = 0
+local levels_unlocked = 0
 
-local Level_scene = { levels_unlocked = 0 }
+local Level_scene = {}
 
 Level_scene.interactables = {}
 
@@ -73,6 +74,7 @@ end
 function Level_scene:load()
 	window_x = love.graphics.getWidth()
 	window_y = love.graphics.getHeight()
+	levels_unlocked = 0
 
 	--title
 	self.title_text = text.new("Select Level", 3, HORIZONTAL_ALIGN.CENTER, VERTICAL_ALIGN.TOP, 0, 10, COLOR.WHITE)
@@ -98,6 +100,15 @@ function Level_scene:load()
 		button.new(85, 50, "8", level_8_pressed, nil, HORIZONTAL_ALIGN.CENTER, VERTICAL_ALIGN.CENTER, 140, 100)
 	self.interactables[10] =
 		button.new(100, 50, "Back", back_pressed, nil, HORIZONTAL_ALIGN.LEFT, VERTICAL_ALIGN.BOTTOM, 50, -50)
+
+	-- Disabled locked levels
+	for i = #self.interactables - 1, 2, -1 do
+		if i - 1 > levels_unlocked then
+			self.interactables[i]:set_disabled(true)
+		else
+			return
+		end
+	end
 end
 
 function Level_scene:update(_)
