@@ -91,10 +91,6 @@ function Button.new(
 end
 
 function Button:check_pressed(mouse_x, mouse_y)
-	if self.is_disabled then
-		return
-	end
-
 	local offset_x = self.width
 	local offset_y = self.height
 
@@ -160,7 +156,7 @@ function Button:draw()
 		love.graphics.setColor(self.button_color:rgb_color())
 	end
 
-	if self.is_hovered or self.is_disabled then
+	if self.is_hovered then
 		love.graphics.rectangle("fill", self.x - 2, self.y - 2, self.width + 4, self.height + 4)
 	else
 		love.graphics.rectangle("fill", self.x, self.y, self.width, self.height)

@@ -80,7 +80,9 @@ function love.mousemoved(x, y)
 	local ui_item = nil
 	--check for basic interactables
 	for _, interactable in ipairs(check_display.interactables) do
-		ui_item = interactable:check_is_hovered(x, y)
+		if not interactable.is_disabled then
+			ui_item = interactable:check_is_hovered(x, y)
+		end
 		if ui_item then
 			break
 		end
@@ -109,10 +111,7 @@ function love.mousemoved(x, y)
 
 		--play sound when hovered
 		if hovered_ui then
-			if not hovered_ui.is_disabled then
-				Sound:play_sound_effect(SOUND_EFFECT.UI_HOVER)
-			end
-
+			Sound:play_sound_effect(SOUND_EFFECT.UI_HOVER)
 			if hovered_ui.set_hovered then
 				hovered_ui:set_hovered(true)
 			end
