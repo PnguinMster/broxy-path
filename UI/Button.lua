@@ -160,7 +160,7 @@ function Button:draw()
 		love.graphics.setColor(self.button_color:rgb_color())
 	end
 
-	if self.is_hovered or not self.is_disabled then
+	if self.is_hovered or self.is_disabled then
 		love.graphics.rectangle("fill", self.x - 2, self.y - 2, self.width + 4, self.height + 4)
 	else
 		love.graphics.rectangle("fill", self.x, self.y, self.width, self.height)

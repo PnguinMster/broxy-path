@@ -109,7 +109,10 @@ function love.mousemoved(x, y)
 
 		--play sound when hovered
 		if hovered_ui then
-			Sound:play_sound_effect(SOUND_EFFECT.UI_HOVER)
+			if not hovered_ui.is_disabled then
+				Sound:play_sound_effect(SOUND_EFFECT.UI_HOVER)
+			end
+
 			if hovered_ui.set_hovered then
 				hovered_ui:set_hovered(true)
 			end
