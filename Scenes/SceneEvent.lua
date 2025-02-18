@@ -63,7 +63,7 @@ function love.mousemoved(x, y)
 		end
 	end
 
-	--return if no ui elemnts found
+	--return if no ui elements found
 	if check_display == nil or check_display.interactables == nil then
 		hovered_ui = nil
 		return
@@ -78,7 +78,7 @@ function love.mousemoved(x, y)
 	end
 
 	local ui_item = nil
-	--check for basic interactables
+	--check for basic interactables hover
 	for _, interactable in ipairs(check_display.interactables) do
 		if not interactable.is_disabled then
 			ui_item = interactable:check_is_hovered(x, y)
