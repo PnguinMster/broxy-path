@@ -1,14 +1,14 @@
 require("Utility.StateEnum")
 require("Utility.SceneEnum")
 require("Utility.ColorEnum")
-require("Utility.LevelImagesEnum")
 require("Scenes.SceneEvent")
+require("Game.Save")
 
 Game = {}
 
 Game.scene = SCENE.MENU
 Game.state = SCENE.MENU
-Game.level = LEVEL_IMAGES.test
+Game.level = 0
 
 function Game:set_scene(scene)
 	self.scene:unload()
@@ -25,6 +25,7 @@ end
 function Game:load()
 	math.randomseed(os.time())
 	love.graphics.setBackgroundColor(COLOR.BLACK:rgb_color())
+	Save:load_data()
 
 	self.scene:load()
 end
@@ -38,4 +39,9 @@ function Game:draw()
 	love.graphics.print("FPS: " .. tostring(love.timer.getFPS()), 10, 10)
 
 	self.scene:draw()
+end
+
+function love.quit()
+	print("Quitting the Game")
+	Save:save_data()
 end

@@ -14,55 +14,55 @@ Level_scene.interactables = {}
 -- UI functions
 local level_0_pressed = function()
 	print("Level 0 pressed")
-	Game.level = LEVEL_IMAGES.level_0
+	Game.level = 0
 	Game:set_scene(SCENE.GAME)
 	Game:set_state(STATE.GAME)
 end
 local level_1_pressed = function()
 	print("Level 1 pressed")
-	Game.level = LEVEL_IMAGES.level_1
+	Game.level = 1
 	Game:set_scene(SCENE.GAME)
 	Game:set_state(STATE.GAME)
 end
 local level_2_pressed = function()
 	print("Level 2 pressed")
-	Game.level = LEVEL_IMAGES.level_2
+	Game.level = 2
 	Game:set_scene(SCENE.GAME)
 	Game:set_state(STATE.GAME)
 end
 local level_3_pressed = function()
 	print("Level 3 pressed")
-	Game.level = LEVEL_IMAGES.level_3
+	Game.level = 3
 	Game:set_scene(SCENE.GAME)
 	Game:set_state(STATE.GAME)
 end
 local level_4_pressed = function()
 	print("Level 4 pressed")
-	Game.level = LEVEL_IMAGES.level_4
+	Game.level = 4
 	Game:set_scene(SCENE.GAME)
 	Game:set_state(STATE.GAME)
 end
 local level_5_pressed = function()
 	print("Level 5 pressed")
-	Game.level = LEVEL_IMAGES.level_5
+	Game.level = 5
 	Game:set_scene(SCENE.GAME)
 	Game:set_state(STATE.GAME)
 end
 local level_6_pressed = function()
 	print("Level 6 pressed")
-	Game.level = LEVEL_IMAGES.level_6
+	Game.level = 6
 	Game:set_scene(SCENE.GAME)
 	Game:set_state(STATE.GAME)
 end
 local level_7_pressed = function()
 	print("Level 7 pressed")
-	Game.level = LEVEL_IMAGES.level_7
+	Game.level = 7
 	Game:set_scene(SCENE.GAME)
 	Game:set_state(STATE.GAME)
 end
 local level_8_pressed = function()
 	print("Level 8 pressed")
-	Game.level = LEVEL_IMAGES.level_8
+	Game.level = 8
 	Game:set_scene(SCENE.GAME)
 	Game:set_state(STATE.GAME)
 end
@@ -74,7 +74,7 @@ end
 function Level_scene:load()
 	window_x = love.graphics.getWidth()
 	window_y = love.graphics.getHeight()
-	levels_unlocked = 0
+	levels_unlocked = Save.unlocked_levels
 
 	--title
 	self.title_text = text.new("Select Level", 3, HORIZONTAL_ALIGN.CENTER, VERTICAL_ALIGN.TOP, 0, 10, COLOR.WHITE)

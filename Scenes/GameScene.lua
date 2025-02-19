@@ -1,5 +1,6 @@
 require("Game.Camera")
 require("Game.Sound")
+require("Utility.LevelImagesEnum")
 local pause_menu = require("UI.PauseMenu")
 local end_menu = require("UI.EndMenu")
 local player = require("Game.Player")
@@ -17,7 +18,8 @@ function Game_scene:load()
 	Player = player.new()
 	Tilemap = tilemap.new(Player.width, Player.height)
 
-	Tilemap:create_map(Game.level)
+	local level_file = LEVEL_IMAGES[Game.level]
+	Tilemap:create_map(level_file)
 	Tilemap:load_map()
 
 	Player:load()
@@ -80,6 +82,9 @@ function Game_scene.on_begin_contact(a, b, _)
 	if block_part == "end" then
 		end_menu.active = true
 		Game:set_state(STATE.MENU)
+		if Game.level > Save.unlocked_levels then
+			Save.unlocked_levels = Game.level
+		end
 		-- end sound effect?
 	elseif block_part == "solid" then
 		if player_part ~= last_part_contact or Player:is_airborne() then
