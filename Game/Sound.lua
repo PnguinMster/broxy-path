@@ -52,6 +52,9 @@ end
 
 function Sound:load()
 	self.Music = love.audio.newSource(music_file, "stream")
+	self.master_volume = Save.master_volume
+	self.music_volume = Save.music_volume
+	self.effect_volume = Save.effect_volume
 
 	--set table of sound effects and variations
 	self.Effects = {
