@@ -23,22 +23,27 @@ end
 local fullscreen_pressed = function(is_checked)
 	print("Fullscreen" .. tostring(is_checked))
 	love.window.setFullscreen(is_checked)
+	Save.fullscreen = is_checked
 end
 local vsync_pressed = function(is_checked)
 	print("Vsync" .. tostring(is_checked))
 	love.window.setVSync(is_checked)
+	Save.vsync = is_checked
 end
 local master_volume_changed = function(new_value)
 	print("Master Changed to:" .. tostring(new_value))
 	Sound:set_volume(new_value, SOUND_TYPE.MASTER)
+	Save.master_volume = new_value
 end
 local music_volume_changed = function(new_value)
 	print("Music Changed to:" .. tostring(new_value))
 	Sound:set_volume(new_value, SOUND_TYPE.MUSIC)
+	Save.music_volume = new_value
 end
 local effect_volume_changed = function(new_value)
 	print("Sound Changed to:" .. tostring(new_value))
 	Sound:set_volume(new_value, SOUND_TYPE.EFFECT)
+	Save.effect_volume = new_value
 end
 
 function Option_scene:load()
