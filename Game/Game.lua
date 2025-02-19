@@ -23,9 +23,12 @@ function Game:set_state(state)
 end
 
 function Game:load()
+	Save:load_data()
+	love.window.setFullscreen(Save.fullscreen)
+	love.window.setVSync(Save.vsync)
+
 	math.randomseed(os.time())
 	love.graphics.setBackgroundColor(COLOR.BLACK:rgb_color())
-	Save:load_data()
 
 	self.scene:load()
 end
