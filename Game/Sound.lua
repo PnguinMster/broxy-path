@@ -34,6 +34,7 @@ local ui_hover_effect_files = {
 	"Sound/UIOnHover_3.wav",
 	"Sound/UIOnHover_4.wav",
 }
+local level_complete_effect_file = { "WinSound.wav" }
 
 local function create_effect_variations(files)
 	local variations = {}
@@ -43,7 +44,7 @@ local function create_effect_variations(files)
 	return variations
 end
 
-local function set_effect_volume(self, new_volume)
+local function setVolume(self, new_volume)
 	for i = 1, #self do
 		local audio_source = self[i]
 		audio_source:setVolume(new_volume)
@@ -62,14 +63,13 @@ function Sound:load()
 		block_bounce = create_effect_variations(block_bounce_effect_files),
 		clicks = create_effect_variations(click_effect_files),
 		ui_hovers = create_effect_variations(ui_hover_effect_files),
+		level_complete = love.audio.newSource(level_complete_effect_file, "static"),
 	}
 
 	--set volume for all sound effects
 	function self.Effects:setVolume(new_volume)
 		for _, effect in pairs(self) do
-			if type(effect) == "table" then
-				set_effect_volume(effect, new_volume)
-			end
+			effect:setVolume(new_volume)
 		end
 	end
 end
@@ -106,6 +106,8 @@ function Sound:play_sound_effect(sound_effect)
 		random_variation = self.Effects.ui_hovers[math.random(#self.Effects.ui_hovers)]
 	elseif sound_effect == SOUND_EFFECT.BLOCK_BOUNCE then
 		random_variation = self.Effects.block_bounce[math.random(#self.Effects.block_bounce)]
+	elseif sound_effect == SOUND_EFFECT.LEVEL_COMPLETE then
+		random_variation = self.Effects.level_complete
 	end
 
 	--play variation of sound
