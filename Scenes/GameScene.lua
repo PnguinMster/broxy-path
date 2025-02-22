@@ -85,7 +85,7 @@ function Game_scene.on_begin_contact(a, b, _)
 		if Game.level > Save.unlocked_levels then
 			Save.unlocked_levels = Game.level
 		end
-		-- end sound effect?
+		Sound:play_sound_effect(SOUND_EFFECT.LEVEL_COMPLETE)
 	elseif block_part == "solid" then
 		if player_part ~= last_part_contact or Player:is_airborne() then
 			Sound:play_sound_effect(SOUND_EFFECT.BLOCK_STEP)
