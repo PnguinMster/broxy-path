@@ -44,7 +44,6 @@ local function create_effect_variations(files)
 	return variations
 end
 
--- does get used, ignore hint
 -- local function setVolume(self, new_volume)
 -- 	for i = 1, #self do
 -- 		local audio_source = self[i]
