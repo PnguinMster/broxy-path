@@ -147,7 +147,7 @@ function Slider:mouse_moved(x)
 		end
 
 		self.value = handle_to_value(self.handle_offset_postion, self.bar_width, self.min_value, self.max_value)
-		self.func(self.value * (self.max_value / self.steps))
+		self.func(self.value)
 	end
 end
 
