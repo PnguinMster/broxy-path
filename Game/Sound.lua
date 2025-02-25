@@ -44,12 +44,12 @@ local function create_effect_variations(files)
 	return variations
 end
 
--- local function setVolume(self, new_volume)
--- 	for i = 1, #self do
--- 		local audio_source = self[i]
--- 		audio_source:setVolume(new_volume)
--- 	end
--- end
+local function set_effect_volume(self, new_volume)
+	for i = 1, #self do
+		local audio_source = self[i]
+		audio_source:setVolume(new_volume)
+	end
+end
 
 function Sound:load()
 	self.Music = love.audio.newSource(music_file, "stream")
@@ -69,7 +69,11 @@ function Sound:load()
 	--set volume for all sound effects
 	function self.Effects:setVolume(new_volume)
 		for _, effect in pairs(self) do
-			effect:setVolume(new_volume)
+			if type(effect) == "table" then
+				set_effect_volume(effect, new_volume)
+			elseif type(effect) == "userdata" then
+				effect:setVolume(new_volume)
+			end
 		end
 	end
 end
@@ -91,7 +95,7 @@ function Sound:set_volume(new_volume, sound_type)
 		self.Effects:setVolume(self.master_volume * self.effect_volume)
 	end
 
-	print("changing ", self[sound_type .. "volume"], "to ", new_volume)
+	print("changing ", sound_type .. "_volume", "to ", new_volume)
 end
 
 function Sound:play_sound_effect(sound_effect)
