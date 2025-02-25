@@ -19,5 +19,5 @@ function love.conf(t)
 
 	t.version = "11.5" --LOVE version
 
-	t.identity = "game_data" --save directory name
+	t.identity = "Broxy_Path" --save directory name
 end
