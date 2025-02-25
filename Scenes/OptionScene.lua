@@ -73,7 +73,7 @@ function Option_scene:load()
 	self.text_displays[3] =
 		text.new("Master Volume", 1, HORIZONTAL_ALIGN.LEFT, VERTICAL_ALIGN.CENTER, 0, -45, COLOR.WHITE)
 	self.option_sliders[1] = slider.new(
-		1,
+		Save.master_volume,
 		0,
 		1,
 		100,
@@ -89,14 +89,38 @@ function Option_scene:load()
 
 	-- Music Volume
 	self.text_displays[4] = text.new("Music Volume", 1, HORIZONTAL_ALIGN.LEFT, VERTICAL_ALIGN.CENTER, 0, 0, COLOR.WHITE)
-	self.option_sliders[2] =
-		slider.new(1, 0, 1, 100, 5, 200, 3, music_volume_changed, HORIZONTAL_ALIGN.RIGHT, VERTICAL_ALIGN.CENTER, 0, 0)
+	self.option_sliders[2] = slider.new(
+		Save.music_volume,
+		0,
+		1,
+		100,
+		5,
+		200,
+		3,
+		music_volume_changed,
+		HORIZONTAL_ALIGN.RIGHT,
+		VERTICAL_ALIGN.CENTER,
+		0,
+		0
+	)
 
-	-- Sound Volume
+	-- Effect Volume
 	self.text_displays[5] =
-		text.new("Sound Volume", 1, HORIZONTAL_ALIGN.LEFT, VERTICAL_ALIGN.CENTER, 0, 45, COLOR.WHITE)
-	self.option_sliders[3] =
-		slider.new(1, 0, 1, 100, 5, 200, 3, effect_volume_changed, HORIZONTAL_ALIGN.RIGHT, VERTICAL_ALIGN.CENTER, 0, 45)
+		text.new("Effect Volume", 1, HORIZONTAL_ALIGN.LEFT, VERTICAL_ALIGN.CENTER, 0, 45, COLOR.WHITE)
+	self.option_sliders[3] = slider.new(
+		Save.effect_volume,
+		0,
+		1,
+		100,
+		5,
+		200,
+		3,
+		effect_volume_changed,
+		HORIZONTAL_ALIGN.RIGHT,
+		VERTICAL_ALIGN.CENTER,
+		0,
+		45
+	)
 end
 
 function Option_scene:update(_)
