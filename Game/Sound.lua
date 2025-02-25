@@ -57,11 +57,8 @@ end
 
 function Sound:load()
 	self.Music = love.audio.newSource(music_file, "stream")
-	self.master_volume = Save.master_volume
-	self.music_volume = Save.music_volume
-	self.effect_volume = Save.effect_volume
 
-	--set table of sound effects and variations
+	--Set table of sound effects and variations
 	self.Effects = {
 		block_step = create_effect_variations(block_step_effect_files),
 		block_bounce = create_effect_variations(block_bounce_effect_files),
@@ -70,12 +67,17 @@ function Sound:load()
 		level_complete = love.audio.newSource(level_complete_effect_file, "static"),
 	}
 
-	--set volume for all sound effects
+	--Set volume for all sound effects
 	function self.Effects:setVolume(new_volume)
 		for _, effect in pairs(self) do
 			set_effect_volume(effect, new_volume)
 		end
 	end
+
+	--Set saved volume options
+	self:set_volume(Save.master_volume, SOUND_TYPE.MASTER)
+	self:set_volume(Save.music_volume, SOUND_TYPE.MUSIC)
+	self:set_volume(Save.effect_volume, SOUND_TYPE.EFFECT)
 end
 
 function Sound:update(_)
