@@ -34,7 +34,7 @@ local ui_hover_effect_files = {
 	"Sound/UIOnHover_3.wav",
 	"Sound/UIOnHover_4.wav",
 }
-local level_complete_effect_file = "WinSound.wav"
+local level_complete_effect_file = "Sound/WinSound.wav"
 
 local function create_effect_variations(files)
 	local variations = {}
