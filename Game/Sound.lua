@@ -45,12 +45,12 @@ local function create_effect_variations(files)
 end
 
 -- does get used, ignore hint
-local function setVolume(self, new_volume)
-	for i = 1, #self do
-		local audio_source = self[i]
-		audio_source:setVolume(new_volume)
-	end
-end
+-- local function setVolume(self, new_volume)
+-- 	for i = 1, #self do
+-- 		local audio_source = self[i]
+-- 		audio_source:setVolume(new_volume)
+-- 	end
+-- end
 
 function Sound:load()
 	self.Music = love.audio.newSource(music_file, "stream")
