@@ -7,22 +7,23 @@ Save = {
 	effect_volume = 1.0,
 }
 
-local save_file = "save.txt"
+local save_file = "GameData.txt"
 
 function Save:save_data()
-	-- Serialize
-	local serialized_data = ""
+	-- Serialization
+	local save_data = "return {\n"
 	for key, value in pairs(self) do
-		serialized_data = serialized_data .. key .. "=" .. tostring(value) .. "\n"
+		if type(value) == "number" or type(value) == "boolean" then
+			save_data = save_data .. string.format("    %s = %s,\n", key, tostring(value))
+		elseif type(value) == "string" then
+			save_data = save_data .. string.format('    %s = "%s",\n', key, value)
+		end
 	end
 
-	-- Write data to file
-	local success, message = love.filesystem.write(save_file, serialized_data)
-	if not success then
-		print("Failed to save data:", message)
-	else
-		print("Game saved successfully")
-	end
+	save_data = save_data .. "}"
+
+	--Write Data to file
+	love.filesystem.write(save_file, save_data)
 end
 
 function Save:load_data()
@@ -36,10 +37,15 @@ function Save:load_data()
 	local serialized_data = love.filesystem.read(save_file)
 
 	-- Deserialize
-	for line in serialized_data.gmatch("[^\r\n]+") do
-		local key, value = line.match("(.+)=(.+)")
-		if key and value then
-			self[key] = value
-		end
+	local data_chunk = load(serialized_data)
+
+	if not data_chunk then
+		print("Error: Failed to load save data")
+		return
+	end
+
+	local saved_data = data_chunk()
+	for key, value in pairs(saved_data) do
+		self[key] = value
 	end
 end
