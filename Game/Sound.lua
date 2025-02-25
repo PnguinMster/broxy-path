@@ -44,10 +44,14 @@ local function create_effect_variations(files)
 	return variations
 end
 
-local function set_effect_volume(self, new_volume)
-	for i = 1, #self do
-		local audio_source = self[i]
-		audio_source:setVolume(new_volume)
+local function set_effect_volume(effect, new_volume)
+	if type(effect) == "table" then
+		for i = 1, #effect do
+			local audio_source = effect[i]
+			audio_source:setVolume(new_volume)
+		end
+	elseif type(effect) == "userdata" then
+		effect:setVolume(new_volume)
 	end
 end
 
@@ -69,11 +73,7 @@ function Sound:load()
 	--set volume for all sound effects
 	function self.Effects:setVolume(new_volume)
 		for _, effect in pairs(self) do
-			if type(effect) == "table" then
-				set_effect_volume(effect, new_volume)
-			elseif type(effect) == "userdata" then
-				effect:setVolume(new_volume)
-			end
+			set_effect_volume(effect, new_volume)
 		end
 	end
 end
