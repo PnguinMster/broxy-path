@@ -43,7 +43,7 @@ function End_menu:update(_)
 	local x_difference = math.abs(window_x - love.graphics.getWidth())
 	local y_difference = math.abs(window_y - love.graphics.getHeight())
 
-	--auto resize horizontally 
+	--auto resize horizontally
 	if x_difference >= RESIZE_DIFFERENCE then
 		self.title_text:auto_resize_x()
 		for _, interactable in ipairs(self.interactables) do
@@ -53,7 +53,7 @@ function End_menu:update(_)
 		window_x = love.graphics.getWidth()
 	end
 
-	--auto resize vertically 
+	--auto resize vertically
 	if y_difference >= RESIZE_DIFFERENCE then
 		self.title_text:auto_resize_y()
 		for _, interactable in ipairs(self.interactables) do
