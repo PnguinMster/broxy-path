@@ -1,5 +1,5 @@
 Save = {
-	unlocked_levels = 0,
+	unlocked_levels = 1,
 	fullscreen = false,
 	vsync = false,
 	master_volume = 1.0,

@@ -8,7 +8,7 @@ Game = {}
 
 Game.scene = SCENE.MENU
 Game.state = SCENE.MENU
-Game.level = 0
+Game.level = 1
 
 function Game:set_scene(scene)
 	self.scene:unload()
