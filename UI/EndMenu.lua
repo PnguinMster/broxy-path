@@ -39,7 +39,7 @@ function End_menu:load()
 		button.new(85, 50, "Main Menu", menu_pressed, nil, HORIZONTAL_ALIGN.CENTER, VERTICAL_ALIGN.CENTER, 0, 140)
 end
 
-function End_menu:update(dt)
+function End_menu:update(_)
 	local x_difference = math.abs(window_x - love.graphics.getWidth())
 	local y_difference = math.abs(window_y - love.graphics.getHeight())
 
