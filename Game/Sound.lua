@@ -62,8 +62,8 @@ function Sound:load()
 	self.Effects = {
 		block_step = create_effect_variations(block_step_effect_files),
 		block_bounce = create_effect_variations(block_bounce_effect_files),
-		clicks = create_effect_variations(click_effect_files),
-		ui_hovers = create_effect_variations(ui_hover_effect_files),
+		click = create_effect_variations(click_effect_files),
+		ui_hover = create_effect_variations(ui_hover_effect_files),
 		level_complete = love.audio.newSource(level_complete_effect_file, "static"),
 	}
 
@@ -105,11 +105,11 @@ function Sound:play_sound_effect(sound_effect)
 
 	--get random variation of sound effect
 	if sound_effect == SOUND_EFFECT.BLOCK_STEP then
-		random_variation = self.Effects.block_step[math.random(#self.Effects.block_steps)]
+		random_variation = self.Effects.block_step[math.random(#self.Effects.block_step)]
 	elseif sound_effect == SOUND_EFFECT.CLICK then
-		random_variation = self.Effects.clicks[math.random(#self.Effects.clicks)]
+		random_variation = self.Effects.click[math.random(#self.Effects.click)]
 	elseif sound_effect == SOUND_EFFECT.UI_HOVER then
-		random_variation = self.Effects.ui_hovers[math.random(#self.Effects.ui_hovers)]
+		random_variation = self.Effects.ui_hover[math.random(#self.Effects.ui_hover)]
 	elseif sound_effect == SOUND_EFFECT.BLOCK_BOUNCE then
 		random_variation = self.Effects.block_bounce[math.random(#self.Effects.block_bounce)]
 	elseif sound_effect == SOUND_EFFECT.LEVEL_COMPLETE then
