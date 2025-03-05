@@ -103,7 +103,7 @@ function Level_scene:load()
 		button.new(100, 50, "Back", back_pressed, nil, HORIZONTAL_ALIGN.LEFT, VERTICAL_ALIGN.BOTTOM, 50, -50)
 
 	-- Disabled locked levels
-	for i = #self.interactables, 2, -1 do
+	for i = #self.interactables - 1, 2, -1 do
 		if i > levels_unlocked then
 			self.interactables[i]:set_disabled(true)
 		else
