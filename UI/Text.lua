@@ -1,5 +1,6 @@
 require("Utility.ColorEnum")
 require("Utility.AlignEnum")
+require("Utility.FontScaleEnum")
 
 local Text = {
 	text = "",
@@ -9,7 +10,7 @@ local Text = {
 	vertical_align = VERTICAL_ALIGN.TOP,
 	x = 0,
 	y = 0,
-	scale = 1,
+	scale = FONT_SCALE.MEDIUM,
 	origin_offset_x = 0,
 	origin_offset_y = 0,
 }
@@ -46,7 +47,7 @@ function Text.new(text, scale, horizontal_align, vertical_align, offset_x, offse
 	return setmetatable({
 		x = x or 0,
 		y = y or 0,
-		scale = scale or 1,
+		scale = scale or FONT_SCALE.MEDIUM,
 		origin_offset_x = text_width or 0,
 		origin_offset_y = text_height or 0,
 		text = text or "Text",
@@ -84,16 +85,8 @@ end
 
 function Text:draw()
 	love.graphics.setColor(self.color:rgb_color())
-	love.graphics.print(
-		self.text,
-		self.x,
-		self.y,
-		0,
-		self.scale,
-		self.scale,
-		self.origin_offset_x,
-		self.origin_offset_y
-	)
+	love.graphics.setFont(self.scale)
+	love.graphics.print(self.text, self.x, self.y, 0, 1, 1, self.origin_offset_x, self.origin_offset_y)
 end
 
 function Text:unload() end
