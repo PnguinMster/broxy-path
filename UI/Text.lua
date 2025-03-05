@@ -10,7 +10,7 @@ local Text = {
 	vertical_align = VERTICAL_ALIGN.TOP,
 	x = 0,
 	y = 0,
-	scale = FONT_SCALE.MEDIUM,
+	scale = FONT_SCALE.SMALL,
 	origin_offset_x = 0,
 	origin_offset_y = 0,
 }
@@ -18,9 +18,8 @@ Text.__index = Text
 
 function Text.new(text, scale, horizontal_align, vertical_align, offset_x, offset_y, color)
 	--set local variabbles from parameters
-	local font = love.graphics:getFont()
-	local text_width = font:getWidth(text)
-	local text_height = font:getHeight()
+	local text_width = scale:getWidth(text)
+	local text_height = scale:getHeight()
 	local x = offset_x or 0
 	local y = offset_y or 0
 
@@ -47,7 +46,7 @@ function Text.new(text, scale, horizontal_align, vertical_align, offset_x, offse
 	return setmetatable({
 		x = x or 0,
 		y = y or 0,
-		scale = scale or FONT_SCALE.MEDIUM,
+		scale = scale or FONT_SCALE.SMALL,
 		origin_offset_x = text_width or 0,
 		origin_offset_y = text_height or 0,
 		text = text or "Text",

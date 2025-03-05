@@ -77,7 +77,8 @@ function Level_scene:load()
 	levels_unlocked = Save.unlocked_levels
 
 	--title
-	self.title_text = text.new("Select Level", 3, HORIZONTAL_ALIGN.CENTER, VERTICAL_ALIGN.TOP, 0, 10, COLOR.WHITE)
+	self.title_text =
+		text.new("Select Level", FONT_SCALE.LARGE, HORIZONTAL_ALIGN.CENTER, VERTICAL_ALIGN.TOP, 0, 10, COLOR.WHITE)
 
 	--buttons
 	self.interactables[1] =

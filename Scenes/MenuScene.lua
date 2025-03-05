@@ -31,7 +31,8 @@ function Menu_scene:load()
 	window_y = love.graphics.getHeight()
 
 	--title
-	self.title_text = text.new("Broxy Grath", 3, HORIZONTAL_ALIGN.CENTER, VERTICAL_ALIGN.TOP, 0, 10, COLOR.WHITE)
+	self.title_text =
+		text.new("Broxy Grath", FONT_SCALE.LARGE, HORIZONTAL_ALIGN.CENTER, VERTICAL_ALIGN.TOP, 0, 10, COLOR.WHITE)
 
 	--buttons
 	self.interactables[1] =

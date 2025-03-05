@@ -59,7 +59,8 @@ function CycleList.new(
 	local current_element_index = 1
 	local max_element_index = #items
 	local list = {}
-	local ui_text = text.new(first_item, 1, horizontal_align, vertical_align, offset_x, offset_y, ui_text_color)
+	local ui_text =
+		text.new(first_item, FONT_SCALE.SMALL, horizontal_align, vertical_align, offset_x, offset_y, ui_text_color)
 
 	local left_button_func = function()
 		print("Left button pressed")

@@ -1,4 +1,5 @@
 require("Utility.ColorEnum")
+require("Utility.FontScaleEnum")
 local text = require("UI.Text")
 
 local Button = {
@@ -46,15 +47,13 @@ function Button.new(
 		x = (love.graphics:getWidth() / 2) + x
 		x = x - width / 2
 	elseif horizontal_align == HORIZONTAL_ALIGN.LEFT then
-		local font = love.graphics:getFont()
-		local text_width = font:getWidth(text_block)
+		local text_width = FONT_SCALE.SMALL:getWidth(text_block)
 		text_offset_x = text_offset_x + (width / 2) - (text_width / 2)
 	end
 
 	--align button vertically
 	if vertical_align == VERTICAL_ALIGN.BOTTOM then
-		local font = love.graphics:getFont()
-		local text_height = font:getHeight()
+		local text_height = FONT_SCALE.SMALL:getHeight()
 		text_offset_y = text_offset_y + (text_height / 2)
 		y = y + love.graphics:getHeight()
 		y = y - height / 2
@@ -70,7 +69,7 @@ function Button.new(
 		height = height or 0,
 		text_block = text.new(
 			text_block,
-			1,
+			FONT_SCALE.SMALL,
 			horizontal_align,
 			vertical_align,
 			text_offset_x,

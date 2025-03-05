@@ -54,24 +54,26 @@ function Option_scene:load()
 	--
 	--  Title
 	--
-	self.title_text = text.new("Options", 3, HORIZONTAL_ALIGN.CENTER, VERTICAL_ALIGN.TOP, 0, 10, COLOR.WHITE)
+	self.title_text =
+		text.new("Options", FONT_SCALE.LARGE, HORIZONTAL_ALIGN.CENTER, VERTICAL_ALIGN.TOP, 0, 10, COLOR.WHITE)
 	self.interactables[1] =
 		button.new(100, 50, "Back", back_pressed, nil, HORIZONTAL_ALIGN.LEFT, VERTICAL_ALIGN.BOTTOM, 50, -50)
 
 	--Fullscreen
 	self.text_displays[1] =
-		text.new("Fullscreen", 1, HORIZONTAL_ALIGN.LEFT, VERTICAL_ALIGN.CENTER, 0, -180, COLOR.WHITE)
+		text.new("Fullscreen", FONT_SCALE.SMALL, HORIZONTAL_ALIGN.LEFT, VERTICAL_ALIGN.CENTER, 0, -180, COLOR.WHITE)
 	self.interactables[2] =
 		checkbox.new(false, 1, fullscreen_pressed, HORIZONTAL_ALIGN.RIGHT, VERTICAL_ALIGN.CENTER, 0, -180)
 
 	-- Vsync
-	self.text_displays[2] = text.new("Vsync", 1, HORIZONTAL_ALIGN.LEFT, VERTICAL_ALIGN.CENTER, 0, -135, COLOR.WHITE)
+	self.text_displays[2] =
+		text.new("Vsync", FONT_SCALE.SMALL, HORIZONTAL_ALIGN.LEFT, VERTICAL_ALIGN.CENTER, 0, -135, COLOR.WHITE)
 	self.interactables[3] =
 		checkbox.new(false, 1, vsync_pressed, HORIZONTAL_ALIGN.RIGHT, VERTICAL_ALIGN.CENTER, 0, -135)
 
 	-- Master Volume
 	self.text_displays[3] =
-		text.new("Master Volume", 1, HORIZONTAL_ALIGN.LEFT, VERTICAL_ALIGN.CENTER, 0, -45, COLOR.WHITE)
+		text.new("Master Volume", FONT_SCALE.SMALL, HORIZONTAL_ALIGN.LEFT, VERTICAL_ALIGN.CENTER, 0, -45, COLOR.WHITE)
 	self.option_sliders[1] = slider.new(
 		Save.master_volume,
 		0,
@@ -88,7 +90,8 @@ function Option_scene:load()
 	)
 
 	-- Music Volume
-	self.text_displays[4] = text.new("Music Volume", 1, HORIZONTAL_ALIGN.LEFT, VERTICAL_ALIGN.CENTER, 0, 0, COLOR.WHITE)
+	self.text_displays[4] =
+		text.new("Music Volume", FONT_SCALE.SMALL, HORIZONTAL_ALIGN.LEFT, VERTICAL_ALIGN.CENTER, 0, 0, COLOR.WHITE)
 	self.option_sliders[2] = slider.new(
 		Save.music_volume,
 		0,
@@ -106,7 +109,7 @@ function Option_scene:load()
 
 	-- Effect Volume
 	self.text_displays[5] =
-		text.new("Effect Volume", 1, HORIZONTAL_ALIGN.LEFT, VERTICAL_ALIGN.CENTER, 0, 45, COLOR.WHITE)
+		text.new("Effect Volume", FONT_SCALE.SMALL, HORIZONTAL_ALIGN.LEFT, VERTICAL_ALIGN.CENTER, 0, 45, COLOR.WHITE)
 	self.option_sliders[3] = slider.new(
 		Save.effect_volume,
 		0,
