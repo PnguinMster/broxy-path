@@ -104,7 +104,7 @@ function Tilemap:draw_map()
 	--draw static blocks
 	for _, block in ipairs(self.static_blocks) do
 		love.graphics.setColor(block.map_info.type:rgb_color())
-		love.graphics.polygon("line", block.body:getWorldPoints(block.shape:getPoints()))
+		love.graphics.polygon("fill", block.body:getWorldPoints(block.shape:getPoints()))
 	end
 
 	--draw kinematic blocks
