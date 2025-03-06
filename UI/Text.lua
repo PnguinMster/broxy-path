@@ -64,7 +64,7 @@ function Text:auto_resize_x()
 	if self.horizontal_align == HORIZONTAL_ALIGN.RIGHT then
 		x = x + love.graphics:getWidth()
 	elseif self.horizontal_align == HORIZONTAL_ALIGN.CENTER then
-		x = (love.graphics:getWidth() / 2) + x
+		x = math.floor(love.graphics:getWidth() / 2) + x
 	end
 
 	self.x = x
@@ -76,7 +76,7 @@ function Text:auto_resize_y()
 	if self.vertical_align == VERTICAL_ALIGN.BOTTOM then
 		y = y + love.graphics:getHeight()
 	elseif self.vertical_align == VERTICAL_ALIGN.CENTER then
-		y = (love.graphics:getHeight() / 2) + y
+		y = math.floor(love.graphics:getHeight() / 2) + y
 	end
 
 	self.y = y
