@@ -13,10 +13,11 @@ local Text = {
 	scale = FONT_SCALE.SMALL,
 	origin_offset_x = 0,
 	origin_offset_y = 0,
+	is_disabled = false,
 }
 Text.__index = Text
 
-function Text.new(text, scale, horizontal_align, vertical_align, offset_x, offset_y, color)
+function Text.new(text, scale, horizontal_align, vertical_align, offset_x, offset_y, color, is_disabled)
 	--set local variabbles from parameters
 	local text_width = scale:getWidth(text)
 	local text_height = scale:getHeight()
@@ -55,6 +56,7 @@ function Text.new(text, scale, horizontal_align, vertical_align, offset_x, offse
 		horizontal_align = horizontal_align or HORIZONTAL_ALIGN.LEFT,
 		vertical_align = vertical_align or VERTICAL_ALIGN.TOP,
 		color = color or COLOR.WHITE,
+		is_disabled = is_disabled or false,
 	}, Text)
 end
 
@@ -82,8 +84,19 @@ function Text:auto_resize_y()
 	self.y = y
 end
 
+function Text:set_disabled(is_disabled)
+	self.is_disabled = is_disabled
+end
+
 function Text:draw()
-	love.graphics.setColor(self.color:rgb_color())
+	local r, g, b = self.color:rgb_color()
+	local alpha = 1
+
+	if self.is_disabled then
+		alpha = 0.5
+	end
+
+	love.graphics.setColor(r, g, b, alpha)
 	love.graphics.setFont(self.scale)
 	love.graphics.print(self.text, self.x, self.y, 0, 1, 1, self.origin_offset_x, self.origin_offset_y)
 end

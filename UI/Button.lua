@@ -74,7 +74,8 @@ function Button.new(
 			vertical_align,
 			text_offset_x,
 			text_offset_y,
-			text_color
+			text_color,
+			is_disabled
 		) or text.new(),
 		func = func or function()
 			print("No Function")
@@ -115,6 +116,7 @@ end
 
 function Button:set_disabled(is_disabled)
 	self.is_disabled = is_disabled
+	self.text_block:set_disabled(is_disabled)
 end
 
 function Button:auto_resize_x()
