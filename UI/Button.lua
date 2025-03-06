@@ -69,7 +69,7 @@ function Button.new(
 		height = height or 0,
 		text_block = text.new(
 			text_block,
-			FONT_SCALE.SMALL,
+			FONT_SCALE.MEDIUM,
 			horizontal_align,
 			vertical_align,
 			text_offset_x,
