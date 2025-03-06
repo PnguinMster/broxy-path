@@ -156,9 +156,9 @@ function Button:draw()
 	end
 
 	if self.is_hovered then
-		love.graphics.rectangle("line", self.x - 2, self.y - 2, self.width + 4, self.height + 4)
+		love.graphics.rectangle("line", self.x - 2, self.y - 2, self.width + 4, self.height + 4, 3, 3)
 	else
-		love.graphics.rectangle("line", self.x, self.y, self.width, self.height)
+		love.graphics.rectangle("line", self.x, self.y, self.width, self.height, 3, 3)
 	end
 	self.text_block:draw()
 end
