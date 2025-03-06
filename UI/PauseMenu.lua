@@ -40,11 +40,11 @@ function Pause_menu:load()
 
 	--buttons
 	self.interactables[1] =
-		button.new(85, 50, "Continue", continue_pressed, nil, HORIZONTAL_ALIGN.CENTER, VERTICAL_ALIGN.CENTER, 0, -140)
+		button.new(115, 60, "Continue", continue_pressed, nil, HORIZONTAL_ALIGN.CENTER, VERTICAL_ALIGN.CENTER, 0, -140)
 	self.interactables[2] =
-		button.new(85, 50, "Retry", retry_pressed, nil, HORIZONTAL_ALIGN.CENTER, VERTICAL_ALIGN.CENTER, 0, 0)
+		button.new(115, 60, "Retry", retry_pressed, nil, HORIZONTAL_ALIGN.CENTER, VERTICAL_ALIGN.CENTER, 0, 0)
 	self.interactables[3] =
-		button.new(85, 50, "Main Menu", menu_pressed, nil, HORIZONTAL_ALIGN.CENTER, VERTICAL_ALIGN.CENTER, 0, 140)
+		button.new(115, 60, "Main Menu", menu_pressed, nil, HORIZONTAL_ALIGN.CENTER, VERTICAL_ALIGN.CENTER, 0, 140)
 end
 
 function Pause_menu:update(_)
