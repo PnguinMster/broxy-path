@@ -36,11 +36,11 @@ function Menu_scene:load()
 
 	--buttons
 	self.interactables[1] =
-		button.new(70, 50, "Start", start_pressed, nil, HORIZONTAL_ALIGN.CENTER, VERTICAL_ALIGN.CENTER)
+		button.new(120, 60, "Start", start_pressed, nil, HORIZONTAL_ALIGN.CENTER, VERTICAL_ALIGN.CENTER)
 	self.interactables[2] =
-		button.new(70, 50, "Options", options_pressed, nil, HORIZONTAL_ALIGN.CENTER, VERTICAL_ALIGN.CENTER, 0, 70)
+		button.new(120, 60, "Options", options_pressed, nil, HORIZONTAL_ALIGN.CENTER, VERTICAL_ALIGN.CENTER, 0, 90)
 	self.interactables[3] =
-		button.new(70, 50, "Quit", quit_pressed, nil, HORIZONTAL_ALIGN.CENTER, VERTICAL_ALIGN.CENTER, 0, 140)
+		button.new(120, 60, "Quit", quit_pressed, nil, HORIZONTAL_ALIGN.CENTER, VERTICAL_ALIGN.CENTER, 0, 180)
 end
 
 function Menu_scene:update(_)
