@@ -64,7 +64,8 @@ function Text:auto_resize_x()
 	local x = self.offset_x
 
 	if self.horizontal_align == HORIZONTAL_ALIGN.RIGHT then
-		x = x + love.graphics:getWidth()
+		local text_width = self.scale:getWidth(self.text)
+		x = x + love.graphics:getWidth() + text_width / 2
 	elseif self.horizontal_align == HORIZONTAL_ALIGN.CENTER then
 		x = math.floor(love.graphics:getWidth() / 2) + x
 	end
