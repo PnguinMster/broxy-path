@@ -26,7 +26,7 @@ function Text.new(text, scale, horizontal_align, vertical_align, offset_x, offse
 
 	--align horizontally
 	if horizontal_align == HORIZONTAL_ALIGN.RIGHT then
-		x = x + love.graphics:getWidth()
+		x = x + love.graphics:getWidth() + text_width / 2
 	elseif horizontal_align == HORIZONTAL_ALIGN.CENTER then
 		x = (love.graphics:getWidth() / 2) + x
 		text_width = text_width / 2
