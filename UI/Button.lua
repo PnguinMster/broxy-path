@@ -148,6 +148,9 @@ function Button:auto_resize_y()
 end
 
 function Button:draw()
+	love.graphics.setColor(COLOR.BLACK:rgb_color())
+	love.graphics.rectangle("fill", self.x, self.y, self.width, self.height, 3, 3)
+
 	if self.is_disabled then
 		local r, g, b = self.button_color:rgb_color()
 		love.graphics.setColor(r, g, b, 0.5)
