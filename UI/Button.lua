@@ -47,13 +47,13 @@ function Button.new(
 		x = (love.graphics:getWidth() / 2) + x
 		x = x - width / 2
 	elseif horizontal_align == HORIZONTAL_ALIGN.LEFT then
-		local text_width = FONT_SCALE.SMALL:getWidth(text_block)
+		local text_width = FONT_SCALE.MEDIUM:getWidth(text_block)
 		text_offset_x = text_offset_x + (width / 2) - (text_width / 2)
 	end
 
 	--align button vertically
 	if vertical_align == VERTICAL_ALIGN.BOTTOM then
-		local text_height = FONT_SCALE.SMALL:getHeight()
+		local text_height = FONT_SCALE.MEDIUM:getHeight()
 		text_offset_y = text_offset_y + (text_height / 2)
 		y = y + love.graphics:getHeight()
 		y = y - height / 2
@@ -163,9 +163,9 @@ function Button:draw()
 	love.graphics.setColor(r, g, b, alpha)
 
 	if self.is_hovered then
-		love.graphics.rectangle("line", self.x - 2, self.y - 2, self.width + 4, self.height + 4, 1, 1)
+		love.graphics.rectangle("line", self.x - 2, self.y - 2, self.width + 4, self.height + 4, 1, 3)
 	else
-		love.graphics.rectangle("line", self.x, self.y, self.width, self.height, 1, 1)
+		love.graphics.rectangle("line", self.x, self.y, self.width, self.height, 1, 3)
 	end
 	self.text_block:draw()
 end
