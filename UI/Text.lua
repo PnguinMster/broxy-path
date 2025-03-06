@@ -54,7 +54,7 @@ function Text.new(text, scale, horizontal_align, vertical_align, offset_x, offse
 		offset_y = offset_y or 0,
 		horizontal_align = horizontal_align or HORIZONTAL_ALIGN.LEFT,
 		vertical_align = vertical_align or VERTICAL_ALIGN.TOP,
-		color = color or COLOR.BLACK,
+		color = color or COLOR.WHITE,
 	}, Text)
 end
 
