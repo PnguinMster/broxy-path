@@ -93,6 +93,7 @@ function Game:update(dt)
 end
 
 function Game:draw()
+	-- Bakground Shaders
 	love.graphics.setCanvas(game_canvas)
 	love.graphics.clear(0, 0, 0, 1)
 
@@ -110,9 +111,11 @@ function Game:draw()
 	-- love.graphics.setColor(COLOR.WHITE:rgb_color())
 	-- love.graphics.print("FPS: " .. tostring(love.timer.getFPS()), 10, 10)
 
+	-- Game Scene
 	self.scene:draw()
 	love.graphics.setColor(COLOR.WHITE:rgb_color())
 
+	-- CRT Shader
 	love.graphics.setCanvas()
 
 	love.graphics.setShader(crt_shader)
