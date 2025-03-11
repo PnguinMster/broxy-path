@@ -9,6 +9,7 @@ Game = {}
 Game.scene = SCENE.MENU
 Game.state = SCENE.MENU
 Game.level = 1
+Game.canvas = {}
 
 local OFFSET_SPEED = 0.1
 local MIN_OFFSET = 0.4
@@ -21,8 +22,6 @@ local gradient_shader
 local star_shader
 local nebula_shader
 local crt_shader
-
-local game_canvas
 
 local function setup_background_shader()
 	-- Gradient Shader
@@ -79,7 +78,7 @@ function Game:load()
 	math.randomseed(os.time())
 	love.graphics.setBackgroundColor(COLOR.BLACK:rgb_color())
 
-	game_canvas = love.graphics.newCanvas()
+	self.game_canvas = love.graphics.newCanvas()
 	setup_background_shader()
 
 	self.scene:load()
@@ -93,7 +92,7 @@ end
 
 function Game:draw()
 	-- Bakground Shaders
-	love.graphics.setCanvas(game_canvas)
+	love.graphics.setCanvas(self.game_canvas)
 	love.graphics.clear(0, 0, 0, 1)
 
 	love.graphics.setShader(gradient_shader)
@@ -118,12 +117,8 @@ function Game:draw()
 	love.graphics.setCanvas()
 
 	love.graphics.setShader(crt_shader)
-	love.graphics.draw(game_canvas, 0, 0)
+	love.graphics.draw(self.game_canvas, 0, 0)
 	love.graphics.setShader()
-end
-
-function love.resize(w, h)
-	game_canvas = love.graphics.newCanvas(w, h)
 end
 
 function love.quit()
