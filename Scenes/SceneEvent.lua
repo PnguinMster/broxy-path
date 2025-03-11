@@ -8,6 +8,10 @@ local end_menu = require("UI.EndMenu")
 local hovered_ui = nil
 local is_holding = false
 
+function love.resize(w, h)
+	Game.game_canvas = love.graphics.newCanvas(w, h)
+end
+
 function love.keyreleased(key)
 	if Game.scene == SCENE.GAME then
 		if key == "escape" then
