@@ -21,7 +21,6 @@ local gradient_shader
 local star_shader
 local nebula_shader
 local crt_shader
--- local vignette_shader
 
 local game_canvas
 
@@ -121,6 +120,10 @@ function Game:draw()
 	love.graphics.setShader(crt_shader)
 	love.graphics.draw(game_canvas, 0, 0)
 	love.graphics.setShader()
+end
+
+function love.resize(w, h)
+	game_canvas = love.graphics.newCanvas(w, h)
 end
 
 function love.quit()
