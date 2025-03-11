@@ -6,7 +6,7 @@ const float vignetteStrength = 0.3;
 const float rgbOffsetScale = 0.002; // This is now a scale factor, not absolute pixels
 const float brightness = 1.1;
 const float contrast = 1.1;
-const float hazeIntensity = 0.07;
+const float hazeIntensity = 0.075;
 
 vec4 effect(vec4 color, Image texture, vec2 texture_coords, vec2 screen_coords)
 {
