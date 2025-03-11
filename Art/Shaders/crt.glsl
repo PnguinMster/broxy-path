@@ -1,12 +1,12 @@
-// CRT shader without geometric distortion but with white haze effect
+// CRT shader without geometric distortion
 // Adjustable parameters
 const float scanlineIntensity = 0.2;
 const float scanlineCount = 200.0;
 const float vignetteStrength = 0.3;
-const float rgbOffset = 0.002;
+const float rgbOffsetScale = 0.002; // This is now a scale factor, not absolute pixels
 const float brightness = 1.1;
 const float contrast = 1.1;
-const float hazeIntensity = 0.07; // Controls the white haze effect
+const float hazeIntensity = 0.07;
 
 vec4 effect(vec4 color, Image texture, vec2 texture_coords, vec2 screen_coords)
 {
@@ -15,6 +15,9 @@ vec4 effect(vec4 color, Image texture, vec2 texture_coords, vec2 screen_coords)
     
     // Convert to normalized coordinates for effects
     vec2 normalizedCoords = screen_coords / love_ScreenSize.xy;
+    
+    // Calculate RGB offset based on screen width to keep the effect consistent
+    float rgbOffset = rgbOffsetScale * (1.0 / love_ScreenSize.x) * 800.0; // Normalized for 800px reference width
     
     // Apply color channel separation/chromatic aberration
     vec4 colorR = Texel(texture, vec2(uv.x + rgbOffset, uv.y));
