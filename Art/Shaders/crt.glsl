@@ -1,5 +1,3 @@
-// CRT shader without geometric distortion
-// Adjustable parameters
 const float scanlineIntensity = 0.2;
 const float scanlineCount = 200.0;
 const float vignetteStrength = 0.3;
