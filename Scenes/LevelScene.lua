@@ -73,7 +73,7 @@ function Level_scene:load()
 
 	--title
 	self.title_text =
-		text.new("Select Level", FONT_SCALE.LARGE, HORIZONTAL_ALIGN.CENTER, VERTICAL_ALIGN.TOP, 0, 10, COLOR.WHITE)
+		text.new("Select Level", FONT_SCALE.LARGE, HORIZONTAL_ALIGN.CENTER, VERTICAL_ALIGN.TOP, 0, 30, COLOR.WHITE)
 
 	--buttons
 	self.interactables[1] =

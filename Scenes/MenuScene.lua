@@ -25,7 +25,7 @@ end
 function Menu_scene:load()
 	--title
 	self.title_text =
-		text.new("Broxy Grath", FONT_SCALE.LARGE, HORIZONTAL_ALIGN.CENTER, VERTICAL_ALIGN.TOP, 0, 10, COLOR.WHITE)
+		text.new("Broxy Grath", FONT_SCALE.LARGE, HORIZONTAL_ALIGN.CENTER, VERTICAL_ALIGN.TOP, 0, 30, COLOR.WHITE)
 
 	--buttons
 	local button_offset = 45
