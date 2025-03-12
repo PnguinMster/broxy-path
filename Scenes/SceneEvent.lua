@@ -12,11 +12,12 @@ function love.resize(width, height)
 	Game.game_canvas = love.graphics.newCanvas(width, height)
 
 	-- Resize all UI scenes
-	pause_menu:resize(width, height)
-	end_menu:resize(width, height)
-	SCENE.MENU:resize(width, height)
-	SCENE.LEVEL:resize(width, height)
-	SCENE.OPTION:resize(width, height)
+	if Game.scene == SCENE.GAME then
+		pause_menu:resize(width, height)
+		end_menu:resize(width, height)
+	else
+		Game.scene:resize(width, height)
+	end
 end
 
 function love.keyreleased(key)
