@@ -46,7 +46,6 @@ function Option_scene:load()
 	-- UI elements
 	--
 	--  Title
-	--
 	self.title_text =
 		text.new("Options", FONT_SCALE.LARGE, HORIZONTAL_ALIGN.CENTER, VERTICAL_ALIGN.TOP, 0, 10, COLOR.WHITE)
 	self.interactables[1] =
