@@ -43,7 +43,6 @@ function love.mousereleased(x, y, index)
 			if hovered_ui.check_pressed then
 				hovered_ui:check_pressed(x, y)
 				Sound:play_sound_effect(SOUND_EFFECT.CLICK)
-				hovered_ui = nil
 			else
 				--Slider Specific
 				hovered_ui:mouse_released()
