@@ -110,6 +110,10 @@ function Game:draw()
 
 	-- love.graphics.setColor(COLOR.WHITE:rgb_color())
 	-- love.graphics.print("FPS: " .. tostring(love.timer.getFPS()), 10, 10)
+	-- local stats = love.graphics.getStats()
+	--
+	-- local str = string.format("Estimated amount of texture memory used: %.2f MB", stats.texturememory / 1024 / 1024)
+	-- love.graphics.print(str, 10, 10)
 
 	-- Game Scene
 	self.scene:draw()
