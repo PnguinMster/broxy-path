@@ -101,26 +101,26 @@ function Checkbox:set_hovered(hovered)
 	self.is_hovered = hovered
 end
 
-function Checkbox:auto_resize_x()
+function Checkbox:auto_resize_x(width)
 	local x = self.offset_x - (self.box_size / 2)
 
 	if self.horizontal_align == HORIZONTAL_ALIGN.RIGHT then
-		x = x + love.graphics:getWidth()
+		x = x + width
 		x = x - (self.box_size / 2)
 	elseif self.horizontal_align == HORIZONTAL_ALIGN.CENTER then
-		x = (love.graphics:getWidth() / 2) + x
+		x = (width / 2) + x
 	end
 
 	self.x = x
 end
 
-function Checkbox:auto_resize_y()
+function Checkbox:auto_resize_y(height)
 	local y = self.offset_y - (self.box_size / 2)
 
 	if self.vertical_align == VERTICAL_ALIGN.BOTTOM then
-		y = y + love.graphics:getHeight()
+		y = y + height
 	elseif self.vertical_align == VERTICAL_ALIGN.CENTER then
-		y = (love.graphics:getHeight() / 2) + y
+		y = (height / 2) + y
 	end
 
 	self.y = y

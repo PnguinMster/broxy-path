@@ -2,9 +2,6 @@ require("Utility.ColorEnum")
 local button = require("UI.Button")
 local text = require("UI.Text")
 
-local RESIZE_DIFFERENCE = 5
-local window_x = 0
-local window_y = 0
 local levels_unlocked = 1
 
 local Level_scene = {}
@@ -72,8 +69,6 @@ local back_pressed = function()
 end
 
 function Level_scene:load()
-	window_x = love.graphics.getWidth()
-	window_y = love.graphics.getHeight()
 	levels_unlocked = Save.unlocked_levels
 
 	--title
@@ -112,30 +107,13 @@ function Level_scene:load()
 	end
 end
 
-function Level_scene:update(_)
-	local x_difference = math.abs(window_x - love.graphics.getWidth())
-	local y_difference = math.abs(window_y - love.graphics.getHeight())
+function Level_scene:resize(width, height)
+	self.title_text:auto_resize_x(width)
+	self.title_text:auto_resize_y(height)
 
-	-- Resize horizontal size
-	if x_difference >= RESIZE_DIFFERENCE then
-		self.title_text:auto_resize_x()
-
-		for _, interactable in ipairs(self.interactables) do
-			interactable:auto_resize_x()
-		end
-
-		window_x = love.graphics.getWidth()
-	end
-
-	-- Resize vertical size
-	if y_difference >= RESIZE_DIFFERENCE then
-		self.title_text:auto_resize_y()
-
-		for _, interactable in ipairs(self.interactables) do
-			interactable:auto_resize_y()
-		end
-
-		window_y = love.graphics.getHeight()
+	for _, interactable in ipairs(self.interactables) do
+		interactable:auto_resize_x(width)
+		interactable:auto_resize_y(height)
 	end
 end
 

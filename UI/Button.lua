@@ -119,34 +119,34 @@ function Button:set_disabled(is_disabled)
 	self.text_block:set_disabled(is_disabled)
 end
 
-function Button:auto_resize_x()
+function Button:auto_resize_x(width)
 	local x = self.offset_x
 
 	if self.horizontal_align == HORIZONTAL_ALIGN.RIGHT then
-		x = x + love.graphics:getWidth()
+		x = x + width
 		x = x - self.width / 2
 	elseif self.horizontal_align == HORIZONTAL_ALIGN.CENTER then
-		x = (love.graphics:getWidth() / 2) + x
+		x = (width / 2) + x
 		x = x - self.width / 2
 	end
 
 	self.x = x
-	self.text_block:auto_resize_x()
+	self.text_block:auto_resize_x(width)
 end
 
-function Button:auto_resize_y()
+function Button:auto_resize_y(height)
 	local y = self.offset_y
 
 	if self.vertical_align == VERTICAL_ALIGN.BOTTOM then
-		y = y + love.graphics:getHeight()
+		y = y + height
 		y = y - self.height / 2
 	elseif self.vertical_align == VERTICAL_ALIGN.CENTER then
-		y = (love.graphics:getHeight() / 2) + y
+		y = (height / 2) + y
 		y = y - self.height / 2
 	end
 
 	self.y = y
-	self.text_block:auto_resize_y()
+	self.text_block:auto_resize_y(height)
 end
 
 function Button:draw()

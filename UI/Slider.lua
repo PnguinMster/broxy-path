@@ -156,25 +156,26 @@ function Slider:mouse_released()
 	self.is_dragging_slider = false
 end
 
-function Slider:auto_resize_x()
+function Slider:auto_resize_x(width)
 	local x = self.offset_x
 
 	if self.horizontal_align == HORIZONTAL_ALIGN.RIGHT then
-		x = x + love.graphics:getWidth() - self.bar_width
+		x = x + width - self.bar_width
+		x = x - self.handle_radius
 	elseif self.horizontal_align == HORIZONTAL_ALIGN.CENTER then
-		x = (love.graphics:getWidth() / 2) + x - (self.bar_width / 2)
+		x = (width / 2) + x - (self.bar_width / 2)
 	end
 
 	self.x = x
 end
 
-function Slider:auto_resize_y()
+function Slider:auto_resize_y(height)
 	local y = self.offset_y
 
 	if self.vertical_align == VERTICAL_ALIGN.BOTTOM then
-		y = y + love.graphics:getHeight()
+		y = y + height
 	elseif self.vertical_align == VERTICAL_ALIGN.CENTER then
-		y = (love.graphics:getHeight() / 2) + y
+		y = (height / 2) + y
 	end
 
 	self.y = y

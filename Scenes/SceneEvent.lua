@@ -8,8 +8,15 @@ local end_menu = require("UI.EndMenu")
 local hovered_ui = nil
 local is_holding = false
 
-function love.resize(w, h)
-	Game.game_canvas = love.graphics.newCanvas(w, h)
+function love.resize(width, height)
+	Game.game_canvas = love.graphics.newCanvas(width, height)
+
+	-- Resize all UI scenes
+	pause_menu:resize(width, height)
+	end_menu:resize(width, height)
+	SCENE.MENU:resize(width, height)
+	SCENE.LEVEL:resize(width, height)
+	SCENE.OPTION:resize(width, height)
 end
 
 function love.keyreleased(key)

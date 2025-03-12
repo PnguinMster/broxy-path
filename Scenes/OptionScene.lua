@@ -7,10 +7,6 @@ local slider = require("UI.Slider")
 
 local Option_scene = {}
 
-local RESIZE_DIFFERENCE = 5
-local window_x = 0
-local window_y = 0
-
 Option_scene.interactables = {}
 Option_scene.text_displays = {}
 Option_scene.option_sliders = {}
@@ -47,9 +43,6 @@ local effect_volume_changed = function(new_value)
 end
 
 function Option_scene:load()
-	window_x = love.graphics.getWidth()
-	window_y = love.graphics.getHeight()
-
 	-- UI elements
 	--
 	--  Title
@@ -126,42 +119,21 @@ function Option_scene:load()
 	)
 end
 
-function Option_scene:update(_)
-	local x_difference = math.abs(window_x - love.graphics.getWidth())
-	local y_difference = math.abs(window_y - love.graphics.getHeight())
+function Option_scene:resize(width, height)
+	self.title_text:auto_resize_x(width)
+	self.title_text:auto_resize_y(height)
 
-	-- Resize x
-	if x_difference >= RESIZE_DIFFERENCE then
-		self.title_text:auto_resize_x()
-
-		for _, interactable in ipairs(self.interactables) do
-			interactable:auto_resize_x()
-		end
-		for _, text_display in ipairs(self.text_displays) do
-			text_display:auto_resize_x()
-		end
-		for _, option_slider in ipairs(self.option_sliders) do
-			option_slider:auto_resize_x()
-		end
-
-		window_x = love.graphics.getWidth()
+	for _, interactable in ipairs(self.interactables) do
+		interactable:auto_resize_x(width)
+		interactable:auto_resize_y(height)
 	end
-
-	-- Resize y
-	if y_difference >= RESIZE_DIFFERENCE then
-		self.title_text:auto_resize_y()
-
-		for _, interactable in ipairs(self.interactables) do
-			interactable:auto_resize_y()
-		end
-		for _, text_display in ipairs(self.text_displays) do
-			text_display:auto_resize_y()
-		end
-		for _, option_slider in ipairs(self.option_sliders) do
-			option_slider:auto_resize_y()
-		end
-
-		window_y = love.graphics.getHeight()
+	for _, text_display in ipairs(self.text_displays) do
+		text_display:auto_resize_x(width)
+		text_display:auto_resize_y(height)
+	end
+	for _, option_slider in ipairs(self.option_sliders) do
+		option_slider:auto_resize_x(width)
+		option_slider:auto_resize_y(height)
 	end
 end
 

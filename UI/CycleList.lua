@@ -142,34 +142,34 @@ function CycleList:check_is_hovered(mouse_x, mouse_y)
 	return self.right_button:check_is_hovered(mouse_x, mouse_y)
 end
 
-function CycleList:auto_resize_x()
+function CycleList:auto_resize_x(width)
 	local x = self.offset_x
 
 	if self.horizontal_align == HORIZONTAL_ALIGN.RIGHT then
-		x = x + love.graphics:getWidth()
+		x = x + width
 	elseif self.horizontal_align == HORIZONTAL_ALIGN.CENTER then
-		x = (love.graphics:getWidth() / 2) + x
+		x = (width / 2) + x
 	end
 
 	self.x = x
-	self.ui_text:auto_resize_x()
-	self.left_button:auto_resize_x()
-	self.right_button:auto_resize_x()
+	self.ui_text:auto_resize_x(width)
+	self.left_button:auto_resize_x(width)
+	self.right_button:auto_resize_x(width)
 end
 
-function CycleList:auto_resize_y()
+function CycleList:auto_resize_y(height)
 	local y = self.offset_y
 
 	if self.vertical_align == VERTICAL_ALIGN.BOTTOM then
-		y = y + love.graphics:getHeight()
+		y = y + height
 	elseif self.vertical_align == VERTICAL_ALIGN.CENTER then
-		y = (love.graphics:getHeight() / 2) + y
+		y = (height / 2) + y
 	end
 
 	self.y = y
-	self.ui_text:auto_resize_y()
-	self.left_button:auto_resize_y()
-	self.right_button:auto_resize_y()
+	self.ui_text:auto_resize_y(height)
+	self.left_button:auto_resize_y(height)
+	self.right_button:auto_resize_y(height)
 end
 
 function CycleList:draw()

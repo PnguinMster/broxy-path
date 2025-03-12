@@ -4,10 +4,6 @@ local text = require("UI.Text")
 
 local Pause_menu = { active = false }
 
-local RESIZE_DIFFERENCE = 5
-local window_x = 0
-local window_y = 0
-
 Pause_menu.interactables = {}
 
 --- UI Functiions
@@ -31,9 +27,6 @@ end
 function Pause_menu:load()
 	self.active = false
 
-	window_x = love.graphics.getWidth()
-	window_y = love.graphics.getHeight()
-
 	--title
 	self.title_text =
 		text.new("Paused", FONT_SCALE.LARGE, HORIZONTAL_ALIGN.CENTER, VERTICAL_ALIGN.TOP, 0, 10, COLOR.WHITE)
@@ -47,26 +40,13 @@ function Pause_menu:load()
 		button.new(115, 60, "Main Menu", menu_pressed, nil, HORIZONTAL_ALIGN.CENTER, VERTICAL_ALIGN.CENTER, 0, 140)
 end
 
-function Pause_menu:update(_)
-	local x_difference = math.abs(window_x - love.graphics.getWidth())
-	local y_difference = math.abs(window_y - love.graphics.getHeight())
+function Pause_menu:resize(width, height)
+	self.title_text:auto_resize_x(width)
+	self.title_text:auto_resize_y(height)
 
-	--auto resize horizontally
-	if x_difference >= RESIZE_DIFFERENCE then
-		self.title_text:auto_resize_x()
-		for _, interactable in ipairs(self.interactables) do
-			interactable:auto_resize_x()
-		end
-		window_x = love.graphics.getWidth()
-	end
-
-	--auto resize vertically
-	if y_difference >= RESIZE_DIFFERENCE then
-		self.title_text:auto_resize_y()
-		for _, interactable in ipairs(self.interactables) do
-			interactable:auto_resize_y()
-		end
-		window_y = love.graphics.getHeight()
+	for _, interactable in ipairs(self.interactables) do
+		interactable:auto_resize_x(width)
+		interactable:auto_resize_y(height)
 	end
 end
 

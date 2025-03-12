@@ -60,26 +60,26 @@ function Text.new(text, scale, horizontal_align, vertical_align, offset_x, offse
 	}, Text)
 end
 
-function Text:auto_resize_x()
+function Text:auto_resize_x(width)
 	local x = self.offset_x
 
 	if self.horizontal_align == HORIZONTAL_ALIGN.RIGHT then
 		local text_width = self.scale:getWidth(self.text)
-		x = x + love.graphics:getWidth() + text_width / 2
+		x = x + width + text_width / 2
 	elseif self.horizontal_align == HORIZONTAL_ALIGN.CENTER then
-		x = math.floor(love.graphics:getWidth() / 2) + x
+		x = math.floor(width / 2) + x
 	end
 
 	self.x = x
 end
 
-function Text:auto_resize_y()
+function Text:auto_resize_y(height)
 	local y = self.offset_y
 
 	if self.vertical_align == VERTICAL_ALIGN.BOTTOM then
-		y = y + love.graphics:getHeight()
+		y = y + height
 	elseif self.vertical_align == VERTICAL_ALIGN.CENTER then
-		y = math.floor(love.graphics:getHeight() / 2) + y
+		y = math.floor(height / 2) + y
 	end
 
 	self.y = y

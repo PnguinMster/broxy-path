@@ -4,10 +4,6 @@ local text = require("UI.Text")
 
 local Menu_scene = {}
 
-local RESIZE_DIFFERENCE = 5
-local window_x = 0
-local window_y = 0
-
 Menu_scene.interactables = {}
 
 --UI Functions
@@ -27,9 +23,6 @@ local quit_pressed = function()
 end
 
 function Menu_scene:load()
-	window_x = love.graphics.getWidth()
-	window_y = love.graphics.getHeight()
-
 	--title
 	self.title_text =
 		text.new("Broxy Grath", FONT_SCALE.LARGE, HORIZONTAL_ALIGN.CENTER, VERTICAL_ALIGN.TOP, 0, 10, COLOR.WHITE)
@@ -52,26 +45,13 @@ function Menu_scene:load()
 		button.new(111, 60, "Quit", quit_pressed, nil, HORIZONTAL_ALIGN.RIGHT, VERTICAL_ALIGN.CENTER, -56 - 30, 180)
 end
 
-function Menu_scene:update(_)
-	local x_difference = math.abs(window_x - love.graphics.getWidth())
-	local y_difference = math.abs(window_y - love.graphics.getHeight())
+function Menu_scene:resize(width, height)
+	self.title_text:auto_resize_x(width)
+	self.title_text:auto_resize_y(height)
 
-	--auto resize horizontally
-	if x_difference >= RESIZE_DIFFERENCE then
-		self.title_text:auto_resize_x()
-		for _, interactable in ipairs(self.interactables) do
-			interactable:auto_resize_x()
-		end
-		window_x = love.graphics.getWidth()
-	end
-
-	--auto resize vertically
-	if y_difference >= RESIZE_DIFFERENCE then
-		self.title_text:auto_resize_y()
-		for _, interactable in ipairs(self.interactables) do
-			interactable:auto_resize_y()
-		end
-		window_y = love.graphics.getHeight()
+	for _, interactable in ipairs(self.interactables) do
+		interactable:auto_resize_x(width)
+		interactable:auto_resize_y(height)
 	end
 end
 
