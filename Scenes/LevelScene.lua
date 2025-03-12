@@ -95,7 +95,7 @@ function Level_scene:load()
 	self.interactables[9] =
 		button.new(63, 60, "8", level_8_pressed, nil, HORIZONTAL_ALIGN.CENTER, VERTICAL_ALIGN.CENTER, 125, 125)
 	self.interactables[10] =
-		button.new(111, 60, "Back", back_pressed, nil, HORIZONTAL_ALIGN.LEFT, VERTICAL_ALIGN.BOTTOM, 50, -50)
+		button.new(111, 60, "Back", back_pressed, nil, HORIZONTAL_ALIGN.LEFT, VERTICAL_ALIGN.BOTTOM, 15, -45)
 
 	-- Disabled locked levels
 	for i = #self.interactables - 1, 2, -1 do

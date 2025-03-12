@@ -47,25 +47,25 @@ function Option_scene:load()
 	--
 	--  Title
 	self.title_text =
-		text.new("Options", FONT_SCALE.LARGE, HORIZONTAL_ALIGN.CENTER, VERTICAL_ALIGN.TOP, 0, 10, COLOR.WHITE)
+		text.new("Options", FONT_SCALE.LARGE, HORIZONTAL_ALIGN.CENTER, VERTICAL_ALIGN.TOP, 0, 30, COLOR.WHITE)
 	self.interactables[1] =
-		button.new(100, 50, "Back", back_pressed, nil, HORIZONTAL_ALIGN.LEFT, VERTICAL_ALIGN.BOTTOM, 50, -50)
+		button.new(111, 60, "Back", back_pressed, nil, HORIZONTAL_ALIGN.LEFT, VERTICAL_ALIGN.BOTTOM, 15, -45)
 
 	--Fullscreen
 	self.text_displays[1] =
-		text.new("Fullscreen", FONT_SCALE.SMALL, HORIZONTAL_ALIGN.LEFT, VERTICAL_ALIGN.CENTER, 0, -180, COLOR.WHITE)
+		text.new("Fullscreen", FONT_SCALE.MEDIUM, HORIZONTAL_ALIGN.LEFT, VERTICAL_ALIGN.CENTER, 30, -115, COLOR.WHITE)
 	self.interactables[2] =
-		checkbox.new(false, 1, fullscreen_pressed, HORIZONTAL_ALIGN.RIGHT, VERTICAL_ALIGN.CENTER, 0, -180)
+		checkbox.new(false, 1, fullscreen_pressed, HORIZONTAL_ALIGN.RIGHT, VERTICAL_ALIGN.CENTER, -30, -115)
 
 	-- Vsync
 	self.text_displays[2] =
-		text.new("Vsync", FONT_SCALE.SMALL, HORIZONTAL_ALIGN.LEFT, VERTICAL_ALIGN.CENTER, 0, -135, COLOR.WHITE)
+		text.new("Vsync", FONT_SCALE.MEDIUM, HORIZONTAL_ALIGN.LEFT, VERTICAL_ALIGN.CENTER, 30, -43, COLOR.WHITE)
 	self.interactables[3] =
-		checkbox.new(false, 1, vsync_pressed, HORIZONTAL_ALIGN.RIGHT, VERTICAL_ALIGN.CENTER, 0, -135)
+		checkbox.new(false, 1, vsync_pressed, HORIZONTAL_ALIGN.RIGHT, VERTICAL_ALIGN.CENTER, -30, -43)
 
 	-- Master Volume
 	self.text_displays[3] =
-		text.new("Master Volume", FONT_SCALE.SMALL, HORIZONTAL_ALIGN.LEFT, VERTICAL_ALIGN.CENTER, 0, -45, COLOR.WHITE)
+		text.new("Master Volume", FONT_SCALE.MEDIUM, HORIZONTAL_ALIGN.LEFT, VERTICAL_ALIGN.CENTER, 30, 29, COLOR.WHITE)
 	self.option_sliders[1] = slider.new(
 		Save.master_volume,
 		0,
@@ -77,13 +77,13 @@ function Option_scene:load()
 		master_volume_changed,
 		HORIZONTAL_ALIGN.RIGHT,
 		VERTICAL_ALIGN.CENTER,
-		0,
-		-45
+		-30,
+		29
 	)
 
 	-- Music Volume
 	self.text_displays[4] =
-		text.new("Music Volume", FONT_SCALE.SMALL, HORIZONTAL_ALIGN.LEFT, VERTICAL_ALIGN.CENTER, 0, 0, COLOR.WHITE)
+		text.new("Music Volume", FONT_SCALE.MEDIUM, HORIZONTAL_ALIGN.LEFT, VERTICAL_ALIGN.CENTER, 30, 101, COLOR.WHITE)
 	self.option_sliders[2] = slider.new(
 		Save.music_volume,
 		0,
@@ -95,13 +95,13 @@ function Option_scene:load()
 		music_volume_changed,
 		HORIZONTAL_ALIGN.RIGHT,
 		VERTICAL_ALIGN.CENTER,
-		0,
-		0
+		-30,
+		101
 	)
 
 	-- Effect Volume
 	self.text_displays[5] =
-		text.new("Effect Volume", FONT_SCALE.SMALL, HORIZONTAL_ALIGN.LEFT, VERTICAL_ALIGN.CENTER, 0, 45, COLOR.WHITE)
+		text.new("Effect Volume", FONT_SCALE.MEDIUM, HORIZONTAL_ALIGN.LEFT, VERTICAL_ALIGN.CENTER, 30, 173, COLOR.WHITE)
 	self.option_sliders[3] = slider.new(
 		Save.effect_volume,
 		0,
@@ -113,8 +113,8 @@ function Option_scene:load()
 		effect_volume_changed,
 		HORIZONTAL_ALIGN.RIGHT,
 		VERTICAL_ALIGN.CENTER,
-		0,
-		45
+		-30,
+		173
 	)
 end
 
