@@ -29,15 +29,15 @@ function Pause_menu:load()
 
 	--title
 	self.title_text =
-		text.new("Paused", FONT_SCALE.LARGE, HORIZONTAL_ALIGN.CENTER, VERTICAL_ALIGN.TOP, 0, 10, COLOR.WHITE)
+		text.new("Paused", FONT_SCALE.LARGE, HORIZONTAL_ALIGN.CENTER, VERTICAL_ALIGN.TOP, 0, 30, COLOR.WHITE)
 
 	--buttons
 	self.interactables[1] =
-		button.new(115, 60, "Continue", continue_pressed, nil, HORIZONTAL_ALIGN.CENTER, VERTICAL_ALIGN.CENTER, 0, -140)
+		button.new(144, 63, "Continue", continue_pressed, nil, HORIZONTAL_ALIGN.CENTER, VERTICAL_ALIGN.CENTER, 0, -115)
 	self.interactables[2] =
-		button.new(115, 60, "Retry", retry_pressed, nil, HORIZONTAL_ALIGN.CENTER, VERTICAL_ALIGN.CENTER, 0, 0)
+		button.new(120, 63, "Retry", retry_pressed, nil, HORIZONTAL_ALIGN.CENTER, VERTICAL_ALIGN.CENTER, 0, 0)
 	self.interactables[3] =
-		button.new(115, 60, "Main Menu", menu_pressed, nil, HORIZONTAL_ALIGN.CENTER, VERTICAL_ALIGN.CENTER, 0, 140)
+		button.new(168, 63, "Main Menu", menu_pressed, nil, HORIZONTAL_ALIGN.CENTER, VERTICAL_ALIGN.CENTER, 0, 115)
 end
 
 function Pause_menu:resize(width, height)
