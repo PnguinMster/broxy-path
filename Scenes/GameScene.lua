@@ -28,19 +28,6 @@ function Game_scene:load()
 end
 
 function Game_scene:update(dt)
-	--handle which menu to show
-	if Game.state ~= STATE.GAME then
-		if Game.state == STATE.MENU then
-			if pause_menu.active then
-				pause_menu:update(dt)
-			elseif end_menu.active then
-				end_menu:update(dt)
-			end
-		end
-
-		return
-	end
-
 	World:update(dt)
 	Player:update(dt)
 	Tilemap:update(dt)
