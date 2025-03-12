@@ -28,6 +28,10 @@ function Game_scene:load()
 end
 
 function Game_scene:update(dt)
+	if Game.state ~= STATE.GAME then
+		return
+	end
+
 	World:update(dt)
 	Player:update(dt)
 	Tilemap:update(dt)
