@@ -77,25 +77,25 @@ function Level_scene:load()
 
 	--buttons
 	self.interactables[1] =
-		button.new(85, 50, "0", level_0_pressed, nil, HORIZONTAL_ALIGN.CENTER, VERTICAL_ALIGN.CENTER, -140, -100)
+		button.new(63, 60, "0", level_0_pressed, nil, HORIZONTAL_ALIGN.CENTER, VERTICAL_ALIGN.CENTER, -141, -141)
 	self.interactables[2] =
-		button.new(85, 50, "1", level_1_pressed, nil, HORIZONTAL_ALIGN.CENTER, VERTICAL_ALIGN.CENTER, 0, -100)
+		button.new(63, 60, "1", level_1_pressed, nil, HORIZONTAL_ALIGN.CENTER, VERTICAL_ALIGN.CENTER, 0, -141)
 	self.interactables[3] =
-		button.new(85, 50, "2", level_2_pressed, nil, HORIZONTAL_ALIGN.CENTER, VERTICAL_ALIGN.CENTER, 140, -100)
+		button.new(63, 60, "2", level_2_pressed, nil, HORIZONTAL_ALIGN.CENTER, VERTICAL_ALIGN.CENTER, 141, -141)
 	self.interactables[4] =
-		button.new(85, 50, "3", level_3_pressed, nil, HORIZONTAL_ALIGN.CENTER, VERTICAL_ALIGN.CENTER, -140)
+		button.new(63, 60, "3", level_3_pressed, nil, HORIZONTAL_ALIGN.CENTER, VERTICAL_ALIGN.CENTER, -141)
 	self.interactables[5] =
-		button.new(85, 50, "4", level_4_pressed, nil, HORIZONTAL_ALIGN.CENTER, VERTICAL_ALIGN.CENTER)
+		button.new(63, 60, "4", level_4_pressed, nil, HORIZONTAL_ALIGN.CENTER, VERTICAL_ALIGN.CENTER)
 	self.interactables[6] =
-		button.new(85, 50, "5", level_5_pressed, nil, HORIZONTAL_ALIGN.CENTER, VERTICAL_ALIGN.CENTER, 140)
+		button.new(63, 60, "5", level_5_pressed, nil, HORIZONTAL_ALIGN.CENTER, VERTICAL_ALIGN.CENTER, 141)
 	self.interactables[7] =
-		button.new(85, 50, "6", level_6_pressed, nil, HORIZONTAL_ALIGN.CENTER, VERTICAL_ALIGN.CENTER, -140, 100)
+		button.new(63, 60, "6", level_6_pressed, nil, HORIZONTAL_ALIGN.CENTER, VERTICAL_ALIGN.CENTER, -141, 141)
 	self.interactables[8] =
-		button.new(85, 50, "7", level_7_pressed, nil, HORIZONTAL_ALIGN.CENTER, VERTICAL_ALIGN.CENTER, 0, 100)
+		button.new(63, 60, "7", level_7_pressed, nil, HORIZONTAL_ALIGN.CENTER, VERTICAL_ALIGN.CENTER, 0, 141)
 	self.interactables[9] =
-		button.new(85, 50, "8", level_8_pressed, nil, HORIZONTAL_ALIGN.CENTER, VERTICAL_ALIGN.CENTER, 140, 100)
+		button.new(63, 60, "8", level_8_pressed, nil, HORIZONTAL_ALIGN.CENTER, VERTICAL_ALIGN.CENTER, 141, 141)
 	self.interactables[10] =
-		button.new(100, 50, "Back", back_pressed, nil, HORIZONTAL_ALIGN.LEFT, VERTICAL_ALIGN.BOTTOM, 50, -50)
+		button.new(111, 60, "Back", back_pressed, nil, HORIZONTAL_ALIGN.LEFT, VERTICAL_ALIGN.BOTTOM, 50, -50)
 
 	-- Disabled locked levels
 	for i = #self.interactables - 1, 2, -1 do
