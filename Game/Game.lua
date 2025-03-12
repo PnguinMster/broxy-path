@@ -87,7 +87,9 @@ end
 function Game:update(dt)
 	dynamic_shader()
 
-	self.scene:update(dt)
+	if self.scene.update then
+		self.scene:update(dt)
+	end
 end
 
 function Game:draw()
