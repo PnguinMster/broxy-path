@@ -28,6 +28,8 @@ function Menu_scene:load()
 		text.new("Broxy Grath", FONT_SCALE.LARGE, HORIZONTAL_ALIGN.CENTER, VERTICAL_ALIGN.TOP, 0, 10, COLOR.WHITE)
 
 	--buttons
+	-- Buttons size is roughly:
+	-- Width = (FONT_SCALE) * (Character Count) + 15
 	self.interactables[1] =
 		button.new(135, 60, "Start", start_pressed, nil, HORIZONTAL_ALIGN.RIGHT, VERTICAL_ALIGN.CENTER, -68 - 30)
 	self.interactables[2] = button.new(
