@@ -55,13 +55,13 @@ function Option_scene:load()
 	self.text_displays[1] =
 		text.new("Fullscreen", FONT_SCALE.MEDIUM, HORIZONTAL_ALIGN.LEFT, VERTICAL_ALIGN.CENTER, 30, -115, COLOR.WHITE)
 	self.interactables[2] =
-		checkbox.new(false, 1, fullscreen_pressed, HORIZONTAL_ALIGN.RIGHT, VERTICAL_ALIGN.CENTER, -30, -115)
+		checkbox.new(Save.fullscreen, 1, fullscreen_pressed, HORIZONTAL_ALIGN.RIGHT, VERTICAL_ALIGN.CENTER, -30, -115)
 
 	-- Vsync
 	self.text_displays[2] =
 		text.new("Vsync", FONT_SCALE.MEDIUM, HORIZONTAL_ALIGN.LEFT, VERTICAL_ALIGN.CENTER, 30, -43, COLOR.WHITE)
 	self.interactables[3] =
-		checkbox.new(false, 1, vsync_pressed, HORIZONTAL_ALIGN.RIGHT, VERTICAL_ALIGN.CENTER, -30, -43)
+		checkbox.new(Save.vsync, 1, vsync_pressed, HORIZONTAL_ALIGN.RIGHT, VERTICAL_ALIGN.CENTER, -30, -43)
 
 	-- Master Volume
 	self.text_displays[3] =
