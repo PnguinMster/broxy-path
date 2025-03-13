@@ -43,7 +43,6 @@ function Game_scene:update(dt)
 end
 
 function Game_scene:draw()
-	love.graphics.setLineWidth(3)
 	Camera:set()
 	Tilemap:draw_map()
 	Player:draw()
