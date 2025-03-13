@@ -185,12 +185,12 @@ function Slider:draw()
 	love.graphics.setColor(love.math.colorFromBytes(235, 237, 233))
 
 	if self.is_hovered then
-		love.graphics.circle("line", self.x + self.handle_offset_postion, self.y, self.handle_radius + 1)
+		love.graphics.circle("fill", self.x + self.handle_offset_postion, self.y, self.handle_radius + 1)
 	else
-		love.graphics.circle("line", self.x + self.handle_offset_postion, self.y, self.handle_radius)
+		love.graphics.circle("fill", self.x + self.handle_offset_postion, self.y, self.handle_radius)
 	end
 
-	love.graphics.rectangle("line", self.x, self.y - (self.bar_height / 2), self.bar_width, self.bar_height)
+	love.graphics.rectangle("line", self.x, self.y - (self.bar_height / 2), self.bar_width, self.bar_height, 3, 3)
 end
 
 function Slider:unload() end
