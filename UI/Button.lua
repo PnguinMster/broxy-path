@@ -151,6 +151,7 @@ end
 
 function Button:draw()
 	love.graphics.setColor(COLOR.BLACK:rgb_color())
+	love.graphics.setLineWidth(1)
 	love.graphics.rectangle("fill", self.x, self.y, self.width, self.height, 3, 3)
 
 	local r, g, b = self.button_color:rgb_color()

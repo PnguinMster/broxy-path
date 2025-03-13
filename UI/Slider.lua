@@ -183,6 +183,7 @@ end
 
 function Slider:draw()
 	love.graphics.setColor(love.math.colorFromBytes(235, 237, 233))
+	love.graphics.setLineWidth(2)
 
 	if self.is_hovered then
 		love.graphics.circle("fill", self.x + self.handle_offset_postion, self.y, self.handle_radius + 1)

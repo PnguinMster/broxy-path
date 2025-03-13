@@ -101,6 +101,8 @@ function Tilemap:update(_)
 end
 
 function Tilemap:draw_map()
+	love.graphics.setLineWidth(5)
+
 	--draw static blocks
 	for _, block in ipairs(self.static_blocks) do
 		love.graphics.setColor(block.map_info.type:rgb_color())

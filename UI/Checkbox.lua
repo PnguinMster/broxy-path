@@ -17,7 +17,7 @@ local Checkbox = {
 }
 Checkbox.__index = Checkbox
 
-local check_scale = 0.8
+local check_scale = 0.7
 local default_size = 25
 
 function Checkbox.new(
@@ -128,6 +128,8 @@ end
 
 function Checkbox:draw()
 	love.graphics.setColor(self.outer_color:rgb_color())
+	love.graphics.setLineWidth(3)
+
 	if self.is_hovered then
 		love.graphics.rectangle("line", self.x - 2, self.y - 2, self.box_size + 4, self.box_size + 4)
 	else

@@ -134,6 +134,7 @@ end
 
 function Player:draw()
 	love.graphics.setColor(COLOR.ORANGE:rgb_color())
+	love.graphics.setLineWidth(3)
 
 	--get shape points
 	local x1, y1, x2, y2, x5, y5, x6, y6 = self.top_body:getWorldPoints(self.top_shape:getPoints())
