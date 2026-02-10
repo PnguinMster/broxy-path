@@ -6,7 +6,7 @@ require('Game.Camera')
 local Player = {
   angular_force = 250 * 100,
   linear_force = 30,
-  hover_force = 70,
+  hover_force = 65,
 
   width = 30,
   height = 60,
