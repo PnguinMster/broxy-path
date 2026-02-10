@@ -30,7 +30,7 @@ function End_menu:load()
 	self.interactables[1] =
 		button.new(135, 63, "Retry", retry_pressed, nil, HORIZONTAL_ALIGN.CENTER, VERTICAL_ALIGN.CENTER, 0, -58)
 	self.interactables[2] =
-		button.new(231, 63, "Main Menu", menu_pressed, nil, HORIZONTAL_ALIGN.CENTER, VERTICAL_ALIGN.CENTER, 0, 58)
+		button.new(207, 63, "Main Menu", menu_pressed, nil, HORIZONTAL_ALIGN.CENTER, VERTICAL_ALIGN.CENTER, 0, 58)
 end
 
 function End_menu:resize(width, height)
