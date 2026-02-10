@@ -33,7 +33,7 @@ local RESTITUTION = 0.1
 local FRICTION = 0.9
 local CATEGORY = LAYERS.PLAYER
 local ANGULAR_DAMPENING = 12
-local HOVER_TIME_GAIN = 1.5
+local HOVER_TIME_GAIN = 5.5
 local HOVER_TIME_LOSE = 1
 local CAN_HOVER_TIME = 0.15
 local AIRBORNE_THRESHOLD = 0.5
@@ -152,8 +152,9 @@ function Player:draw()
 end
 
 function Player:hover_bar()
-  local bar_height = math.lerp(self.height, 0.0, self.hover_timer)
-  local half_height = self.height / 2.0
+  local bar_difference = math.lerp(self.height, 0.0, self.hover_timer)
+  local half_height = self.height * 0.5
+  local empty_height = self.height
 
   --get shape points
   love.graphics.setColor(COLOR.GREEN:rgb_color())
@@ -173,8 +174,8 @@ function Player:hover_bar()
   center_x2, center_y2 = self.top_body:getLocalPoint(center_x2, center_y2)
 
   --determine hover bar height
-  y1 = y1 + bar_height
-  y2 = y2 + bar_height
+  y1 = y1 + bar_difference
+  y2 = y2 + bar_difference
   center_y1 = math.clamp(center_y1, y1, center_y1)
   center_y2 = math.clamp(center_y2, y2, center_y2)
 
@@ -184,10 +185,21 @@ function Player:hover_bar()
   center_x1, center_y1 = self.top_body:getWorldPoint(center_x1, center_y1)
   center_x2, center_y2 = self.top_body:getWorldPoint(center_x2, center_y2)
 
-  if bar_height < half_height then
-    love.graphics.polygon('line', x1, y1, x2, y2, center_x1, center_y1, center_x2, center_y2, x4, y4, x3, y3, center_x1, center_y1, center_x2, center_y2)
+  if bar_difference >= empty_height then
+    love.graphics.line(x3, y3, x4, y4)
+  elseif bar_difference > half_height then
+    love.graphics.line(center_x1, center_y1, x3, y3)
+    love.graphics.line(x3, y3, x4, y4)
+    love.graphics.line(x4, y4, center_x2, center_y2)
+    love.graphics.line(center_x2, center_y2, center_x1, center_y1)
   else
-    love.graphics.polygon('line', x1, y1, x2, y2, x3, y3, x4, y4)
+    love.graphics.line(x1, y1, x2, y2)
+    love.graphics.line(x2, y2, center_x1, center_y1)
+    love.graphics.line(center_x1, center_y1, x3, y3)
+    love.graphics.line(x3, y3, x4, y4)
+    love.graphics.line(x4, y4, center_x2, center_y2)
+    love.graphics.line(center_x2, center_y2, x1, y1)
+    love.graphics.line(center_x2, center_y2, center_x1, center_y1)
   end
 end
 
