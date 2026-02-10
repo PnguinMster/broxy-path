@@ -34,7 +34,7 @@ function Block_info.new(map_info, x, y, offset_x, offset_y)
 	local shape = love.physics.newRectangleShape(map_info.width * BLOCK_SIZE, map_info.height * BLOCK_SIZE)
 	local fixture = love.physics.newFixture(body, shape)
 	fixture:setCategory(LAYERS.LEVEL)
-	fixture:setFriction(0.8)
+	fixture:setFriction(0.7)
 
 	-- check if block is bouncy
 	if
