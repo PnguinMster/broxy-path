@@ -72,10 +72,10 @@ function Game_scene.on_begin_contact(a, b, _)
 	-- check which type of block it is
 	if block_part == "end" then
 		end_menu.active = true
-		Game:set_state(STATE.MENU)
-		if Game.level > Save.unlocked_levels then
-			Save.unlocked_levels = Game.level
+		if Game.level >= Save.unlocked_levels then
+			Save.unlocked_levels = Game.level + 1
 		end
+		Game:set_state(STATE.MENU)
 		Sound:play_sound_effect(SOUND_EFFECT.LEVEL_COMPLETE)
 	elseif block_part == "solid" then
 		if player_part ~= last_part_contact or Player:is_airborne() then

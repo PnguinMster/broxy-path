@@ -7,12 +7,21 @@ local End_menu = { active = false }
 End_menu.interactables = {}
 
 -- UI Function
+local next_level_pressed = function()
+  print('Next Level pressed')
+  Game.level = Game.level + 1
+  Game:set_scene(STATE.GAME)
+  End_menu.active = false
+  Player:reset_player()
+end
+
 local retry_pressed = function()
   print('Retry pressed')
   Game:set_state(STATE.GAME)
   End_menu.active = false
   Player:reset_player()
 end
+
 local menu_pressed = function()
   print('Menu pressed')
   End_menu.active = false
@@ -26,7 +35,7 @@ function End_menu:load()
   self.title_text = text.new('Finished', FONT_SCALE.LARGE, HORIZONTAL_ALIGN.CENTER, VERTICAL_ALIGN.TOP, 0, 30, COLOR.WHITE)
 
   --buttons
-  self.interactables[1] = button.new(219, 60, 'Next Level', retry_pressed, nil, HORIZONTAL_ALIGN.CENTER, VERTICAL_ALIGN.CENTER, 0, -135)
+  self.interactables[1] = button.new(219, 60, 'Next Level', next_level_pressed, nil, HORIZONTAL_ALIGN.CENTER, VERTICAL_ALIGN.CENTER, 0, -135)
   self.interactables[2] = button.new(135, 60, 'Retry', retry_pressed, nil, HORIZONTAL_ALIGN.CENTER, VERTICAL_ALIGN.CENTER, 0, 0)
   self.interactables[3] = button.new(207, 60, 'Main Menu', menu_pressed, nil, HORIZONTAL_ALIGN.CENTER, VERTICAL_ALIGN.CENTER, 0, 135)
 end
