@@ -66,7 +66,6 @@ end
 
 function Game:set_state(state)
 	self.state = state
-
 	love.mouse.setVisible(state == STATE.MENU)
 end
 

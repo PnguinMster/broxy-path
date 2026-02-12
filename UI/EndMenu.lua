@@ -1,6 +1,6 @@
-require('Utility.ColorEnum')
-local button = require('UI.Button')
-local text = require('UI.Text')
+require("Utility.ColorEnum")
+local button = require("UI.Button")
+local text = require("UI.Text")
 
 local End_menu = { active = false }
 
@@ -8,69 +8,82 @@ End_menu.interactables = {}
 
 -- UI Function
 local next_level_pressed = function()
-  print('Next Level pressed')
-  Game.level = Game.level + 1
-  Game:set_scene(STATE.GAME)
-  End_menu.active = false
-  Player:reset_player()
+	print("Next Level pressed")
+	Game.level = Game.level + 1
+	End_menu.active = false
+	Game:set_state(STATE.GAME)
+	Game:set_scene(SCENE.GAME)
 end
 
 local retry_pressed = function()
-  print('Retry pressed')
-  Game:set_state(STATE.GAME)
-  End_menu.active = false
-  Player:reset_player()
+	print("Retry pressed")
+	Game:set_state(STATE.GAME)
+	End_menu.active = false
+	Player:reset_player()
 end
 
 local menu_pressed = function()
-  print('Menu pressed')
-  End_menu.active = false
-  Game:set_scene(SCENE.MENU)
+	print("Menu pressed")
+	End_menu.active = false
+	Game:set_scene(SCENE.MENU)
 end
 
 function End_menu:load()
-  self.active = false
+	self.active = false
 
-  --title
-  self.title_text = text.new('Finished', FONT_SCALE.LARGE, HORIZONTAL_ALIGN.CENTER, VERTICAL_ALIGN.TOP, 0, 30, COLOR.WHITE)
+	--title
+	self.title_text =
+		text.new("Finished", FONT_SCALE.LARGE, HORIZONTAL_ALIGN.CENTER, VERTICAL_ALIGN.TOP, 0, 30, COLOR.WHITE)
 
-  --buttons
-  self.interactables[1] = button.new(219, 60, 'Next Level', next_level_pressed, nil, HORIZONTAL_ALIGN.CENTER, VERTICAL_ALIGN.CENTER, 0, -135)
-  self.interactables[2] = button.new(135, 60, 'Retry', retry_pressed, nil, HORIZONTAL_ALIGN.CENTER, VERTICAL_ALIGN.CENTER, 0, 0)
-  self.interactables[3] = button.new(207, 60, 'Main Menu', menu_pressed, nil, HORIZONTAL_ALIGN.CENTER, VERTICAL_ALIGN.CENTER, 0, 135)
+	--buttons
+	self.interactables[1] = button.new(
+		219,
+		60,
+		"Next Level",
+		next_level_pressed,
+		nil,
+		HORIZONTAL_ALIGN.CENTER,
+		VERTICAL_ALIGN.CENTER,
+		0,
+		-135
+	)
+	self.interactables[2] =
+		button.new(135, 60, "Retry", retry_pressed, nil, HORIZONTAL_ALIGN.CENTER, VERTICAL_ALIGN.CENTER, 0, 0)
+	self.interactables[3] =
+		button.new(207, 60, "Main Menu", menu_pressed, nil, HORIZONTAL_ALIGN.CENTER, VERTICAL_ALIGN.CENTER, 0, 135)
 end
 
 function End_menu:resize(width, height)
-  self.title_text:auto_resize_x(width)
-  self.title_text:auto_resize_y(height)
+	self.title_text:auto_resize_x(width)
+	self.title_text:auto_resize_y(height)
 
-  for _, interactable in ipairs(self.interactables) do
-    interactable:auto_resize_x(width)
-    interactable:auto_resize_y(height)
-  end
+	for _, interactable in ipairs(self.interactables) do
+		interactable:auto_resize_x(width)
+		interactable:auto_resize_y(height)
+	end
 end
 
 function End_menu:draw()
-  if self.active == false then
-    return
-  end
+	if self.active == false then
+		return
+	end
 
-  self.title_text:draw()
-  for _, interactable in ipairs(self.interactables) do
-    interactable:draw()
-  end
+	self.title_text:draw()
+	for _, interactable in ipairs(self.interactables) do
+		interactable:draw()
+	end
 end
 
 function End_menu:unload()
-  -- Title
-  self.title_text:unload()
-  self.title_text = nil
+	-- Title
+	self.title_text:unload()
+	self.title_text = nil
 
-  -- Unload interactables
-  for x, element in pairs(self.interactables) do
-    element:unload()
-    self.interactables[x] = nil
-  end
+	-- Unload interactables
+	for x, element in pairs(self.interactables) do
+		element:unload()
+		self.interactables[x] = nil
+	end
 end
 
 return End_menu
