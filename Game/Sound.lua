@@ -57,6 +57,7 @@ end
 
 function Sound:load()
 	self.Music = love.audio.newSource(music_file, "stream")
+	self.Music:setLooping(true)
 
 	--Set table of sound effects and variations
 	self.Effects = {
@@ -78,12 +79,6 @@ function Sound:load()
 	self:set_volume(Save.master_volume, SOUND_TYPE.MASTER)
 	self:set_volume(Save.music_volume, SOUND_TYPE.MUSIC)
 	self:set_volume(Save.effect_volume, SOUND_TYPE.EFFECT)
-end
-
-function Sound:update(_)
-	if not self.Music:isPlaying() then
-		love.audio.play(self.Music)
-	end
 end
 
 function Sound:set_volume(new_volume, sound_type)
