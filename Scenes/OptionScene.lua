@@ -15,6 +15,7 @@ Option_scene.option_sliders = {}
 local back_pressed = function()
 	print("Back pressed")
 	Game:set_scene(SCENE.MENU)
+	Save:save_data()
 end
 local fullscreen_pressed = function(is_checked)
 	print("Fullscreen" .. tostring(is_checked))
@@ -173,6 +174,8 @@ function Option_scene:unload()
 		text_slider:unload()
 		self.option_sliders[x] = nil
 	end
+
+	Save:save_data()
 end
 
 return Option_scene
