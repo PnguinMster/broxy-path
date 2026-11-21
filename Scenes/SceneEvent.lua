@@ -39,7 +39,7 @@ end
 function love.mousereleased(x, y, index)
 	if index == 1 then
 		--press button that is being hovered
-		if hovered_ui then
+		if hovered_ui and end_menu.active == false then
 			if hovered_ui.check_pressed then
 				hovered_ui:check_pressed(x, y)
 				Sound:play_sound_effect(SOUND_EFFECT.CLICK)
@@ -55,7 +55,7 @@ end
 function love.mousepressed(x, y, index)
 	if index == 1 then
 		--Slider Specific
-		if hovered_ui and hovered_ui.check_held then
+		if hovered_ui and hovered_ui.check_held and end_menu.active == false then
 			hovered_ui:check_held(x, y)
 			is_holding = true
 		end

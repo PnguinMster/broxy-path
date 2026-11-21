@@ -1,4 +1,5 @@
 require("Utility.ColorEnum")
+require("Utility.LevelImagesEnum")
 local button = require("UI.Button")
 local text = require("UI.Text")
 
@@ -31,7 +32,7 @@ end
 function End_menu:load()
 	self.active = false
 
-	local is_last_level = Game.level >= 9
+	local is_last_level = Game.level >= #LEVEL_IMAGES
 
 	--title
 	self.title_text =

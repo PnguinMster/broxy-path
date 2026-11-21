@@ -1,7 +1,7 @@
 Save = {
 	unlocked_levels = 1,
 	fullscreen = false,
-	vsync = false,
+	vsync = true,
 	master_volume = 1.0,
 	music_volume = 1.0,
 	effect_volume = 1.0,
