@@ -31,6 +31,8 @@ end
 function End_menu:load()
 	self.active = false
 
+	local is_last_level = Game.level >= 9
+
 	--title
 	self.title_text =
 		text.new("Finished", FONT_SCALE.LARGE, HORIZONTAL_ALIGN.CENTER, VERTICAL_ALIGN.TOP, 0, 30, COLOR.WHITE)
@@ -45,7 +47,10 @@ function End_menu:load()
 		HORIZONTAL_ALIGN.CENTER,
 		VERTICAL_ALIGN.CENTER,
 		0,
-		-135
+		-135,
+		_,
+		_,
+		is_last_level
 	)
 	self.interactables[2] =
 		button.new(135, 60, "Retry", retry_pressed, nil, HORIZONTAL_ALIGN.CENTER, VERTICAL_ALIGN.CENTER, 0, 0)

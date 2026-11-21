@@ -10,6 +10,7 @@ function love.conf(t)
 	t.window.vsync = 0
 	t.window.msaa = 3
 	t.window.display = 2
+	t.console = false
 
 	--Disable unused modules
 	t.modules.data = false
