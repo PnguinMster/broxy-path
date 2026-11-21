@@ -48,8 +48,8 @@ function End_menu:load()
 		VERTICAL_ALIGN.CENTER,
 		0,
 		-135,
-		_,
-		_,
+		nil,
+		nil,
 		is_last_level
 	)
 	self.interactables[2] =
