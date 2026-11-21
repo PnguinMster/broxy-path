@@ -115,6 +115,6 @@ function Sound:play_sound_effect(sound_effect)
 
 	--play variation of sound
 	if random_variation ~= nil then
-		love.audio.play(random_variation)
+		random_variation:clone():play()
 	end
 end
