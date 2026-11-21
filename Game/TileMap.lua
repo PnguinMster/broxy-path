@@ -5,9 +5,6 @@ require('Utility.ColorEnum')
 local love = require('love')
 
 local Tilemap = {
-  map = {},
-  static_blocks = {},
-  movable_blocks = {},
   start_x = 0,
   start_y = 0,
   player_offset_x = 0,
@@ -16,9 +13,15 @@ local Tilemap = {
 Tilemap.__index = Tilemap
 
 function Tilemap.new(player_width, player_height)
-  local player_offset_x = player_width / 2
-  local player_offset_y = player_height / 2
-  return setmetatable({ player_offset_x = player_offset_x or 0, player_offset_y = player_offset_y or 0 }, Tilemap)
+  return setmetatable(
+    {
+      player_offset_x = player_width / 2 or 0,
+      player_offset_y = player_height / 2 or 0,
+      map = {},
+      static_blocks = {},
+      movable_blocks = {}
+    },
+    Tilemap)
 end
 
 function Tilemap:create_map(image)
