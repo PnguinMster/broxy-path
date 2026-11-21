@@ -11,7 +11,6 @@ end
 
 function love.update(dt)
 	Game:update(dt)
-	Sound:update(dt)
 end
 
 function love.draw()
