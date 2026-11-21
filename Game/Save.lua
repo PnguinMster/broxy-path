@@ -44,7 +44,13 @@ function Save:load_data()
 		return
 	end
 
-	local saved_data = data_chunk()
+	local ok, saved_data = pcall(data_chunk)
+
+	if not ok or type(saved_data) ~= "table" then
+		print("Error: corrupt save data")
+		return
+	end
+
 	for key, value in pairs(saved_data) do
 		self[key] = value
 	end

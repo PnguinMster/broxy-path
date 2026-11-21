@@ -85,6 +85,7 @@ function Game_scene.on_begin_contact(a, b, _)
 		end_menu.active = true
 		if Game.level >= Save.unlocked_levels then
 			Save.unlocked_levels = Game.level + 1
+			Save:save_data()
 		end
 		Game:set_state(STATE.MENU)
 		Sound:play_sound_effect(SOUND_EFFECT.LEVEL_COMPLETE)
