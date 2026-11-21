@@ -171,7 +171,7 @@ function Option_scene:unload()
 	-- Unload Slider
 	for x, text_slider in ipairs(self.option_sliders) do
 		text_slider:unload()
-		self.text_displays[x] = nil
+		self.option_sliders[x] = nil
 	end
 end
 
