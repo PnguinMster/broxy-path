@@ -8,6 +8,9 @@ local tilemap = require("Game.TileMap")
 
 local Game_scene = {}
 
+local STEP = 1 / 120
+local accumulator = 0
+
 function Game_scene:load()
 	World = love.physics.newWorld(0, 9.8 * 16, true)
 	World:setCallbacks(self.on_begin_contact, self.on_end_contact)
@@ -19,6 +22,8 @@ function Game_scene:load()
 	Tilemap:create_map(level_file)
 	Tilemap:load_map()
 
+	accumulator = 0
+
 	Player:load()
 	pause_menu:load()
 	end_menu:load()
@@ -29,9 +34,14 @@ function Game_scene:update(dt)
 		return
 	end
 
-	World:update(dt)
-	Player:update(dt)
-	Tilemap:update(dt)
+	accumulator = accumulator + math.min(dt, 0.25)
+
+	while accumulator >= STEP do
+		World:update(STEP)
+		Player:update(STEP)
+		Tilemap:update(STEP)
+		accumulator = accumulator - STEP
+	end
 
 	local x, y = Player:get_position()
 	x = x - love.graphics.getWidth() / 2
