@@ -7,7 +7,7 @@ require("Game.Save")
 Game = {}
 
 Game.scene = SCENE.MENU
-Game.state = SCENE.MENU
+Game.state = STATE.MENU
 Game.level = 1
 Game.canvas = {}
 
