@@ -15,8 +15,8 @@ Tilemap.__index = Tilemap
 function Tilemap.new(player_width, player_height)
   return setmetatable(
     {
-      player_offset_x = player_width / 2 or 0,
-      player_offset_y = player_height / 2 or 0,
+      player_offset_x = player_width / 2,
+      player_offset_y = player_height / 2,
       map = {},
       static_blocks = {},
       movable_blocks = {}
