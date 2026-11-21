@@ -1,6 +1,6 @@
 function love.conf(t)
 	--Window Configuration
-	t.window.title = "Broxy Grath"
+	t.window.title = "Broxy Path"
 	t.window.icon = nil
 	t.window.width = 850
 	t.window.height = 750
