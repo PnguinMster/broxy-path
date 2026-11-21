@@ -15,7 +15,6 @@ Option_scene.option_sliders = {}
 local back_pressed = function()
 	print("Back pressed")
 	Game:set_scene(SCENE.MENU)
-	Save:save_data()
 end
 local fullscreen_pressed = function(is_checked)
 	print("Fullscreen" .. tostring(is_checked))
