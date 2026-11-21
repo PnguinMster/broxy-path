@@ -40,7 +40,11 @@ function Game_scene:update(dt)
 		World:update(STEP)
 		Player:update(STEP)
 		Tilemap:update(STEP)
+
 		accumulator = accumulator - STEP
+		if Game.state ~= STATE.GAME then
+			break
+		end
 	end
 
 	local x, y = Player:get_position()
