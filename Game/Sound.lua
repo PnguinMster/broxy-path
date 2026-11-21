@@ -79,6 +79,8 @@ function Sound:load()
 	self:set_volume(Save.master_volume, SOUND_TYPE.MASTER)
 	self:set_volume(Save.music_volume, SOUND_TYPE.MUSIC)
 	self:set_volume(Save.effect_volume, SOUND_TYPE.EFFECT)
+
+	self.Music:play()
 end
 
 function Sound:set_volume(new_volume, sound_type)
