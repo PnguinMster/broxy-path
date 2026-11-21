@@ -77,7 +77,7 @@ function love.mousemoved(x, y)
 	end
 
 	--return if no ui elements found
-	if check_display == nil or check_display.interactables == nil then
+	if check_display == nil or check_display.interactables == nil or Game.state == STATE.GAME then
 		hovered_ui = nil
 		return
 	end
