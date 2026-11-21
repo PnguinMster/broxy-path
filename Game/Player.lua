@@ -47,6 +47,23 @@ local function reset_camera_to_player(self)
   Camera:setPosition(x, y)
 end
 
+local outline = {}
+
+local function compute_outline(self)
+  local x1, y1, x2, y2, x5, y5, x6, y6 = self.top_body:getWorldPoints(self.top_shape:getPoints())
+  local x7, y7, x8, y8, x3, y3, x4, y4 = self.bottom_body:getWorldPoints(self.bottom_shape:getPoints())
+
+  outline.x1, outline.y1 = x1, y1
+  outline.x2, outline.y2 = x2, y2
+  outline.x3, outline.y3 = x3, y3
+  outline.x4, outline.y4 = x4, y4
+  -- centers of the edges where the two halves meet
+  outline.cx1, outline.cy1 = (x5 + x8) * 0.5, (y5 + y8) * 0.5
+  outline.cx2, outline.cy2 = (x6 + x7) * 0.5, (y6 + y7) * 0.5
+
+  return outline
+end
+
 function Player.new()
   return setmetatable({}, Player)
 end
@@ -102,7 +119,7 @@ function Player:update(dt)
   if love.keyboard.isDown('up') and self.hover_enabled then
     self.top_body:applyForce(0, -9.8 * self.hover_force)
     self.bottom_body:applyForce(0, -9.8 * self.hover_force)
-    self.hover_timer = self.hover_timer - dt * HOVER_TIME_LOSE
+    self.hover_timer = self.hover_timer - dt / HOVER_TIME_LOSE
     --thrust player down
   elseif love.keyboard.isDown('down') and self.hover_enabled then
     self.top_body:applyForce(0, 9.8 * self.hover_force)
@@ -139,42 +156,31 @@ function Player:draw()
   love.graphics.setLineWidth(3)
 
   --get shape points
-  local x1, y1, x2, y2, x5, y5, x6, y6 = self.top_body:getWorldPoints(self.top_shape:getPoints())
-  local x7, y7, x8, y8, x3, y3, x4, y4 = self.bottom_body:getWorldPoints(self.bottom_shape:getPoints())
+  local p = compute_outline(self)
 
-  -- calculate center of edge points
-  local center_x1 = (x5 + x8) * 0.5
-  local center_y1 = (y5 + y8) * 0.5
-  local center_x2 = (x6 + x7) * 0.5
-  local center_y2 = (y6 + y7) * 0.5
+  love.graphics.polygon('line',
+    p.x1, p.y1, p.x2, p.y2, p.cx1, p.cy1, p.cx2, p.cy2,
+    p.x4, p.y4, p.x3, p.y3, p.cx1, p.cy1, p.cx2, p.cy2)
 
-  love.graphics.polygon('line', x1, y1, x2, y2, center_x1, center_y1, center_x2, center_y2, x4, y4, x3, y3, center_x1,
-    center_y1, center_x2, center_y2)
-
-  self:hover_bar()
+  self:hover_bar(p)
 end
 
-function Player:hover_bar()
+function Player:hover_bar(p)
   local bar_difference = math.lerp(self.height, 0.0, self.hover_timer)
   local half_height = self.height * 0.5
   local empty_height = self.height
 
   --get shape points
   love.graphics.setColor(COLOR.GREEN:rgb_color())
-  local x1, y1, x2, y2, x5, y5, x6, y6 = self.top_body:getWorldPoints(self.top_shape:getPoints())
-  local x7, y7, x8, y8, x3, y3, x4, y4 = self.bottom_body:getWorldPoints(self.bottom_shape:getPoints())
 
-  -- calculate center of edges
-  local center_x1 = (x5 + x8) * 0.5
-  local center_y1 = (y5 + y8) * 0.5
-  local center_x2 = (x6 + x7) * 0.5
-  local center_y2 = (y6 + y7) * 0.5
+  local x3, y3, x4, y4 = p.x3, p.y3, p.x4, p.y4
 
   --convert from world to local
-  x1, y1 = self.top_body:getLocalPoint(x1, y1)
-  x2, y2 = self.top_body:getLocalPoint(x2, y2)
-  center_x1, center_y1 = self.top_body:getLocalPoint(center_x1, center_y1)
-  center_x2, center_y2 = self.top_body:getLocalPoint(center_x2, center_y2)
+  local x1, y1 = self.top_body:getLocalPoint(p.x1, p.y1)
+  local x2, y2 = self.top_body:getLocalPoint(p.x2, p.y2)
+  local center_x1, center_y1 = self.top_body:getLocalPoint(p.cx1, p.cy1)
+  local center_x2, center_y2 = self.top_body:getLocalPoint(p.cx2, p.cy2)
+
 
   --determine hover bar height
   y1 = y1 + bar_difference
@@ -241,13 +247,13 @@ end
 
 function Player:reset_player()
   --reset top body
-  self.top_body:setPosition(0, 0)
+  self.top_body:setPosition(self.start_x, self.start_y)
   self.top_body:setAngle(0)
   self.top_body:setLinearVelocity(0, 0)
   self.top_body:setAngularVelocity(0)
 
   --reset bottom body
-  self.bottom_body:setPosition(0, 0)
+  self.bottom_body:setPosition(self.start_x, self.start_y)
   self.bottom_body:setAngle(0)
   self.bottom_body:setLinearVelocity(0, 0)
   self.bottom_body:setAngularVelocity(0)

@@ -16,7 +16,7 @@ function Save:save_data()
 		if type(value) == "number" or type(value) == "boolean" then
 			save_data = save_data .. string.format("    %s = %s,\n", key, tostring(value))
 		elseif type(value) == "string" then
-			save_data = save_data .. string.format('    %s = "%s",\n', key, value)
+			save_data = save_data .. string.format("    %s = %q,\n", key, value)
 		end
 	end
 
@@ -37,7 +37,7 @@ function Save:load_data()
 	local serialized_data = love.filesystem.read(save_file)
 
 	-- Deserialize
-	local data_chunk = load(serialized_data)
+	local data_chunk = load(serialized_data, "save", "t", {})
 
 	if not data_chunk then
 		print("Error: Failed to load save data")
@@ -52,6 +52,8 @@ function Save:load_data()
 	end
 
 	for key, value in pairs(saved_data) do
-		self[key] = value
+		if self[key] ~= nil and type(self[key]) == type(value) then
+			self[key] = value
+		end
 	end
 end

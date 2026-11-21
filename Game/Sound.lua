@@ -94,7 +94,7 @@ function Sound:set_volume(new_volume, sound_type)
 		self.Effects:setVolume(self.master_volume * self.effect_volume)
 	end
 
-	print("changing ", sound_type .. "_volume", "to ", new_volume)
+	-- print("changing ", sound_type .. "_volume", "to ", new_volume)
 end
 
 function Sound:play_sound_effect(sound_effect)
@@ -115,6 +115,7 @@ function Sound:play_sound_effect(sound_effect)
 
 	--play variation of sound
 	if random_variation ~= nil then
-		random_variation:clone():play()
+		random_variation:stop()
+		random_variation:play()
 	end
 end

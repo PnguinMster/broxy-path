@@ -18,7 +18,7 @@ local BLOCK_MOVE_SPEED = 25
 function Block_info.new(map_info, x, y, offset_x, offset_y)
   -- Set body type
   local body_type = 'kinematic'
-  if map_info.type.r == BLOCK_TYPE.STATIC_BLOCK.r or map_info.type.r == BLOCK_TYPE.BOUNCE_BLOCK.r or map_info.type.r == BLOCK_TYPE.END.r then
+  if map_info.type == BLOCK_TYPE.STATIC_BLOCK or map_info.type == BLOCK_TYPE.BOUNCE_BLOCK or map_info.type == BLOCK_TYPE.END then
     body_type = 'static'
   end
 
@@ -26,7 +26,7 @@ function Block_info.new(map_info, x, y, offset_x, offset_y)
   local visual_points = nil
 
   -- Make end gate collision smaller
-  if map_info.type.r == BLOCK_TYPE.END.r then
+  if map_info.type == BLOCK_TYPE.END then
     map_info.height = 2
     scale_offset = 0.25
 

@@ -9,7 +9,6 @@ Game = {}
 Game.scene = SCENE.MENU
 Game.state = STATE.MENU
 Game.level = 1
-Game.canvas = {}
 
 local OFFSET_SPEED = 0.1
 local MIN_OFFSET = 0.4
@@ -94,7 +93,7 @@ function Game:update(dt)
 end
 
 function Game:draw()
-	-- Bakground Shaders
+	-- Background Shaders
 	love.graphics.setCanvas(self.game_canvas)
 	love.graphics.clear(0, 0, 0, 1)
 

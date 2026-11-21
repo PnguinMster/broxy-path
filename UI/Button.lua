@@ -54,7 +54,7 @@ function Button.new(
 	--align button vertically
 	if vertical_align == VERTICAL_ALIGN.BOTTOM then
 		local text_height = FONT_SCALE.MEDIUM:getHeight()
-		text_offset_y = text_offset_y - (text_height / 2)
+		text_offset_y = text_offset_y + (text_height / 2)
 		y = y + love.graphics:getHeight()
 		y = y - height / 2
 	elseif vertical_align == VERTICAL_ALIGN.CENTER then

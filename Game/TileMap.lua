@@ -15,30 +15,32 @@ Tilemap.__index = Tilemap
 function Tilemap.new(player_width, player_height)
   return setmetatable(
     {
+      height = 0,
       player_offset_x = player_width / 2,
       player_offset_y = player_height / 2,
       map = {},
       static_blocks = {},
-      movable_blocks = {}
+      movable_blocks = {},
     },
     Tilemap)
 end
 
 function Tilemap:create_map(image)
   local level = love.image.newImageData(image)
+  self.height = level:getHeight()
 
   for x = 1, level:getWidth() do
     self.map[x] = {}
     for y = 1, level:getHeight() do
       local r, g, b = love.math.colorToBytes(level:getPixel(x - 1, y - 1))
-      local type = self.has_block_value(r, g, b)
+      local block_type = self.has_block_value(r, g, b)
 
       --check if tile is start tile
       if BLOCK_TYPE.START:has_values(r, g, b) then
         self.start_x = -x
         self.start_y = -y
-      elseif type ~= nil then
-        self.map[x][y] = map_info.new(type)
+      elseif block_type ~= nil then
+        self.map[x][y] = map_info.new(block_type)
       end
     end
   end
@@ -49,8 +51,10 @@ function Tilemap:optimize_map()
   --check if top block is the same as current
   --if yes then combine
   for x, _ in pairs(self.map) do
-    for y, _ in pairs(self.map[x]) do
-      if self.map[x][y - 1] ~= nil and self.map[x][y].type == self.map[x][y - 1].type then
+    for y = 2, self.height do
+      local cur, above = self.map[x][y], self.map[x][y - 1]
+
+      if cur and above and cur.type == above.type then
         self.map[x][y].height = self.map[x][y].height + self.map[x][y - 1].height
         self.map[x][y - 1] = nil
       end
@@ -106,7 +110,7 @@ function Tilemap:draw_map()
   for _, block in ipairs(self.static_blocks) do
     love.graphics.setColor(block.map_info.type:rgb_color())
 
-    if block.map_info.type.r == BLOCK_TYPE.END.r then
+    if block.map_info.type == BLOCK_TYPE.END then
       -- love.graphics.polygon('line', block.body:getWorldPoints(block.visual_points))
       love.graphics.push()
       love.graphics.translate(block.body:getX(), block.body:getY())
@@ -151,9 +155,9 @@ function Tilemap:unload()
 end
 
 function Tilemap.has_block_value(r, g, b)
-  for _, type in pairs(BLOCK_TYPE) do
-    if type:has_values(r, g, b) then
-      return type
+  for _, block_type in pairs(BLOCK_TYPE) do
+    if block_type:has_values(r, g, b) then
+      return block_type
     end
   end
   return nil
