@@ -59,12 +59,14 @@ local function dynamic_shader()
 end
 
 function Game:set_scene(scene)
+	clear_hovered_ui()
 	self.scene:unload()
 	self.scene = scene
 	self.scene:load()
 end
 
 function Game:set_state(state)
+	clear_hovered_ui()
 	self.state = state
 	love.mouse.setVisible(state == STATE.MENU)
 end
