@@ -8,7 +8,6 @@ function love.conf(t)
 	t.window.minheight = 350
 	t.window.resizable = true
 	t.window.vsync = 1
-	t.window.msaa = 3
 	t.console = false
 
 	--Disable unused modules

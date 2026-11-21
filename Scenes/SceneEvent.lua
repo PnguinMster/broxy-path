@@ -9,7 +9,7 @@ local hovered_ui = nil
 local is_holding = false
 
 function love.resize(width, height)
-	Game.game_canvas = love.graphics.newCanvas(width, height)
+	Game.game_canvas = love.graphics.newCanvas(width, height, { msaa = 4 })
 
 	-- Resize all UI scenes
 	if Game.scene == SCENE.GAME then
