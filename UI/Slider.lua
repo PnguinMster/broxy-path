@@ -167,6 +167,7 @@ function Slider:auto_resize_x(width)
 	end
 
 	self.x = x
+	self.bar_max_position = x + self.bar_width
 end
 
 function Slider:auto_resize_y(height)
