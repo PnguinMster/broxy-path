@@ -76,6 +76,10 @@ function Game_scene.on_begin_contact(a, b, _)
 		return
 	end
 
+	if end_menu.active then
+		return
+	end
+
 	-- check which type of block it is
 	if block_part == "end" then
 		end_menu.active = true
