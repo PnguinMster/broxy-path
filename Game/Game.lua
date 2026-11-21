@@ -79,7 +79,7 @@ function Game:load()
 	math.randomseed(os.time())
 	love.graphics.setBackgroundColor(COLOR.BLACK:rgb_color())
 
-	self.game_canvas = love.graphics.newCanvas()
+	self:resize_canvas(love.graphics.getWidth(), love.graphics.getHeight())
 	setup_background_shader()
 
 	self.scene:load()
@@ -118,7 +118,7 @@ function Game:draw()
 
 	-- Game Scene
 	self.scene:draw()
-	love.graphics.setColor(COLOR.WHITE:rgb_color())
+	love.graphics.setColor(1, 1, 1, 1)
 
 	-- CRT Shader
 	love.graphics.setCanvas()
@@ -126,6 +126,18 @@ function Game:draw()
 	love.graphics.setShader(crt_shader)
 	love.graphics.draw(self.game_canvas, 0, 0)
 	love.graphics.setShader()
+end
+
+local function create_game_canvas(width, height)
+	-- use the highest MSAA level the GPU supports, up to 4
+	local max_msaa = love.graphics.getSystemLimits().canvasmsaa
+	local msaa = math.min(4, max_msaa)
+
+	return love.graphics.newCanvas(width, height, { msaa = msaa })
+end
+
+function Game:resize_canvas(width, height)
+	self.game_canvas = create_game_canvas(width, height)
 end
 
 function love.quit()

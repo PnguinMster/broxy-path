@@ -50,17 +50,18 @@ function Block_info.new(map_info, x, y, offset_x, offset_y)
 
   -- set physics body variables
   local body = love.physics.newBody(World, offset_x + center_x, offset_y + center_y, body_type)
-  local shape = love.physics.newRectangleShape(map_info.width * BLOCK_SIZE * scale_offset, map_info.height * BLOCK_SIZE * scale_offset)
+  local shape = love.physics.newRectangleShape(map_info.width * BLOCK_SIZE * scale_offset,
+    map_info.height * BLOCK_SIZE * scale_offset)
   local fixture = love.physics.newFixture(body, shape)
   fixture:setCategory(LAYERS.LEVEL)
   fixture:setFriction(0.7)
 
   -- check if block is bouncy
   if
-    map_info.type == BLOCK_TYPE.BOUNCE_BLOCK
-    or map_info.type == BLOCK_TYPE.ROTATING_BOUNCE
-    or map_info.type == BLOCK_TYPE.VERTICAL_BOUNCE
-    or map_info.type == BLOCK_TYPE.HORIZONTAL_BOUNCE
+      map_info.type == BLOCK_TYPE.BOUNCE_BLOCK
+      or map_info.type == BLOCK_TYPE.ROTATING_BOUNCE
+      or map_info.type == BLOCK_TYPE.VERTICAL_BOUNCE
+      or map_info.type == BLOCK_TYPE.HORIZONTAL_BOUNCE
   then
     fixture:setRestitution(0.9)
   end
@@ -73,17 +74,17 @@ function Block_info.new(map_info, x, y, offset_x, offset_y)
   elseif map_info.type == BLOCK_TYPE.START then
     fixture:setUserData({ entity = 'block', part = 'start' })
   elseif
-    map_info.type == BLOCK_TYPE.VERTICAL_BLOCK
-    or map_info.type == BLOCK_TYPE.HORIZONTAL_BLOCK
-    or map_info.type == BLOCK_TYPE.STATIC_BLOCK
-    or map_info.type == BLOCK_TYPE.ROTATING_BLOCK
+      map_info.type == BLOCK_TYPE.VERTICAL_BLOCK
+      or map_info.type == BLOCK_TYPE.HORIZONTAL_BLOCK
+      or map_info.type == BLOCK_TYPE.STATIC_BLOCK
+      or map_info.type == BLOCK_TYPE.ROTATING_BLOCK
   then
     fixture:setUserData({ entity = 'block', part = 'solid' })
   elseif
-    map_info.type == BLOCK_TYPE.BOUNCE_BLOCK
-    or map_info.type == BLOCK_TYPE.ROTATING_BOUNCE
-    or map_info.type == BLOCK_TYPE.VERTICAL_BOUNCE
-    or map_info.type == BLOCK_TYPE.HORIZONTAL_BOUNCE
+      map_info.type == BLOCK_TYPE.BOUNCE_BLOCK
+      or map_info.type == BLOCK_TYPE.ROTATING_BOUNCE
+      or map_info.type == BLOCK_TYPE.VERTICAL_BOUNCE
+      or map_info.type == BLOCK_TYPE.HORIZONTAL_BOUNCE
   then
     fixture:setUserData({ entity = 'block', part = 'bounce' })
   end
@@ -110,7 +111,7 @@ function Block_info.new(map_info, x, y, offset_x, offset_y)
           body:setLinearVelocity(0, BLOCK_MOVE_SPEED)
         end
       end
-    -- Set for horizontal movement
+      -- Set for horizontal movement
     elseif map_info.type == BLOCK_TYPE.HORIZONTAL_BLOCK or map_info.type == BLOCK_TYPE.HORIZONTAL_BOUNCE then
       local first = body:getX()
       local last = first + (BLOCK_MOVE_DISTANCE * BLOCK_SIZE)
@@ -127,7 +128,7 @@ function Block_info.new(map_info, x, y, offset_x, offset_y)
           body:setLinearVelocity(-BLOCK_MOVE_SPEED, 0)
         end
       end
-    -- Set for rotating block
+      -- Set for rotating block
     elseif map_info.type == BLOCK_TYPE.ROTATING_BLOCK or map_info.type == BLOCK_TYPE.ROTATING_BOUNCE then
       move = function(self)
         self.body:setAngularVelocity(BLOCK_ROTATE_SPEED)
@@ -136,7 +137,7 @@ function Block_info.new(map_info, x, y, offset_x, offset_y)
   end
 
   return setmetatable({
-    map_info = map_info or map_info.new(),
+    map_info = map_info,
     shape = shape,
     body = body,
     move = move,
