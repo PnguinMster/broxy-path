@@ -7,11 +7,8 @@ local player = require("Game.Player")
 local tilemap = require("Game.TileMap")
 
 local Game_scene = {}
-local last_part_contact = ""
 
 function Game_scene:load()
-	last_part_contact = ""
-
 	World = love.physics.newWorld(0, 9.8 * 16, true)
 	World:setCallbacks(self.on_begin_contact, self.on_end_contact)
 
@@ -78,14 +75,14 @@ function Game_scene.on_begin_contact(a, b, _)
 		Game:set_state(STATE.MENU)
 		Sound:play_sound_effect(SOUND_EFFECT.LEVEL_COMPLETE)
 	elseif block_part == "solid" then
-		if player_part ~= last_part_contact or Player:is_airborne() then
+		if not Player:is_part_of_contact(player_part) or Player:is_airborne() then
 			Sound:play_sound_effect(SOUND_EFFECT.BLOCK_STEP)
-			last_part_contact = player_part
+			Player.last_part_contact = player_part
 		end
 	elseif block_part == "bounce" then
-		if player_part ~= last_part_contact or Player:is_airborne() then
+		if not Player:is_part_of_contact(player_part) or Player:is_airborne() then
 			Sound:play_sound_effect(SOUND_EFFECT.BLOCK_BOUNCE)
-			last_part_contact = player_part
+			Player.last_part_contact = player_part
 		end
 	end
 end

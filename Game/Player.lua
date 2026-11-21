@@ -24,6 +24,8 @@ local Player = {
   can_hover_timer = 0,
   hover_enabled = true,
   time_since_grounded = 0,
+
+  last_part_contact = ""
 }
 Player.__index = Player
 
@@ -88,7 +90,7 @@ function Player:update(dt)
     self.top_body:applyForce(self.linear_force, 0)
     self.bottom_body:applyTorque(self.angular_force)
     self.bottom_body:applyForce(self.linear_force, 0)
-  --rotate player left
+    --rotate player left
   elseif love.keyboard.isDown('left') then
     self.top_body:applyTorque(-self.angular_force)
     self.top_body:applyForce(-self.linear_force, 0)
@@ -101,12 +103,12 @@ function Player:update(dt)
     self.top_body:applyForce(0, -9.8 * self.hover_force)
     self.bottom_body:applyForce(0, -9.8 * self.hover_force)
     self.hover_timer = self.hover_timer - dt * HOVER_TIME_LOSE
-  --thrust player down
+    --thrust player down
   elseif love.keyboard.isDown('down') and self.hover_enabled then
     self.top_body:applyForce(0, 9.8 * self.hover_force)
     self.bottom_body:applyForce(0, 9.8 * self.hover_force)
     self.hover_timer = self.hover_timer - dt / HOVER_TIME_LOSE
-  --restore hover stamina
+    --restore hover stamina
   elseif self.hover_enabled then
     self.hover_timer = self.hover_timer + dt / HOVER_TIME_GAIN
   end
@@ -146,7 +148,8 @@ function Player:draw()
   local center_x2 = (x6 + x7) * 0.5
   local center_y2 = (y6 + y7) * 0.5
 
-  love.graphics.polygon('line', x1, y1, x2, y2, center_x1, center_y1, center_x2, center_y2, x4, y4, x3, y3, center_x1, center_y1, center_x2, center_y2)
+  love.graphics.polygon('line', x1, y1, x2, y2, center_x1, center_y1, center_x2, center_y2, x4, y4, x3, y3, center_x1,
+    center_y1, center_x2, center_y2)
 
   self:hover_bar()
 end
@@ -232,6 +235,10 @@ function Player:is_airborne()
   return self.time_since_grounded > AIRBORNE_THRESHOLD
 end
 
+function Player:is_part_of_contact(part_of_contact)
+  return self.last_part_contact == part_of_contact
+end
+
 function Player:reset_player()
   --reset top body
   self.top_body:setPosition(0, 0)
@@ -247,6 +254,10 @@ function Player:reset_player()
 
   self.hover_timer = 1
   self.hover_enabled = true
+  self.can_hover_timer = 0
+  self.time_since_grounded = 0
+
+  self.last_part_contact = ""
 
   reset_camera_to_player(self)
 end

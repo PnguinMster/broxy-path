@@ -17,6 +17,7 @@ local retry_pressed = function()
   Game:set_state(STATE.GAME)
   Pause_menu.active = false
   Player:reset_player()
+  Game_scene:reset_last_contact()
 end
 local menu_pressed = function()
   print('Menu pressed')
