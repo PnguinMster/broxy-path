@@ -21,7 +21,7 @@ function love.resize(width, height)
 end
 
 function love.keyreleased(key)
-	if key == "escape" and end_menu == false then
+	if key == "escape" and end_menu.active == false then
 		if Game.scene == SCENE.GAME then
 			if Game.state == STATE.GAME then
 				Game:set_state(STATE.MENU)
